@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>SIP Discovery Engine - Insights</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <style>
+    @layer base {
+      html, body { margin: 0; padding: 0; }
+      body { overscroll-behavior: none; }
+      main > :first-child { margin-top: 0 !important; }
+      main > :last-child { margin-bottom: 0 !important; }
+    }
+    ::-webkit-scrollbar { display: none; }
+  </style>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#006948",
+            "primary-container": "#00855d",
+            "primary-fixed": "#85f8c4",
+            "primary-fixed-dim": "#68dba9",
+            "on-primary": "#ffffff",
+            "on-primary-fixed": "#002114",
+            "on-primary-container": "#f5fff7",
+            "secondary": "#565e74",
+            "secondary-container": "#dae2fd",
+            "on-secondary-container": "#5c647a",
+            "tertiary": "#006947",
+            "tertiary-fixed": "#6ffbbe",
+            "tertiary-fixed-dim": "#4edea3",
+            "on-tertiary-fixed": "#002113",
+            "surface": "#f7f9fb",
+            "surface-dim": "#d8dadc",
+            "surface-bright": "#f7f9fb",
+            "surface-container-lowest": "#ffffff",
+            "surface-container-low": "#f2f4f6",
+            "surface-container": "#eceef0",
+            "surface-container-high": "#e6e8ea",
+            "surface-container-highest": "#e0e3e5",
+            "on-surface": "#191c1e",
+            "on-surface-variant": "#3d4a42",
+            "outline": "#6d7a72",
+            "outline-variant": "#bccac0",
+            "error": "#ba1a1a",
+            "error-container": "#ffdad6",
+            "on-error-container": "#93000a"
+          },
+          fontFamily: {
+            sans: ["Inter", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-surface font-sans text-on-surface antialiased min-h-screen flex flex-col">
+  <!-- Top Navigation Bar -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest border-b border-outline-variant/30 shadow-[0_1px_8px_rgba(0,0,0,0.03)]">
+    <div class="h-16 max-w-7xl mx-auto px-6 flex items-center justify-between gap-6">
+      <div class="flex items-center">
+        <span class="text-xl font-bold text-on-surface tracking-tight">SIP Discovery Engine</span>
+      </div>
+      <nav class="flex items-center p-1 bg-surface-container-low rounded-lg gap-1">
+        <a class="px-4 py-1.5 rounded-lg font-semibold text-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" href="/">Dashboard</a>
+        <a class="px-4 py-1.5 rounded-lg font-semibold text-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" href="/upload">Upload data</a>
+        <a aria-current="page" class="px-4 py-1.5 transition-all bg-primary-container text-on-primary-container font-semibold text-sm rounded-lg" href="/insights">Insights</a>
+      </nav>
+      <div class="w-10"></div>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main class="w-full pt-16 bg-surface flex-1">
+    <div class="max-w-7xl mx-auto px-6 py-8">
+      <div class="flex flex-col w-full">
+        <!-- Error Container -->
+        <div id="errorContainer" class="hidden mb-6 p-4 rounded-xl bg-error-container/40 border border-error/30 text-on-surface flex items-start gap-3">
+          <span class="material-symbols-outlined text-error text-[22px] shrink-0 mt-0.5">error</span>
+          <div>
+            <h4 class="font-bold text-sm text-on-error-container">Could Not Load Insights</h4>
+            <p id="errorMessage" class="text-xs text-on-surface mt-1"></p>
+          </div>
+        </div>
+
+        <!-- Top Header & Control Deck -->
+        <div class="flex flex-col gap-4 mb-8">
+          <div class="flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+              <h1 class="text-3xl font-bold text-on-surface tracking-tight">AI insight summary</h1>
+              <span id="datasetBadge" class="px-2.5 py-1 rounded-full bg-surface-container text-on-surface-variant text-xs font-semibold"></span>
+            </div>
+            <!-- Action Button: Regenerate -->
+            <div class="flex items-center gap-2">
+              <button id="btnRegenerate" type="button" class="px-4 py-2 rounded-lg bg-surface-container-lowest border border-outline-variant/40 text-on-surface font-semibold text-sm shadow-sm hover:bg-surface-container transition-all flex items-center gap-2 active:scale-[0.98] cursor-pointer">
+                <span id="regenIcon" class="material-symbols-outlined text-[18px] text-outline transition-transform duration-500">autorenew</span>
+                <span>Regenerate</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Meta Controls Ribbon -->
+          <div class="flex flex-wrap items-center gap-4 p-4 rounded-xl bg-surface-container-lowest shadow-sm border border-outline-variant/20">
+            <div class="flex items-center gap-2 px-3 py-1 rounded-full bg-primary-fixed text-on-primary-fixed font-semibold text-xs">
+              <span class="relative flex h-2 w-2">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+              </span>
+              <span id="generatedTime">Loading...</span>
+            </div>
+            <div class="h-4 w-px bg-surface-container-highest hidden sm:block"></div>
+            <div class="flex items-center gap-2 text-on-surface-variant text-xs">
+              <span class="material-symbols-outlined text-[16px] text-outline">hub</span>
+              <span id="datasetSummaryText">Synthesized from qualitative feedback</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main 2-Column Analytical Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          <!-- Left Column: 3 Insight Cards + Next Questions (8 cols) -->
+          <div class="lg:col-span-8 flex flex-col gap-6">
+            <!-- Cards Container (Populated dynamically) -->
+            <div id="cardsContainer" class="flex flex-col gap-6">
+              <!-- Loading Skeleton / Placeholder -->
+              <div class="p-8 rounded-xl bg-surface-container-lowest border border-outline-variant/20 flex items-center justify-center text-on-surface-variant">
+                <span class="material-symbols-outlined animate-spin text-primary text-[28px]">sync</span>
+                <span class="ml-2 text-sm font-medium">Generating qualitative insights...</span>
+              </div>
+            </div>
+
+            <!-- Bottom Box: Suggested Next Questions -->
+            <section id="nextQuestionsSection" class="hidden flex flex-col gap-4 p-6 rounded-xl bg-primary-container/10 border border-primary/20 shadow-sm">
+              <div class="flex items-center gap-3">
+                <div class="p-2 rounded-lg bg-primary text-on-primary">
+                  <span class="material-symbols-outlined text-[20px]">auto_awesome</span>
+                </div>
+                <div class="flex flex-col">
+                  <h3 class="text-base font-bold text-on-surface">Suggested next questions</h3>
+                  <span class="text-xs text-on-surface-variant">Recommended qualitative and research follow-ups</span>
+                </div>
+              </div>
+              <div id="questionsContainer" class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <!-- Dynamically populated via insights.js -->
+              </div>
+            </section>
+          </div>
+
+          <!-- Right Column: Segment View Sidebar (4 cols) -->
+          <aside class="lg:col-span-4 flex flex-col gap-6">
+            <div class="flex flex-col gap-4 p-6 rounded-xl bg-surface-container-lowest shadow-sm border border-outline-variant/20">
+              <div class="flex flex-col gap-1">
+                <div class="flex items-center justify-between">
+                  <h3 class="text-lg font-bold text-on-surface tracking-tight">Segment view</h3>
+                  <span class="material-symbols-outlined text-outline text-[20px]">pie_chart</span>
+                </div>
+                <p class="text-xs text-on-surface-variant">
+                  Income stability vs share of paused or stopped SIPs
+                </p>
+              </div>
+
+              <!-- Segment View List -->
+              <div id="segmentViewContainer" class="flex flex-col gap-3 mt-1">
+                <!-- Populated dynamically via insights.js -->
+              </div>
+            </div>
+          </aside>
+        </div>
+
+        <!-- Mandatory Footer Note -->
+        <footer class="mt-12 pt-6 flex items-center justify-center gap-2 text-on-surface-variant border-t border-outline-variant/20">
+          <span class="material-symbols-outlined text-[18px] text-outline">info</span>
+          <p class="text-xs text-on-surface-variant font-medium">
+            Small sample. Treat as patterns, not proof.
+          </p>
+        </footer>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal Dialog for Evidence Inspection -->
+  <dialog id="evidenceModal" class="p-0 rounded-2xl bg-surface-container-lowest shadow-2xl backdrop:bg-on-surface/40 max-w-xl w-full m-auto border border-outline-variant/30">
+    <div class="p-6 flex flex-col gap-4">
+      <div class="flex items-center justify-between pb-2 border-b border-outline-variant/20">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-primary text-[22px]">quick_reference_all</span>
+          <h4 class="text-base font-bold text-on-surface">Record Trace Detail</h4>
+          <span id="modalItemId" class="font-mono text-xs font-semibold px-2 py-0.5 rounded bg-surface-container-high text-on-surface"></span>
+        </div>
+        <button id="modalClose" type="button" class="p-1 rounded-lg hover:bg-surface-container-high transition-colors text-outline hover:text-on-surface" title="Close dialog">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+      </div>
+
+      <div id="modalContent" class="py-2">
+        <!-- Injected via insights.js -->
+      </div>
+
+      <div class="flex items-center justify-between pt-2 border-t border-outline-variant/20">
+        <span class="font-mono text-[11px] text-outline">Verified Trace Entry</span>
+        <button id="btnDismissModal" type="button" class="px-4 py-1.5 rounded-lg bg-surface-container-high text-on-surface font-semibold text-xs hover:bg-surface-container-highest transition-colors cursor-pointer">
+          Dismiss
+        </button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Script Module -->
+  <script type="module" src="/static/insights.js"></script>
+</body>
+</html>

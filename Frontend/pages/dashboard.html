@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>SIP Discovery Engine - Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <style>
+    @layer base {
+      html, body { margin: 0; padding: 0; }
+      body { overscroll-behavior: none; }
+      main > :first-child { margin-top: 0 !important; }
+      main > :last-child { margin-bottom: 0 !important; }
+    }
+    ::-webkit-scrollbar { display: none; }
+  </style>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#006948",
+            "primary-container": "#00855d",
+            "primary-fixed": "#85f8c4",
+            "primary-fixed-dim": "#68dba9",
+            "on-primary": "#ffffff",
+            "on-primary-fixed": "#002114",
+            "on-primary-container": "#f5fff7",
+            "secondary": "#565e74",
+            "secondary-container": "#dae2fd",
+            "on-secondary-container": "#5c647a",
+            "tertiary": "#006947",
+            "tertiary-fixed": "#6ffbbe",
+            "tertiary-fixed-dim": "#4edea3",
+            "on-tertiary-fixed": "#002113",
+            "surface": "#f7f9fb",
+            "surface-dim": "#d8dadc",
+            "surface-bright": "#f7f9fb",
+            "surface-container-lowest": "#ffffff",
+            "surface-container-low": "#f2f4f6",
+            "surface-container": "#eceef0",
+            "surface-container-high": "#e6e8ea",
+            "surface-container-highest": "#e0e3e5",
+            "on-surface": "#191c1e",
+            "on-surface-variant": "#3d4a42",
+            "outline": "#6d7a72",
+            "outline-variant": "#bccac0",
+            "error": "#ba1a1a",
+            "error-container": "#ffdad6",
+            "on-error-container": "#93000a"
+          },
+          fontFamily: {
+            sans: ["Inter", "sans-serif"]
+          }
+        }
+      }
+    }
+  </script>
+  <script type="module" src="/static/app.js"></script>
+</head>
+<body class="bg-surface font-sans text-on-surface antialiased min-h-screen flex flex-col">
+  <!-- 1. Top Navigation Bar -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest border-b border-outline-variant/30 shadow-[0_1px_6px_rgba(0,0,0,0.03)]">
+    <div class="h-16 max-w-7xl mx-auto px-6 flex items-center justify-between gap-6">
+      <div class="flex items-center gap-3">
+        <span class="text-lg font-bold text-on-surface tracking-tight">SIP Discovery Engine</span>
+      </div>
+      <nav class="flex items-center p-1 bg-surface-container-low rounded-lg gap-1">
+        <a aria-current="page" class="px-4 py-1.5 transition-all bg-primary-container text-on-primary-container font-semibold text-sm rounded-md" href="/">Dashboard</a>
+        <a class="px-4 py-1.5 rounded-md font-medium text-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" href="/upload">Upload data</a>
+        <a class="px-4 py-1.5 rounded-md font-medium text-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" href="/insights">Insights</a>
+      </nav>
+      <div class="w-10"></div>
+    </div>
+  </header>
+
+  <!-- Error Alert Banner -->
+  <div id="error-banner" class="hidden fixed top-16 left-0 right-0 z-40 bg-error-container text-on-error-container px-6 py-2.5 text-xs font-medium flex items-center justify-between border-b border-error/20">
+    <div class="flex items-center gap-2 max-w-7xl mx-auto w-full">
+      <span class="material-symbols-outlined text-[16px]">error</span>
+      <span id="error-message">An error occurred while loading data.</span>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="w-full pt-16 bg-surface flex-1">
+    <div class="max-w-7xl mx-auto px-6 py-8">
+      <div class="flex flex-col w-full relative">
+
+        <!-- Loading Overlay -->
+        <div id="loading-overlay" class="hidden absolute inset-0 bg-surface/50 backdrop-blur-[1px] z-30 flex items-center justify-center rounded-xl min-h-[400px]">
+          <div class="flex flex-col items-center gap-2 p-4 rounded-xl bg-surface-container-lowest border border-outline-variant/30 shadow-md">
+            <span class="material-symbols-outlined animate-spin text-primary text-[28px]">progress_activity</span>
+            <span class="text-xs font-semibold text-on-surface">Updating dashboard...</span>
+          </div>
+        </div>
+
+        <!-- 2. Page Header -->
+        <section class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-8">
+          <div class="flex flex-col max-w-3xl">
+            <div class="flex items-center flex-wrap gap-2.5 mb-1.5">
+              <h1 class="text-2xl font-bold text-on-surface tracking-tight">Why do first-time SIP investors drop off?</h1>
+              <span id="ai-badge" class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed text-xs font-semibold">
+                <span class="material-symbols-outlined text-[13px]">auto_awesome</span>
+                AI-tagged qualitative synthesis
+              </span>
+            </div>
+            <p class="text-sm text-on-surface-variant leading-relaxed">
+              Qualitative synthesis &amp; behavioral drop-off telemetry for first-time mutual fund SIP investors within 12 months.
+            </p>
+          </div>
+          <!-- Top Actions -->
+          <div class="flex items-center flex-wrap gap-2.5 self-start lg:self-center">
+            <button id="btn-export-csv" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-lg bg-primary text-on-primary hover:bg-primary-container transition-colors text-sm font-semibold shadow-sm cursor-pointer" type="button">
+              <span class="material-symbols-outlined text-[18px]">download</span>
+              <span>Export (.csv)</span>
+            </button>
+          </div>
+        </section>
+
+        <!-- 3. Summary Cards -->
+        <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+          <!-- Card 1: Total Items Analysed -->
+          <div class="p-5 rounded-xl bg-surface-container-lowest border border-outline-variant/30 shadow-sm flex flex-col justify-between">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs uppercase tracking-wider text-outline font-semibold">Total items analysed</span>
+              <div class="w-8 h-8 rounded-lg bg-primary-fixed/40 flex items-center justify-center text-primary">
+                <span class="material-symbols-outlined text-[18px]">dataset</span>
+              </div>
+            </div>
+            <div>
+              <div id="stat-total-items" class="text-2xl font-bold text-on-surface mb-0.5">-</div>
+              <div class="text-xs text-on-surface-variant">Corpus items collected</div>
+            </div>
+          </div>
+          <!-- Card 2: Sources -->
+          <div class="p-5 rounded-xl bg-surface-container-lowest border border-outline-variant/30 shadow-sm flex flex-col justify-between">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs uppercase tracking-wider text-outline font-semibold">Sources</span>
+              <div class="w-8 h-8 rounded-lg bg-secondary-container/60 flex items-center justify-center text-on-secondary-container">
+                <span class="material-symbols-outlined text-[18px]">hub</span>
+              </div>
+            </div>
+            <div>
+              <div id="stat-sources" class="text-2xl font-bold text-on-surface mb-0.5">-</div>
+              <div id="stat-sources-subtext" class="text-xs text-on-surface-variant truncate">Feedback channels analysed</div>
+            </div>
+          </div>
+          <!-- Card 3: Labelled Evidence Items -->
+          <div class="p-5 rounded-xl bg-surface-container-lowest border border-outline-variant/30 shadow-sm flex flex-col justify-between">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs uppercase tracking-wider text-outline font-semibold">Labelled evidence items</span>
+              <div class="w-8 h-8 rounded-lg bg-tertiary-fixed/40 flex items-center justify-center text-tertiary">
+                <span class="material-symbols-outlined text-[18px]">fact_check</span>
+              </div>
+            </div>
+            <div>
+              <div id="stat-labelled-items" class="text-2xl font-bold text-on-surface mb-0.5">-</div>
+              <div class="text-xs text-on-surface-variant">Verified snippets</div>
+            </div>
+          </div>
+          <!-- Card 4: Deep Interviews -->
+          <div class="p-5 rounded-xl bg-surface-container-lowest border border-outline-variant/30 shadow-sm flex flex-col justify-between">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-xs uppercase tracking-wider text-outline font-semibold">Deep interviews</span>
+              <div class="w-8 h-8 rounded-lg bg-primary-container/20 flex items-center justify-center text-primary-container">
+                <span class="material-symbols-outlined text-[18px]">record_voice_over</span>
+              </div>
+            </div>
+            <div>
+              <div id="stat-deep-interviews" class="text-2xl font-bold text-on-surface mb-0.5">-</div>
+              <div class="text-xs text-on-surface-variant">Qualitative deep-dives</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 4. Filter Bar -->
+        <section class="w-full bg-surface-container-lowest p-4 rounded-xl border border-outline-variant/30 shadow-sm mb-8 flex flex-col gap-3">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="text-xs font-semibold text-outline uppercase tracking-wider mr-1">Filter Cohort:</span>
+              <!-- Source Filter -->
+              <div class="relative">
+                <select id="filter-source" class="appearance-none bg-surface-container-low text-on-surface border-0 rounded-lg px-3 py-1.5 pr-8 text-xs font-medium focus:ring-1 focus:ring-primary cursor-pointer">
+                  <option value="">Source: All</option>
+                </select>
+                <span class="material-symbols-outlined text-[16px] text-outline absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none">expand_more</span>
+              </div>
+              <!-- Income Stability -->
+              <div class="relative">
+                <select id="filter-income" class="appearance-none bg-surface-container-low text-on-surface border-0 rounded-lg px-3 py-1.5 pr-8 text-xs font-medium focus:ring-1 focus:ring-primary cursor-pointer">
+                  <option value="">Income stability: All</option>
+                </select>
+                <span class="material-symbols-outlined text-[16px] text-outline absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none">expand_more</span>
+              </div>
+              <!-- Age Band -->
+              <div class="relative">
+                <select id="filter-age" class="appearance-none bg-surface-container-low text-on-surface border-0 rounded-lg px-3 py-1.5 pr-8 text-xs font-medium focus:ring-1 focus:ring-primary cursor-pointer">
+                  <option value="">Age band: All</option>
+                </select>
+                <span class="material-symbols-outlined text-[16px] text-outline absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none">expand_more</span>
+              </div>
+              <!-- Influence -->
+              <div class="relative">
+                <select id="filter-influence" class="appearance-none bg-surface-container-low text-on-surface border-0 rounded-lg px-3 py-1.5 pr-8 text-xs font-medium focus:ring-1 focus:ring-primary cursor-pointer">
+                  <option value="">Influence: All</option>
+                </select>
+                <span class="material-symbols-outlined text-[16px] text-outline absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none">expand_more</span>
+              </div>
+            </div>
+            <!-- Active Records Info & Reset -->
+            <div class="flex items-center gap-3 ml-auto">
+              <span id="showing-records-badge" class="px-2.5 py-1 rounded-full bg-surface-container text-on-surface-variant text-xs font-medium">
+                Loading records...
+              </span>
+              <button id="btn-reset-all" class="text-xs font-semibold text-primary hover:text-primary-container transition-colors underline underline-offset-2 cursor-pointer" type="button">
+                Reset all
+              </button>
+            </div>
+          </div>
+          <!-- Active Filter Pills Strip -->
+          <div id="filter-pills-container" class="hidden flex flex-wrap items-center gap-1.5 pt-1 border-t border-surface-container"></div>
+        </section>
+
+        <!-- 5. Visual Analytics (2 Columns) -->
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-8">
+          <!-- Column 1: Main Driver (7 cols) -->
+          <div class="lg:col-span-7 bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/30 shadow-sm flex flex-col justify-between">
+            <div class="flex items-center justify-between mb-4 pb-2 border-b border-surface-container">
+              <div>
+                <h2 class="text-base font-semibold text-on-surface">Main driver</h2>
+                <p class="text-xs text-on-surface-variant">Primary factors driving drop-off or pause</p>
+              </div>
+              <span class="material-symbols-outlined text-outline text-[20px]">bar_chart</span>
+            </div>
+            <!-- Main Drivers Dynamic Bars -->
+            <div id="main-driver-container" class="flex flex-col gap-2.5">
+              <p class="text-xs text-outline py-4">Loading drivers...</p>
+            </div>
+          </div>
+
+          <!-- Column 2: Outcome (5 cols) -->
+          <div class="lg:col-span-5 bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/30 shadow-sm flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-4 pb-2 border-b border-surface-container">
+                <div>
+                  <h2 class="text-base font-semibold text-on-surface">Outcome</h2>
+                  <p class="text-xs text-on-surface-variant">Cohort status distribution</p>
+                </div>
+                <span class="material-symbols-outlined text-outline text-[20px]">donut_large</span>
+              </div>
+              <!-- Donut Chart -->
+              <div class="flex items-center justify-center my-6 relative">
+                <svg id="outcome-donut-svg" class="w-48 h-48 -rotate-90 transform" viewBox="0 0 100 100">
+                  <circle class="text-surface-container-low" cx="50" cy="50" fill="transparent" r="38" stroke="currentColor" stroke-width="14"></circle>
+                </svg>
+                <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                  <span id="outcome-center-pct" class="text-2xl font-bold text-on-surface">-</span>
+                  <span id="outcome-center-label" class="text-xs text-outline uppercase tracking-wider font-semibold">-</span>
+                </div>
+              </div>
+            </div>
+            <!-- Dynamic Legend -->
+            <div id="outcome-legend" class="flex flex-col gap-2 pt-2 border-t border-surface-container">
+              <p class="text-xs text-outline py-2">Loading outcomes...</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- 6. Top Unmet Needs -->
+        <section class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant/30 shadow-sm mb-8">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-5 gap-2">
+            <div>
+              <h2 class="text-base font-semibold text-on-surface">Top unmet needs</h2>
+              <p class="text-xs text-on-surface-variant">High-frequency recurring investor needs</p>
+            </div>
+            <span class="text-xs font-medium text-outline">Priority by volume</span>
+          </div>
+          <!-- 5 Dynamic Need Cards -->
+          <div id="unmet-needs-container" class="grid grid-cols-1 md:grid-cols-5 gap-4">
+            <p class="text-xs text-outline py-2 col-span-full">Loading unmet needs...</p>
+          </div>
+        </section>
+
+        <!-- 7. Evidence Table & Side Panel -->
+        <section class="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start mb-8">
+          <!-- Left: Evidence Table (8 cols) -->
+          <div class="xl:col-span-8 bg-surface-container-lowest rounded-xl border border-outline-variant/30 shadow-sm p-5 flex flex-col">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+              <div>
+                <h2 class="text-base font-semibold text-on-surface">Evidence repository</h2>
+                <span id="evidence-info" class="text-xs text-on-surface-variant">Loading records...</span>
+              </div>
+              <div class="relative w-full sm:w-60">
+                <span class="material-symbols-outlined text-outline text-[18px] absolute left-3 top-1/2 -translate-y-1/2">search</span>
+                <input id="search-input" class="w-full pl-9 pr-3 py-1.5 rounded-lg bg-surface-container-low text-on-surface placeholder:text-outline text-xs outline-none focus:bg-surface-container-lowest focus:ring-1 focus:ring-primary transition-all border-0" placeholder="Search verbatim quotes..." type="text"/>
+              </div>
+            </div>
+            <!-- Table Container -->
+            <div class="w-full overflow-x-auto">
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr class="bg-surface-container-low text-outline text-xs uppercase tracking-wider font-semibold">
+                    <th class="py-2.5 px-3 rounded-l-lg">ID</th>
+                    <th class="py-2.5 px-3">Source</th>
+                    <th class="py-2.5 px-3">Stage</th>
+                    <th class="py-2.5 px-3">Main driver</th>
+                    <th class="py-2.5 px-3">Outcome</th>
+                    <th class="py-2.5 px-3">Unmet need</th>
+                    <th class="py-2.5 px-3 rounded-r-lg">Text preview</th>
+                  </tr>
+                </thead>
+                <tbody id="evidence-tbody" class="divide-y divide-surface-container text-xs">
+                  <tr>
+                    <td colspan="7" class="py-6 text-center text-xs text-outline">Loading evidence records...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <!-- Pagination Controls -->
+            <div class="flex items-center justify-between pt-4 mt-2 text-outline text-xs border-t border-surface-container/40">
+              <span class="text-xs text-outline">Click a row to inspect full transcript</span>
+              <div id="pagination-container" class="flex items-center gap-1"></div>
+            </div>
+          </div>
+
+          <!-- Right: Side Panel for Selected Row (4 cols) -->
+          <div id="evidence-side-panel" class="xl:col-span-4 bg-surface-container-lowest rounded-xl border border-outline-variant/30 shadow-sm p-5 flex flex-col">
+            <div class="flex items-center justify-between pb-3 mb-4 border-b border-surface-container">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-primary"></span>
+                <span id="panel-title" class="text-base font-bold text-on-surface truncate">Evidence Item</span>
+              </div>
+              <span id="panel-source" class="px-2 py-0.5 rounded bg-surface-container text-xs font-medium text-on-surface-variant uppercase">-</span>
+            </div>
+            <!-- Verbatim Text -->
+            <div class="bg-surface-container-low p-4 rounded-xl mb-4">
+              <span class="text-xs uppercase tracking-wider text-outline font-semibold block mb-1.5">Verbatim Transcript</span>
+              <p id="panel-quote" class="text-sm text-on-surface italic leading-relaxed">Select a row from the repository to view its verbatim transcript.</p>
+            </div>
+            <!-- Investor Context -->
+            <div class="flex flex-col gap-2.5 mb-2">
+              <span class="text-xs uppercase tracking-wider text-outline font-semibold">Investor Context</span>
+              <div class="grid grid-cols-2 gap-2.5">
+                <div class="p-2.5 rounded-lg bg-surface-container-low">
+                  <span class="text-xs text-outline block mb-0.5">Stage</span>
+                  <span id="panel-stage" class="text-xs font-semibold text-on-surface">-</span>
+                </div>
+                <div class="p-2.5 rounded-lg bg-surface-container-low">
+                  <span class="text-xs text-outline block mb-0.5">Income Stability</span>
+                  <span id="panel-income" class="text-xs font-semibold text-on-surface">-</span>
+                </div>
+                <div class="p-2.5 rounded-lg bg-surface-container-low">
+                  <span class="text-xs text-outline block mb-0.5">Age Band</span>
+                  <span id="panel-age" class="text-xs font-semibold text-on-surface">-</span>
+                </div>
+                <div class="p-2.5 rounded-lg bg-surface-container-low">
+                  <span class="text-xs text-outline block mb-0.5">Influence</span>
+                  <span id="panel-influence" class="text-xs font-semibold text-on-surface">-</span>
+                </div>
+                <div class="p-2.5 rounded-lg bg-surface-container-low">
+                  <span class="text-xs text-outline block mb-0.5">Main Driver</span>
+                  <span id="panel-driver" class="text-xs font-semibold text-on-surface">-</span>
+                </div>
+                <div class="p-2.5 rounded-lg bg-surface-container-low">
+                  <span class="text-xs text-outline block mb-0.5">Outcome</span>
+                  <span id="panel-outcome" class="text-xs font-semibold text-on-surface">-</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Clean Footer (links removed) -->
+  <footer class="w-full bg-surface-container-lowest border-t border-outline-variant/30 py-4">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <span class="text-xs text-on-surface-variant font-medium">SIP Discovery Engine</span>
+      <span class="text-xs text-outline">Real-time qualitative evidence & telemetry</span>
+    </div>
+  </footer>
+</body>
+</html>
+

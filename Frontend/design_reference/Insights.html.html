@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="web_standard" name="shell-type"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+    @layer base {
+      html, body { margin: 0; padding: 0; }
+      body { overscroll-behavior: none; }
+      main > :first-child { margin-top: 0 !important; }
+      main > :last-child { margin-bottom: 0 !important; }
+    }
+    ::-webkit-scrollbar { display: none; }
+  </style>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "tertiary-fixed-dim": "#4edea3",
+            "surface-container-highest": "#e0e3e5",
+            "inverse-on-surface": "#eff1f3",
+            "primary-fixed-dim": "#68dba9",
+            "on-background": "#191c1e",
+            "on-surface-variant": "#3d4a42",
+            "tertiary-fixed": "#6ffbbe",
+            "outline": "#6d7a72",
+            "surface-container-lowest": "#ffffff",
+            "outline-variant": "#bccac0",
+            "on-secondary-container": "#5c647a",
+            "error": "#ba1a1a",
+            "secondary-fixed": "#dae2fd",
+            "primary-fixed": "#85f8c4",
+            "surface-container-low": "#f2f4f6",
+            "on-primary": "#ffffff",
+            "surface-container-high": "#e6e8ea",
+            "inverse-primary": "#68dba9",
+            "on-secondary": "#ffffff",
+            "on-error": "#ffffff",
+            "on-surface": "#191c1e",
+            "inverse-surface": "#2d3133",
+            "on-primary-fixed": "#002114",
+            "on-secondary-fixed": "#131b2e",
+            "on-tertiary-fixed-variant": "#005236",
+            "surface-variant": "#e0e3e5",
+            "surface-tint": "#006c4a",
+            "on-primary-fixed-variant": "#005137",
+            "secondary": "#565e74",
+            "on-secondary-fixed-variant": "#3f465c",
+            "secondary-fixed-dim": "#bec6e0",
+            "tertiary-container": "#00855b",
+            "on-primary-container": "#f5fff7",
+            "primary-container": "#00855d",
+            "primary": "#006948",
+            "on-tertiary": "#ffffff",
+            "surface-container": "#eceef0",
+            "on-error-container": "#93000a",
+            "error-container": "#ffdad6",
+            "surface-dim": "#d8dadc",
+            "surface-bright": "#f7f9fb",
+            "on-tertiary-fixed": "#002113",
+            "secondary-container": "#dae2fd",
+            "tertiary": "#006947",
+            "surface": "#f7f9fb",
+            "background": "#f7f9fb",
+            "on-tertiary-container": "#f5fff6"
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          spacing: {
+            "gutter": "1.5rem",
+            "space-xl": "2rem",
+            "space-lg": "1.5rem",
+            "space-xs": "0.25rem",
+            "space-sm": "0.5rem",
+            "margin": "2rem",
+            "space-md": "1rem",
+            "gutter-dense": "1rem",
+            "margin-compact": "1.25rem",
+            "space-2xl": "3rem"
+          },
+          fontFamily: {
+            "display-md": ["Inter"],
+            "body-md": ["Inter"],
+            "data-metric": ["Inter"],
+            "body-sm": ["Inter"],
+            "code-inline": ["Inter"],
+            "label-md": ["Inter"],
+            "headline-sm": ["Inter"],
+            "headline-md": ["Inter"],
+            "headline-lg": ["Inter"],
+            "display-lg": ["Inter"],
+            "label-sm": ["Inter"],
+            "data-table": ["Inter"],
+            "body-lg": ["Inter"]
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-surface font-body-md text-on-surface antialiased min-h-screen flex flex-col">
+<!-- Navigation Bar -->
+<header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest border-b border-outline-variant/30 shadow-[0_1px_8px_rgba(0,0,0,0.03)]">
+<div class="h-16 max-w-7xl mx-auto px-gutter flex items-center justify-between gap-gutter">
+<!-- Text-only wordmark logo -->
+<div class="flex items-center">
+<span class="font-headline-md text-headline-md font-bold text-on-surface tracking-tight">SIP Discovery Engine</span>
+</div>
+<!-- Navigation tabs -->
+<nav class="flex items-center p-1 bg-surface-container-low rounded-lg gap-space-xs">
+<a class="px-space-md py-1.5 rounded-lg font-headline-sm text-headline-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="dashboard" href="#">Dashboard</a>
+<a class="px-space-md py-1.5 rounded-lg font-headline-sm text-headline-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" data-path="upload-data" href="#">Upload data</a>
+<a aria-current="page" class="px-space-md py-1.5 transition-all bg-primary-container text-on-primary-container font-headline-sm text-headline-sm rounded-lg" data-path="insights" href="#">Insights</a>
+</nav>
+<!-- Empty / balanced spacer to keep centered tabs alignment -->
+<div class="w-10"></div>
+</div>
+</header>
+<main class="w-full pt-16 bg-surface flex-1">
+<div class="max-w-7xl mx-auto px-gutter py-margin">
+<div class="flex flex-col w-full">
+<!-- Top Header & Control Deck -->
+<div class="flex flex-col gap-space-md mb-space-xl">
+<div class="flex flex-wrap items-center justify-between gap-space-md">
+<div class="flex flex-col gap-space-xs">
+<h1 class="font-display-md text-display-md text-on-surface tracking-tight">AI insight summary</h1>
+</div>
+<!-- Action Button: Only Regenerate -->
+<div class="flex items-center gap-space-sm">
+<button class="px-space-md py-2 rounded-lg bg-surface-container-lowest border border-outline-variant/40 text-on-surface font-headline-sm text-headline-sm shadow-sm hover:bg-surface-container transition-all flex items-center gap-space-xs active:scale-[0.99]" id="btn-regenerate">
+<span class="material-symbols-outlined text-[18px] text-outline transition-transform duration-500" id="refresh-icon">autorenew</span>
+<span>Regenerate</span>
+</button>
+</div>
+</div>
+<!-- Meta Controls Ribbon -->
+<div class="flex flex-wrap items-center gap-space-md p-space-md rounded-xl bg-surface-container-lowest shadow-sm border border-outline-variant/20">
+<div class="flex items-center gap-space-xs px-space-sm py-1 rounded-full bg-primary-fixed text-on-primary-fixed">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+</span>
+<span class="font-label-md text-label-md">Generated just now</span>
+</div>
+<div class="h-4 w-px bg-surface-container-highest hidden sm:block"></div>
+<div class="flex items-center gap-space-xs text-on-surface-variant font-body-sm text-body-sm">
+<span class="material-symbols-outlined text-[16px] text-outline">hub</span>
+<span>Synthesized from <strong class="text-on-surface font-medium">XX qualitative records</strong> across XX channels (Play Store, App Store, Reddit, YouTube, Survey, Interviews)</span>
+</div>
+</div>
+</div>
+<!-- Main 2-Column Analytical Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
+<!-- Left Column (8 cols): 3 Insight Cards + Next Questions -->
+<div class="lg:col-span-8 flex flex-col gap-space-lg">
+<!-- Card 1 -->
+<article class="flex flex-col gap-space-md p-space-lg rounded-xl bg-surface-container-lowest shadow-sm border border-outline-variant/20 hover:shadow-md transition-all">
+<div class="flex flex-wrap items-center justify-between gap-space-sm">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary-fixed text-on-primary-fixed font-label-md text-label-md">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+                  Strong signal
+                </span>
+</div>
+<div class="flex flex-col gap-space-xs">
+<h2 class="font-headline-lg text-headline-lg font-bold text-on-surface tracking-tight">
+                  Variable-income investors cancel instead of pausing
+                </h2>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                  Users experiencing periodic cash flow shifts struggle to locate temporary pause controls during critical billing windows.<br/>
+                  Without an evident 1-step skip option, users report opting for complete cancellation to avoid account overdraft charges.
+                </p>
+</div>
+<!-- Evidence Chips strictly ID-XXXXX -->
+<div class="flex flex-col gap-space-xs pt-space-xs">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Evidence Logs</span>
+<div class="flex flex-wrap gap-space-xs">
+<button class="evidence-chip px-space-sm py-1 rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-colors font-code-inline text-code-inline text-primary font-semibold border border-outline-variant/30" data-transcript="Record trace ID-00101: User noted delayed payment cycle and opted to terminate recurring setup rather than miss debit deadline.">
+                    ID-00101
+                  </button>
+<button class="evidence-chip px-space-sm py-1 rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-colors font-code-inline text-code-inline text-primary font-semibold border border-outline-variant/30" data-transcript="Record trace ID-00102: Freelance worker indicated inability to pause contribution across lean quarter.">
+                    ID-00102
+                  </button>
+<button class="evidence-chip px-space-sm py-1 rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-colors font-code-inline text-code-inline text-primary font-semibold border border-outline-variant/30" data-transcript="Record trace ID-00103: Review stated intent to take a short pause, but only found an outright stop button.">
+                    ID-00103
+                  </button>
+</div>
+</div>
+<!-- Proposed PM Action -->
+<div class="flex items-start gap-space-sm p-space-md rounded-lg bg-primary-fixed/20 text-on-surface mt-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px] mt-0.5">lightbulb</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-primary uppercase font-bold tracking-wider">Proposed PM Action Cue</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">Introduce a streamlined pause option directly inside the cancellation workflow.</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Allow investors to defer upcoming cycles with automated resumption reminders.</span>
+</div>
+</div>
+</article>
+<!-- Card 2 -->
+<article class="flex flex-col gap-space-md p-space-lg rounded-xl bg-surface-container-lowest shadow-sm border border-outline-variant/20 hover:shadow-md transition-all">
+<div class="flex flex-wrap items-center justify-between gap-space-sm">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-md text-label-md">
+<span class="material-symbols-outlined text-[14px]">tune</span>
+                  Medium signal
+                </span>
+</div>
+<div class="flex flex-col gap-space-xs">
+<h2 class="font-headline-lg text-headline-lg font-bold text-on-surface tracking-tight">
+                  Short-term volatility triggers early stop
+                </h2>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                  First-time investors entering growth funds observe initial downward market variance and interpret it as underperformance.<br/>
+                  Unprepared for regular short-cycle portfolio movement, users discontinue commitments early in the investment lifecycle.
+                </p>
+</div>
+<!-- Evidence Chips strictly ID-XXXXX -->
+<div class="flex flex-col gap-space-xs pt-space-xs">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Evidence Logs</span>
+<div class="flex flex-wrap gap-space-xs">
+<button class="evidence-chip px-space-sm py-1 rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-colors font-code-inline text-code-inline text-primary font-semibold border border-outline-variant/30" data-transcript="Record trace ID-00201: Participant expressed concern over early unrealized losses and terminated schedule.">
+                    ID-00201
+                  </button>
+<button class="evidence-chip px-space-sm py-1 rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-colors font-code-inline text-code-inline text-primary font-semibold border border-outline-variant/30" data-transcript="Record trace ID-00202: App review reporting dissatisfaction after first periodic valuation dip.">
+                    ID-00202
+                  </button>
+<button class="evidence-chip px-space-sm py-1 rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-colors font-code-inline text-code-inline text-primary font-semibold border border-outline-variant/30" data-transcript="Record trace ID-00203: User interview highlight regarding mismatched initial return expectations.">
+                    ID-00203
+                  </button>
+</div>
+</div>
+<!-- Proposed PM Action -->
+<div class="flex items-start gap-space-sm p-space-md rounded-lg bg-primary-fixed/20 text-on-surface mt-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px] mt-0.5">lightbulb</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-primary uppercase font-bold tracking-wider">Proposed PM Action Cue</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">Embed an interactive averaging and volatility context explainer within the tracker.</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Highlight long-horizon accumulation milestones when accounts experience initial negative fluctuation.</span>
+</div>
+</div>
+</article>
+<!-- Card 3 -->
+<article class="flex flex-col gap-space-md p-space-lg rounded-xl bg-surface-container-lowest shadow-sm border border-outline-variant/20 hover:shadow-md transition-all">
+<div class="flex flex-wrap items-center justify-between gap-space-sm">
+<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-surface-container-high text-on-surface-variant font-label-md text-label-md">
+<span class="material-symbols-outlined text-[14px]">help_outline</span>
+                  Weak signal
+                </span>
+</div>
+<div class="flex flex-col gap-space-xs">
+<h2 class="font-headline-lg text-headline-lg font-bold text-on-surface tracking-tight">
+                  Confusion about fund allocation mechanics
+                </h2>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                  Users encounter conflicting external advice and struggle to evaluate differences between fund categories.<br/>
+                  Uncertainty around allocation adjustment steps leads investors to halt contributions entirely rather than modify allocations.
+                </p>
+</div>
+<!-- Evidence Chips strictly ID-XXXXX -->
+<div class="flex flex-col gap-space-xs pt-space-xs">
+<span class="font-label-sm text-label-sm text-outline uppercase tracking-wider">Evidence Logs</span>
+<div class="flex flex-wrap gap-space-xs">
+<button class="evidence-chip px-space-sm py-1 rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-colors font-code-inline text-code-inline text-primary font-semibold border border-outline-variant/30" data-transcript="Record trace ID-00301: Community post noting hesitation to adjust funds due to lack of comparative guidance.">
+                    ID-00301
+                  </button>
+<button class="evidence-chip px-space-sm py-1 rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-colors font-code-inline text-code-inline text-primary font-semibold border border-outline-variant/30" data-transcript="Record trace ID-00302: Support query requesting help on reallocating installment amounts into an alternate basket.">
+                    ID-00302
+                  </button>
+<button class="evidence-chip px-space-sm py-1 rounded-lg bg-surface-container-low hover:bg-surface-container-high transition-colors font-code-inline text-code-inline text-primary font-semibold border border-outline-variant/30" data-transcript="Record trace ID-00303: Feedback record noting ambiguity in adjusting existing standing instructions.">
+                    ID-00303
+                  </button>
+</div>
+</div>
+<!-- Proposed PM Action -->
+<div class="flex items-start gap-space-sm p-space-md rounded-lg bg-primary-fixed/20 text-on-surface mt-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px] mt-0.5">lightbulb</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-primary uppercase font-bold tracking-wider">Proposed PM Action Cue</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">Provide guided fund category comparison and seamless migration pathways.</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Allow seamless redirection of future installments toward selected alternative plans.</span>
+</div>
+</div>
+</article>
+<!-- Bottom Box: Suggested Next Questions -->
+<section class="flex flex-col gap-space-md p-space-lg rounded-xl bg-primary-container/10 border border-primary/20 shadow-sm">
+<div class="flex items-center gap-space-sm">
+<div class="p-2 rounded-lg bg-primary text-on-primary">
+<span class="material-symbols-outlined text-[20px]">auto_awesome</span>
+</div>
+<div class="flex flex-col">
+<h3 class="font-headline-md text-headline-md font-bold text-on-surface">Suggested next questions</h3>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Recommended qualitative and research follow-ups</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-sm">
+<button class="question-chip p-space-md rounded-xl bg-surface-container-lowest hover:bg-surface-container-low border border-outline-variant/20 transition-all text-left shadow-sm flex flex-col justify-between gap-space-md group">
+<div class="flex items-start justify-between gap-space-xs">
+<span class="font-label-sm text-label-sm text-primary font-semibold">Question 1</span>
+<span class="material-symbols-outlined text-[16px] text-outline group-hover:text-primary transition-colors">arrow_forward</span>
+</div>
+<p class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors">
+                    “What percentage of paused SIPs resume within XX days?”
+                  </p>
+</button>
+<button class="question-chip p-space-md rounded-xl bg-surface-container-lowest hover:bg-surface-container-low border border-outline-variant/20 transition-all text-left shadow-sm flex flex-col justify-between gap-space-md group">
+<div class="flex items-start justify-between gap-space-xs">
+<span class="font-label-sm text-label-sm text-primary font-semibold">Question 2</span>
+<span class="material-symbols-outlined text-[16px] text-outline group-hover:text-primary transition-colors">arrow_forward</span>
+</div>
+<p class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors">
+                    “How do payment mandate retries perform across cohorts?”
+                  </p>
+</button>
+<button class="question-chip p-space-md rounded-xl bg-surface-container-lowest hover:bg-surface-container-low border border-outline-variant/20 transition-all text-left shadow-sm flex flex-col justify-between gap-space-md group">
+<div class="flex items-start justify-between gap-space-xs">
+<span class="font-label-sm text-label-sm text-primary font-semibold">Question 3</span>
+<span class="material-symbols-outlined text-[16px] text-outline group-hover:text-primary transition-colors">arrow_forward</span>
+</div>
+<p class="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors">
+                    “Does an early volatility explainer decrease month-XX drop-offs?”
+                  </p>
+</button>
+</div>
+</section>
+</div>
+<!-- Right Column (4 cols): Segment View Sidebar -->
+<aside class="lg:col-span-4 flex flex-col gap-space-lg">
+<div class="flex flex-col gap-space-md p-space-lg rounded-xl bg-surface-container-lowest shadow-sm border border-outline-variant/20">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<h3 class="font-headline-lg text-headline-lg font-bold text-on-surface tracking-tight">Segment view</h3>
+<span class="material-symbols-outlined text-outline text-[20px]">pie_chart</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                  Income stability vs share of paused or stopped SIPs
+                </p>
+</div>
+<!-- Strictly 4 rows only -->
+<div class="flex flex-col gap-space-md mt-space-xs">
+<!-- Row 1: Fixed salary -->
+<div class="flex flex-col gap-space-xs p-space-sm rounded-lg bg-surface-container-low border border-outline-variant/20">
+<div class="flex items-center justify-between font-label-md text-label-md">
+<span class="font-semibold text-on-surface flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-primary"></span>
+                      Fixed salary
+                    </span>
+<span class="font-data-table text-data-table text-on-surface font-bold">XX%</span>
+</div>
+<div class="w-full bg-surface-container-highest h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-2 rounded-full w-2/3"></div>
+</div>
+</div>
+<!-- Row 2: Variable income -->
+<div class="flex flex-col gap-space-xs p-space-sm rounded-lg bg-surface-container-low border border-outline-variant/20">
+<div class="flex items-center justify-between font-label-md text-label-md">
+<span class="font-semibold text-on-surface flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-primary-container"></span>
+                      Variable income
+                    </span>
+<span class="font-data-table text-data-table text-on-surface font-bold">XX%</span>
+</div>
+<div class="w-full bg-surface-container-highest h-2 rounded-full overflow-hidden">
+<div class="bg-primary-container h-2 rounded-full w-1/2"></div>
+</div>
+</div>
+<!-- Row 3: Student or dependent -->
+<div class="flex flex-col gap-space-xs p-space-sm rounded-lg bg-surface-container-low border border-outline-variant/20">
+<div class="flex items-center justify-between font-label-md text-label-md">
+<span class="font-semibold text-on-surface flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary"></span>
+                      Student or dependent
+                    </span>
+<span class="font-data-table text-data-table text-on-surface font-bold">XX%</span>
+</div>
+<div class="w-full bg-surface-container-highest h-2 rounded-full overflow-hidden">
+<div class="bg-secondary h-2 rounded-full w-1/3"></div>
+</div>
+</div>
+<!-- Row 4: Unclear -->
+<div class="flex flex-col gap-space-xs p-space-sm rounded-lg bg-surface-container-low border border-outline-variant/20">
+<div class="flex items-center justify-between font-label-md text-label-md">
+<span class="font-semibold text-on-surface flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-outline"></span>
+                      Unclear
+                    </span>
+<span class="font-data-table text-data-table text-on-surface font-bold">XX%</span>
+</div>
+<div class="w-full bg-surface-container-highest h-2 rounded-full overflow-hidden">
+<div class="bg-outline h-2 rounded-full w-1/4"></div>
+</div>
+</div>
+</div>
+</div>
+</aside>
+</div>
+<!-- Mandatory Footer Note -->
+<footer class="mt-space-2xl pt-space-lg flex items-center justify-center gap-space-xs text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px] text-outline">info</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            Small sample. Treat as patterns, not proof.
+          </p>
+</footer>
+<!-- Modal Dialog for Evidence inspection -->
+<dialog class="p-0 rounded-2xl bg-surface-container-lowest shadow-2xl backdrop:bg-inverse-surface/40 max-w-lg w-full m-auto" id="evidence-modal">
+<div class="p-space-lg flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">quick_reference_all</span>
+<h4 class="font-headline-md text-headline-md font-bold text-on-surface">Record Trace Detail</h4>
+</div>
+<button class="p-1 rounded-lg hover:bg-surface-container-high transition-colors" id="modal-close">
+<span class="material-symbols-outlined text-outline text-[20px]">close</span>
+</button>
+</div>
+<div class="p-space-md rounded-xl bg-surface-container-low font-body-md text-body-md text-on-surface border border-outline-variant/20" id="modal-content">
+              Loading trace details...
+            </div>
+<div class="flex items-center justify-between pt-space-xs">
+<span class="font-code-inline text-code-inline text-outline">Verified Trace Entry</span>
+<button class="px-space-md py-1.5 rounded-lg bg-surface-container-high text-on-surface font-headline-sm text-headline-sm hover:bg-surface-container-highest transition-colors" onclick="document.getElementById('evidence-modal').close()">
+                Dismiss
+              </button>
+</div>
+</div>
+</dialog>
+</div>
+</div>
+</main>
+<script>
+    // Evidence chip dialog interaction
+    const evidenceModal = document.getElementById('evidence-modal');
+    const modalContent = document.getElementById('modal-content');
+    const modalClose = document.getElementById('modal-close');
+
+    document.querySelectorAll('.evidence-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        const transcript = chip.getAttribute('data-transcript');
+        if (transcript && evidenceModal) {
+          modalContent.textContent = transcript;
+          evidenceModal.showModal();
+        }
+      });
+    });
+
+    if (modalClose) {
+      modalClose.addEventListener('click', () => {
+        evidenceModal.close();
+      });
+    }
+
+    // Regenerate button simulation
+    const regenBtn = document.getElementById('btn-regenerate');
+    const refreshIcon = document.getElementById('refresh-icon');
+
+    if (regenBtn && refreshIcon) {
+      regenBtn.addEventListener('click', () => {
+        refreshIcon.classList.add('rotate-180');
+        regenBtn.disabled = true;
+        regenBtn.style.opacity = '0.7';
+        setTimeout(() => {
+          refreshIcon.classList.remove('rotate-180');
+          regenBtn.disabled = false;
+          regenBtn.style.opacity = '1';
+        }, 700);
+      });
+    }
+  </script>
+</body></html>

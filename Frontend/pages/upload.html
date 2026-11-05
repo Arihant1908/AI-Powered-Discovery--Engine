@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>SIP Discovery Engine - Upload Data</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <style>
+    @layer base {
+      html, body { margin: 0; padding: 0; }
+      body { overscroll-behavior: none; }
+      main > :first-child { margin-top: 0 !important; }
+      main > :last-child { margin-bottom: 0 !important; }
+    }
+    ::-webkit-scrollbar { display: none; }
+  </style>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#006948",
+            "primary-container": "#00855d",
+            "primary-fixed": "#85f8c4",
+            "primary-fixed-dim": "#68dba9",
+            "on-primary": "#ffffff",
+            "on-primary-fixed": "#002114",
+            "on-primary-container": "#f5fff7",
+            "secondary": "#565e74",
+            "secondary-container": "#dae2fd",
+            "on-secondary-container": "#5c647a",
+            "tertiary": "#006947",
+            "tertiary-fixed": "#6ffbbe",
+            "tertiary-fixed-dim": "#4edea3",
+            "on-tertiary-fixed": "#002113",
+            "surface": "#f7f9fb",
+            "surface-dim": "#d8dadc",
+            "surface-bright": "#f7f9fb",
+            "surface-container-lowest": "#ffffff",
+            "surface-container-low": "#f2f4f6",
+            "surface-container": "#eceef0",
+            "surface-container-high": "#e6e8ea",
+            "surface-container-highest": "#e0e3e5",
+            "on-surface": "#191c1e",
+            "on-surface-variant": "#3d4a42",
+            "outline": "#6d7a72",
+            "outline-variant": "#bccac0",
+            "error": "#ba1a1a",
+            "error-container": "#ffdad6",
+            "on-error-container": "#93000a"
+          },
+          fontFamily: {
+            sans: ["Inter", "sans-serif"]
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-surface font-sans text-on-surface antialiased min-h-screen flex flex-col">
+  <!-- Top Navigation Bar -->
+  <header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest border-b border-outline-variant/30 shadow-[0_1px_8px_rgba(0,0,0,0.03)]">
+    <div class="h-16 max-w-7xl mx-auto px-6 flex items-center justify-between gap-6">
+      <div class="flex items-center">
+        <span class="text-xl font-bold text-on-surface tracking-tight">SIP Discovery Engine</span>
+      </div>
+      <nav class="flex items-center p-1 bg-surface-container-low rounded-lg gap-1">
+        <a class="px-4 py-1.5 rounded-lg font-semibold text-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" href="/">Dashboard</a>
+        <a aria-current="page" class="px-4 py-1.5 transition-all bg-primary-container text-on-primary-container font-semibold text-sm rounded-lg" href="/upload">Upload data</a>
+        <a class="px-4 py-1.5 rounded-lg font-semibold text-sm text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-all" href="/insights">Insights</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main class="w-full pt-16 bg-surface flex-1">
+    <div class="max-w-7xl mx-auto px-6 py-8">
+      <div class="flex flex-col w-full">
+        <!-- Header Section -->
+        <div class="flex flex-col justify-between gap-1 mb-8">
+          <div class="max-w-3xl">
+            <h1 class="text-3xl font-bold text-on-surface tracking-tight">Upload Investor Feedback &amp; Voice of Customer Data</h1>
+            <p class="mt-1 text-base text-on-surface-variant">
+              Ingest CSV exports from app stores, surveys, Reddit, or interviews for automated classification.
+            </p>
+          </div>
+        </div>
+
+        <!-- AI Unavailable Alert Banner (Dynamic) -->
+        <div id="aiUnavailableNotice" class="hidden mb-6 p-4 rounded-xl bg-amber-50 border border-amber-200 text-amber-900 flex items-start gap-3">
+          <span class="material-symbols-outlined text-amber-700 text-[22px] shrink-0 mt-0.5">info</span>
+          <div>
+            <h4 class="font-bold text-sm text-amber-900">AI Service Running in Fallback / Mock Mode</h4>
+            <p class="text-xs text-amber-800 mt-0.5">
+              No Gemini API key configured or mock mode active. Classification will automatically assign fallback values (Other / Unknown / Unclear). All other engine capabilities remain fully functional.
+            </p>
+          </div>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="grid grid-cols-1 xl:grid-cols-12 gap-8 items-start">
+          <!-- Left Column: Drag & Drop Zone (5 Cols) -->
+          <div class="xl:col-span-5 flex flex-col gap-6">
+            <!-- Upload Surface -->
+            <div class="relative bg-surface-container-lowest rounded-xl p-8 shadow-sm overflow-hidden group">
+              <!-- Drop target area with dashed border -->
+              <div id="dropZone" class="relative bg-surface-container-low border-2 border-dashed border-outline-variant/60 rounded-xl p-8 flex flex-col items-center text-center cursor-pointer transition-all duration-300 hover:bg-surface-container hover:border-primary">
+                <input accept=".csv,.xlsx" class="absolute inset-0 opacity-0 cursor-pointer w-full h-full z-10" id="fileUploadInput" type="file"/>
+                <div class="w-16 h-16 rounded-full bg-surface-container-lowest shadow-sm flex items-center justify-center text-primary mb-4 group-hover:scale-105 transition-transform">
+                  <span class="material-symbols-outlined text-[32px]">cloud_upload</span>
+                </div>
+                <h3 class="text-xl font-bold text-on-surface tracking-tight">Upload your feedback CSV</h3>
+                <p class="text-sm text-on-surface-variant mt-1">
+                  Drag and drop your file here, or <span class="text-primary font-semibold underline decoration-primary/40 underline-offset-4">browse files</span>
+                </p>
+                <!-- Required Schema -->
+                <div class="w-full mt-6 pt-3 bg-surface-container-lowest rounded-lg p-3 border border-outline-variant/30 text-center">
+                  <p class="text-xs text-on-surface-variant font-medium">
+                    Required columns: <span class="text-xs text-on-surface font-semibold font-mono">id, source, date, rating, text</span>
+                  </p>
+                </div>
+              </div>
+
+              <!-- Helper Actions Row -->
+              <div class="mt-6 flex flex-wrap items-center justify-between gap-2 pt-1">
+                <button id="btnSampleData" type="button" class="px-4 py-2 rounded-lg bg-surface-container text-on-surface font-semibold text-sm hover:bg-surface-container-high transition-colors flex items-center gap-1.5 shadow-sm cursor-pointer">
+                  <span class="material-symbols-outlined text-[18px] text-tertiary">dataset</span>
+                  <span>Use sample data</span>
+                </button>
+                <a id="btnDownloadTemplate" class="inline-flex items-center gap-1.5 font-semibold text-sm text-primary hover:text-primary-container transition-colors py-2 px-1" href="/api/template.csv" download="template.csv">
+                  <span class="material-symbols-outlined text-[18px]">download</span>
+                  <span>Download CSV template</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- Validation / Upload Error Banner -->
+            <div id="errorCard" class="hidden p-4 bg-error-container/40 border border-error/30 rounded-xl text-on-surface flex items-start gap-3">
+              <span class="material-symbols-outlined text-error text-[22px] shrink-0 mt-0.5">error</span>
+              <div class="flex-1">
+                <h4 class="font-bold text-sm text-on-error-container">Upload / Validation Issue</h4>
+                <p id="errorMessage" class="text-xs text-on-surface mt-1 leading-relaxed"></p>
+              </div>
+              <button id="btnDismissError" class="text-outline hover:text-on-surface transition-colors p-1" title="Dismiss error">
+                <span class="material-symbols-outlined text-[18px]">close</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Right Column: Active Processing & Preview Matrix (7 Cols) -->
+          <div class="xl:col-span-7 flex flex-col gap-6">
+            <!-- Empty State Card (Before upload) -->
+            <div id="emptyStateCard" class="bg-surface-container-lowest rounded-xl p-8 shadow-sm border border-outline-variant/30 text-center flex flex-col items-center justify-center min-h-[300px]">
+              <div class="w-16 h-16 rounded-full bg-surface-container-low flex items-center justify-center text-outline mb-4">
+                <span class="material-symbols-outlined text-[32px]">folder_open</span>
+              </div>
+              <h3 class="text-lg font-bold text-on-surface">No Upload Session Active</h3>
+              <p class="text-sm text-on-surface-variant max-w-sm mt-1">
+                Upload a feedback CSV / XLSX file or click &ldquo;Use sample data&rdquo; to start automated classification.
+              </p>
+            </div>
+
+            <!-- Active AI Processing State Card -->
+            <div id="processingCard" class="hidden bg-surface-container-lowest rounded-xl p-6 shadow-sm border border-outline-variant/30 relative overflow-hidden">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2">
+                <div class="flex items-center gap-2">
+                  <span id="statusSpinner" class="material-symbols-outlined text-primary text-[22px] animate-spin">sync</span>
+                  <div>
+                    <h2 id="statusTitle" class="text-lg font-bold text-on-surface tracking-tight">AI is tagging rows...</h2>
+                  </div>
+                </div>
+                <div class="text-right flex sm:flex-col items-center sm:items-end justify-between">
+                  <span id="statusBadge" class="px-2.5 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed text-xs font-semibold">0% Complete</span>
+                  <span id="statusDetail" class="text-xs text-outline sm:mt-1">0 rows remaining</span>
+                </div>
+              </div>
+              <!-- Progress Bar -->
+              <div class="mt-2">
+                <div class="w-full h-2.5 bg-surface-container-high rounded-full overflow-hidden p-0.5">
+                  <div id="progressBar" class="h-full bg-primary rounded-full transition-all duration-500 ease-out" style="width: 0%"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Fallback Classification Warning Banner -->
+            <div id="fallbackBanner" class="hidden p-3 bg-amber-50 border border-amber-200 rounded-lg flex items-start gap-2 text-amber-900">
+              <span class="material-symbols-outlined text-amber-700 text-[20px] shrink-0 mt-0.5">warning</span>
+              <p id="fallbackText" class="text-xs font-medium"></p>
+            </div>
+
+            <!-- Live Batch Preview Table Card -->
+            <div id="previewCard" class="hidden bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant/30 flex flex-col overflow-hidden">
+              <!-- Header -->
+              <div class="p-4 border-b border-outline-variant/20 flex items-center justify-between">
+                <h3 class="text-lg font-bold text-on-surface">Live Batch Preview</h3>
+                <span id="previewCountBadge" class="px-2.5 py-0.5 rounded-full bg-surface-container text-on-surface-variant text-xs font-medium">0 Total Rows</span>
+              </div>
+
+              <!-- Prominent Note Banner -->
+              <div class="p-3 bg-secondary-container/30 border-b border-outline-variant/20 flex items-center gap-2">
+                <span class="material-symbols-outlined text-secondary text-[20px] shrink-0">edit_note</span>
+                <p class="text-xs text-on-secondary-container font-medium">
+                  Labels are AI-drafted. Click any dropdown in the <span class="font-semibold text-on-surface">Main driver</span> or <span class="font-semibold text-on-surface">Outcome</span> columns to edit. Changes save immediately.
+                </p>
+              </div>
+
+              <!-- 5-Column Table -->
+              <div class="w-full overflow-x-auto">
+                <table class="w-full table-fixed text-left border-collapse min-w-[620px]">
+                  <thead>
+                    <tr class="bg-surface-container-low text-outline text-xs uppercase tracking-wider border-y border-outline-variant/30">
+                      <th class="py-2.5 px-3 w-[15%]">ID</th>
+                      <th class="py-2.5 px-3 w-[15%]">Source</th>
+                      <th class="py-2.5 px-3 w-[36%]">Text preview</th>
+                      <th class="py-2.5 px-3 w-[20%]">Main driver</th>
+                      <th class="py-2.5 px-3 w-[14%] text-right">Outcome</th>
+                    </tr>
+                  </thead>
+                  <tbody id="previewTableBody" class="divide-y divide-outline-variant/20 text-xs text-on-surface">
+                    <!-- Populated dynamically via upload.js -->
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Pagination Footer -->
+              <div class="p-3 bg-surface-container-low/50 border-t border-outline-variant/20 flex items-center justify-between text-xs text-on-surface-variant">
+                <span id="paginationIndicator">Page 1 of 1</span>
+                <div class="flex items-center gap-2">
+                  <button id="btnPrevPage" type="button" class="px-3 py-1 rounded bg-surface-container hover:bg-surface-container-high disabled:opacity-40 disabled:cursor-not-allowed font-medium transition-colors" disabled>Previous</button>
+                  <button id="btnNextPage" type="button" class="px-3 py-1 rounded bg-surface-container hover:bg-surface-container-high disabled:opacity-40 disabled:cursor-not-allowed font-medium transition-colors" disabled>Next</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Summary Bar -->
+        <div id="bottomSummaryBar" class="hidden sticky bottom-4 z-40 mt-12 bg-surface-container-lowest rounded-xl p-4 shadow-xl border border-outline-variant/30 flex flex-wrap items-center justify-between gap-4">
+          <div class="flex items-center gap-6">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-primary"></span>
+              <span class="text-sm font-bold text-on-surface">Total tagged: <strong id="summaryTotalTagged" class="text-primary font-semibold">0 of 0</strong></span>
+            </div>
+            <div class="h-4 w-px bg-surface-container-highest"></div>
+            <div class="flex items-center gap-3 text-xs text-on-surface-variant">
+              <span>User edited: <strong id="summaryEditedCount" class="text-on-surface font-semibold">0</strong></span>
+              <span>•</span>
+              <span>Fallback labels: <strong id="summaryFallbackCount" class="text-on-surface font-semibold">0</strong></span>
+            </div>
+          </div>
+          <div>
+            <a id="btnViewInsights" class="px-6 py-2.5 rounded-lg bg-primary text-on-primary font-bold text-sm hover:bg-primary-container transition-all inline-flex items-center gap-2 shadow-sm cursor-pointer opacity-50 pointer-events-none" href="#">
+              <span>View insights</span>
+              <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Clean Minimal Footer -->
+  <footer class="w-full bg-surface-container-lowest border-t border-outline-variant/30 py-4 mt-auto">
+    <div class="max-w-7xl mx-auto px-6 flex items-center justify-between text-on-surface-variant text-xs">
+      <span>SIP Discovery Engine</span>
+      <span>Investor Feedback &amp; Voice of Customer</span>
+    </div>
+  </footer>
+
+  <!-- Script Module -->
+  <script type="module" src="/static/upload.js"></script>
+</body>
+</html>

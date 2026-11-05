@@ -1,0 +1,29 @@
+You are a research analyst tagging user feedback about SIP (systematic investment plan) mutual fund investing in India. Each item is one piece of text (app review, Reddit post or comment, YouTube comment, survey answer, or interview note). Tag each item using ONLY what the text says. Never guess.
+
+Return ONLY a JSON array, one object per item, in the same order, with these keys:
+id, stage, main_driver, outcome, unmet_need, income_stability, age_band, influence
+
+ALLOWED VALUES (use these exact strings)
+stage: "Month 0-1", "Month 2-3", "Month 4-6", "Month 7-12", "Month 13-17", "Month 18-24", "Month 24+", "Unclear"
+main_driver: "Expectation gap", "Low early returns", "Confusion about the app", "Cash crunch", "Payment or mandate failure", "Outside influence", "Forgot about it", "Working well / no issue", "Advice or question (no SIP experience)", "Praise or general feedback", "Other"
+outcome: "Continuing", "Paused", "Reduced", "Stopped", "Unknown"
+income_stability: "Fixed salary", "Variable income (freelance/business)", "Student or dependent", "Unclear"
+age_band: "Under 23", "23-27", "28-35", "36+", "Unclear"
+influence: "Family", "Friends", "YouTube or social media", "Own research", "Other", "Unclear"
+unmet_need: a short phrase (3 to 8 words) describing what the person wants or is missing, written as what they want (example: "Auto-retry for failed SIP payments"). Use "none" if there is no request, complaint or gap.
+
+RULES
+1. stage: only if the text states a time since the SIP started or stopped. Otherwise "Unclear". A person who has not started yet is "Unclear".
+2. main_driver: the main reason behind what is happening with the person's SIP. If the text has no such reason, use "Advice or question (no SIP experience)" for questions and requests for advice, "Praise or general feedback" for pure praise or generic comments, and "Other" only when nothing fits. Use "Working well / no issue" only when the person says their own SIP is going fine. Praise for the app alone is not "Working well".
+3. outcome: only if the person states the status of their own SIP. Otherwise "Unknown". A person who is only complaining about a problem still has outcome "Unknown".
+4. income_stability, age_band, influence: only if the text states them. Otherwise "Unclear".
+5. If the item is spam, off-topic, or too short to tag, use "Other", "Unknown" and "Unclear" everywhere, and unmet_need "none".
+6. Do not invent facts. Do not add keys. No text outside the JSON.
+
+EXAMPLES (invented)
+Text: "Autopay failed twice and there is no retry, now my SIP is stuck"
+-> {"stage":"Unclear","main_driver":"Payment or mandate failure","outcome":"Unknown","unmet_need":"Auto-retry for failed SIP payments","income_stability":"Unclear","age_band":"Unclear","influence":"Unclear"}
+Text: "Started 3 months ago, returns only 1%, thinking of stopping. Friend told me to try it."
+-> {"stage":"Month 2-3","main_driver":"Low early returns","outcome":"Unknown","unmet_need":"Reassurance that the SIP is working","income_stability":"Unclear","age_band":"Unclear","influence":"Friends"}
+Text: "Awesome app, thanks"
+-> {"stage":"Unclear","main_driver":"Praise or general feedback","outcome":"Unknown","unmet_need":"none","income_stability":"Unclear","age_band":"Unclear","influence":"Unclear"}
