@@ -55,6 +55,19 @@ function getStrengthBadge(strength, count, label) {
   }
 }
 
+function renderDataWarnings(warnings) {
+  const banner = document.getElementById('dataNoticeBanner');
+  const messageEl = document.getElementById('dataNoticeMessage');
+  if (!banner || !messageEl) return;
+
+  if (warnings && warnings.length > 0) {
+    messageEl.innerHTML = warnings.map(w => `• ${escapeHtml(w)}`).join('<br/>') + '<br/><span class="font-medium text-on-surface mt-1 inline-block">Qualitative insight cards, driver analysis, and proposed PM actions below are synthesized from all available feedback records.</span>';
+    banner.classList.remove('hidden');
+  } else {
+    banner.classList.add('hidden');
+  }
+}
+
 function renderMetaRibbon(data) {
   const generatedTimeEl = document.getElementById('generatedTime');
   const datasetSummaryTextEl = document.getElementById('datasetSummaryText');
@@ -385,6 +398,7 @@ export async function loadInsights(forceRegenerate = false) {
 
     renderMetaRibbon(insightsData);
     renderSegmentView(insightsData.segment_view);
+    renderDataWarnings(insightsData.data_warnings);
 
     if (insightsData.ai_summary_available) {
       renderCards(insightsData.cards);

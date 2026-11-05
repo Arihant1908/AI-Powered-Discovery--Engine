@@ -4,7 +4,7 @@ import threading
 import time
 from collections import defaultdict
 from pathlib import Path
-from typing import List, Dict, Any, Optional
+from typing import List, Dict, Any, Optional, Tuple
 
 import pandas as pd
 from fastapi import APIRouter, UploadFile, File, BackgroundTasks, HTTPException, Query, Response, Request
@@ -29,7 +29,6 @@ router = APIRouter(prefix="/api", tags=["upload"])
 
 MAX_FILE_SIZE = 25 * 1024 * 1024  # 25 MB
 MAX_ROWS = 500
-REQUIRED_COLUMNS = ["id", "source", "date", "rating", "text"]
 
 class UploadRateLimiter:
     def __init__(self, max_requests: int = 10, window_seconds: int = 3600):
@@ -64,30 +63,61 @@ class UploadRateLimiter:
 
 upload_rate_limiter = UploadRateLimiter(max_requests=10, window_seconds=3600)
 
-def validate_dataframe(df: pd.DataFrame) -> List[Dict[str, Any]]:
-    # Check column names (case-insensitive)
-    df_cols_lower = [str(c).strip().lower() for c in df.columns]
-    col_map = {str(c).strip().lower(): c for c in df.columns}
-
-    missing = [c for c in REQUIRED_COLUMNS if c not in df_cols_lower]
-    if missing:
+def validate_dataframe(df: pd.DataFrame) -> Tuple[List[Dict[str, Any]], List[str], List[str]]:
+    row_count = len(df)
+    if row_count == 0:
         raise HTTPException(
             status_code=400,
-            detail=f"Missing required columns: {', '.join(missing)}"
+            detail="File contains 0 data rows."
         )
 
-    row_count = len(df)
     if row_count > MAX_ROWS:
         raise HTTPException(
             status_code=400,
             detail=f"File exceeds maximum row limit of 500 rows ({row_count} rows found)."
         )
 
-    if row_count == 0:
+    # Normalize column names for flexible detection
+    col_map = {str(c).strip().lower(): c for c in df.columns}
+
+    def find_col(candidates: List[str]) -> Optional[str]:
+        for cand in candidates:
+            if cand in col_map:
+                return col_map[cand]
+        return None
+
+    # Text column is the core requirement for customer feedback classification
+    text_col = find_col([
+        "text", "feedback", "review", "reviews", "comment", "comments",
+        "content", "body", "description", "message", "quote",
+        "user_feedback", "text_feedback", "response"
+    ])
+    if not text_col:
         raise HTTPException(
             status_code=400,
-            detail="File contains 0 data rows."
+            detail="Missing required columns: text. No feedback or text column found in the file."
         )
+
+    id_col = find_col(["id", "item_id", "row_id", "record_id", "uid", "user_id"])
+    source_col = find_col(["source", "channel", "platform", "source_name", "type"])
+    date_col = find_col(["date", "created_at", "timestamp", "time", "date_time", "posted_at"])
+    rating_col = find_col(["rating", "score", "stars", "star_rating", "rating_score"])
+
+    data_warnings: List[str] = []
+    missing_columns: List[str] = []
+
+    if not rating_col:
+        missing_columns.append("rating")
+        data_warnings.append("Rating column not provided. Numerical satisfaction scores will not be displayed.")
+    if not date_col:
+        missing_columns.append("date")
+        data_warnings.append("Date column not provided. Temporal tracking will not be displayed.")
+    if not source_col:
+        missing_columns.append("source")
+        data_warnings.append("Source column not provided (defaulted to 'upload').")
+    if not id_col:
+        missing_columns.append("id")
+        data_warnings.append("ID column not provided. Sequential IDs (ROW-0001...) were auto-generated.")
 
     seen_ids = set()
     validated_items = []
@@ -95,44 +125,58 @@ def validate_dataframe(df: pd.DataFrame) -> List[Dict[str, Any]]:
     for idx, row in df.iterrows():
         row_num = idx + 2  # 1-based line number including header
 
-        # Validate ID
-        raw_id = row[col_map["id"]]
-        id_str = "" if pd.isna(raw_id) else str(raw_id).strip()
-        if not id_str:
-            raise HTTPException(
-                status_code=400,
-                detail=f"Missing or empty ID at row {row_num}."
-            )
-        if id_str.lower() in seen_ids:
-            raise HTTPException(
-                status_code=400,
-                detail=f"Duplicate ID '{id_str}' found in row {row_num}."
-            )
-        seen_ids.add(id_str.lower())
-
         # Validate Text
-        raw_text = row[col_map["text"]]
+        raw_text = row[text_col]
         text_str = "" if pd.isna(raw_text) else str(raw_text).strip()
         if not text_str:
+            err_label = f"ID '{row[id_col]}'" if id_col and not pd.isna(row.get(id_col)) else f"row {row_num}"
             raise HTTPException(
                 status_code=400,
-                detail=f"Empty text found in row with ID '{id_str}'."
+                detail=f"Empty text found in row with {err_label}."
             )
 
-        # Optional Date
-        raw_date = row[col_map["date"]]
-        date_str = None if pd.isna(raw_date) else str(raw_date).strip()
-
-        # Optional Rating
-        raw_rating = row[col_map["rating"]]
-        try:
-            rating_val = float(raw_rating) if not pd.isna(raw_rating) else None
-        except (ValueError, TypeError):
-            rating_val = None
+        # Validate / Resolve ID
+        if id_col:
+            raw_id = row[id_col]
+            id_str = "" if pd.isna(raw_id) else str(raw_id).strip()
+            if not id_str:
+                raise HTTPException(
+                    status_code=400,
+                    detail=f"Missing or empty ID at row {row_num}."
+                )
+            if id_str.lower() in seen_ids:
+                raise HTTPException(
+                    status_code=400,
+                    detail=f"Duplicate ID '{id_str}' found in row {row_num}."
+                )
+            seen_ids.add(id_str.lower())
+        else:
+            id_str = f"ROW-{idx + 1:04d}"
+            seen_ids.add(id_str.lower())
 
         # Source
-        raw_source = row[col_map["source"]]
-        source_str = "unknown" if pd.isna(raw_source) else str(raw_source).strip()
+        if source_col:
+            raw_source = row[source_col]
+            source_str = "upload" if pd.isna(raw_source) else str(raw_source).strip() or "upload"
+        else:
+            source_str = "upload"
+
+        # Date
+        if date_col:
+            raw_date = row[date_col]
+            date_str = None if pd.isna(raw_date) else str(raw_date).strip() or None
+        else:
+            date_str = None
+
+        # Rating
+        if rating_col:
+            raw_rating = row[rating_col]
+            try:
+                rating_val = float(raw_rating) if not pd.isna(raw_rating) else None
+            except (ValueError, TypeError):
+                rating_val = None
+        else:
+            rating_val = None
 
         validated_items.append({
             "id": id_str,
@@ -142,7 +186,7 @@ def validate_dataframe(df: pd.DataFrame) -> List[Dict[str, Any]]:
             "text": text_str,
         })
 
-    return validated_items
+    return validated_items, data_warnings, missing_columns
 
 @router.post("/upload", response_model=UploadJobInitResponse)
 async def upload_file(
@@ -177,15 +221,21 @@ async def upload_file(
             detail=f"Failed to parse {ext} file: {str(exc)}"
         )
 
-    raw_items = validate_dataframe(df)
+    raw_items, warnings, missing_cols = validate_dataframe(df)
 
-    job_id = job_manager.create_job(total_rows=len(raw_items))
+    job_id = job_manager.create_job(
+        total_rows=len(raw_items),
+        data_warnings=warnings,
+        missing_columns=missing_cols,
+    )
     background_tasks.add_task(job_manager.process_tagging_job, job_id, raw_items)
 
     return UploadJobInitResponse(
         job_id=job_id,
         state="running",
         total=len(raw_items),
+        data_warnings=warnings,
+        missing_columns=missing_cols,
     )
 
 @router.post("/upload/sample", response_model=UploadJobInitResponse)
@@ -196,15 +246,21 @@ def upload_sample(request: Request, background_tasks: BackgroundTasks):
         raise HTTPException(status_code=404, detail="sample_upload.csv not found in data directory.")
 
     df = pd.read_csv(sample_file)
-    raw_items = validate_dataframe(df)
+    raw_items, warnings, missing_cols = validate_dataframe(df)
 
-    job_id = job_manager.create_job(total_rows=len(raw_items))
+    job_id = job_manager.create_job(
+        total_rows=len(raw_items),
+        data_warnings=warnings,
+        missing_columns=missing_cols,
+    )
     background_tasks.add_task(job_manager.process_tagging_job, job_id, raw_items)
 
     return UploadJobInitResponse(
         job_id=job_id,
         state="running",
         total=len(raw_items),
+        data_warnings=warnings,
+        missing_columns=missing_cols,
     )
 
 @router.get("/upload/{job_id}/status", response_model=JobStatusResponse)
@@ -223,6 +279,8 @@ def get_job_status(job_id: str):
         total=job.get("total", 0),
         fallback_count=job.get("fallback_count", 0),
         error_message=job.get("error_message"),
+        data_warnings=job.get("data_warnings", []),
+        missing_columns=job.get("missing_columns", []),
     )
 
 @router.get("/upload/{job_id}/rows", response_model=PaginatedJobRowsResponse)

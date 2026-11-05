@@ -173,10 +173,19 @@ def tag_batch(batch: List[Dict[str, Any]], system_prompt: str) -> List[TaggedRec
             # Fallback for that specific item
             item_tags = FALLBACK_VALUES.copy()
 
+        raw_rating = item.get("rating")
+        parsed_rating = None
+        if raw_rating is not None:
+            try:
+                parsed_rating = float(raw_rating)
+            except (ValueError, TypeError):
+                parsed_rating = None
+
         tagged_rec = TaggedRecord(
             id=orig_id,
             source=str(item.get("source", "unknown")),
             date=str(item["date"]) if item.get("date") is not None else None,
+            rating=parsed_rating,
             text=str(item.get("text", "")),
             stage=item_tags["stage"],
             main_driver=item_tags["main_driver"],

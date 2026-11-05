@@ -133,6 +133,19 @@ function updateStatusUI(status) {
     }
   }
 
+  // Data Warnings / Missing Columns Notice Handling
+  const dataNoticeBanner = document.getElementById('dataNoticeBanner');
+  const dataNoticeText = document.getElementById('dataNoticeText');
+  const warnings = status.data_warnings || [];
+  if (dataNoticeBanner && dataNoticeText) {
+    if (warnings.length > 0) {
+      dataNoticeText.innerHTML = warnings.map(w => escapeHtml(w)).join('<br/>') + '<br/><span class="text-blue-900 font-semibold mt-1 inline-block">All available feedback text was accepted and classified successfully.</span>';
+      dataNoticeBanner.classList.remove('hidden');
+    } else {
+      dataNoticeBanner.classList.add('hidden');
+    }
+  }
+
   // AI Unavailability Notice
   if (aiUnavailableNotice && metaData && metaData.ai_available === false) {
     aiUnavailableNotice.classList.remove('hidden');

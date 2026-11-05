@@ -433,6 +433,21 @@ class InsightsService:
         stats = compute_dataset_stats(records)
         ai_available, message, cards, questions = generate_ai_insights(stats, records)
 
+        # Detect and assemble data quality notices
+        warnings: List[str] = []
+        if key != "preloaded":
+            job = job_manager.get_job(key)
+            if job:
+                warnings.extend(job.get("data_warnings", []))
+
+        has_ratings = any(r.rating is not None for r in records)
+        if not has_ratings and not any("rating" in w.lower() for w in warnings):
+            warnings.append("Rating column not provided. Numerical satisfaction scores are not available.")
+
+        has_dates = any(r.date is not None for r in records)
+        if not has_dates and not any("date" in w.lower() for w in warnings):
+            warnings.append("Date column not provided. Timeline tracking is not available.")
+
         response = InsightsResponse(
             dataset=key,
             total_records=stats.total_records,
@@ -444,6 +459,7 @@ class InsightsService:
             suggested_questions=questions,
             generated_at=datetime.now(timezone.utc).isoformat(),
             cached=False,
+            data_warnings=warnings,
         )
 
         # Cache results in runtime/

@@ -288,3 +288,83 @@ def test_upload_rate_limiter_exceeded():
 
     # Clean up rate limiter state
     upload_rate_limiter._requests.clear()
+
+def test_upload_accepts_missing_rating_column():
+    """Verify that uploading data without a 'rating' column succeeds and reports data notice."""
+    csv_no_rating = (
+        "id,source,date,text\n"
+        "NORATE-01,playstore,2026-10-01,Love the automated deductions for SIP\n"
+        "NORATE-02,survey,2026-10-02,Emergency expenses forced me to stop investing\n"
+    )
+    file_obj = io.BytesIO(csv_no_rating.encode("utf-8"))
+    resp = client.post(
+        "/api/upload",
+        files={"file": ("no_rating.csv", file_obj, "text/csv")}
+    )
+    assert resp.status_code == 200
+    data = resp.json()
+    assert data["total"] == 2
+    assert "rating" in data.get("missing_columns", [])
+    
+    # Check status
+    st_resp = client.get(f"/api/upload/{data['job_id']}/status")
+    assert st_resp.status_code == 200
+    st_data = st_resp.json()
+    assert st_data["state"] == "done"
+    assert "rating" in st_data.get("missing_columns", [])
+    assert any("rating" in w.lower() for w in st_data.get("data_warnings", []))
+
+    # Check rows have rating None
+    rows_resp = client.get(f"/api/upload/{data['job_id']}/rows")
+    assert rows_resp.status_code == 200
+    items = rows_resp.json()["items"]
+    assert len(items) == 2
+    assert items[0]["rating"] is None
+    assert items[1]["rating"] is None
+
+def test_upload_accepts_only_text_and_auto_generates_ids():
+    """Verify uploading only 'text' column works, auto-generating sequential row IDs."""
+    csv_text_only = (
+        "text\n"
+        "Great experience with mutual fund investing\n"
+        "Facing issues with payment mandate authorization\n"
+    )
+    file_obj = io.BytesIO(csv_text_only.encode("utf-8"))
+    resp = client.post(
+        "/api/upload",
+        files={"file": ("text_only.csv", file_obj, "text/csv")}
+    )
+    assert resp.status_code == 200
+    data = resp.json()
+    assert data["total"] == 2
+    
+    rows_resp = client.get(f"/api/upload/{data['job_id']}/rows")
+    assert rows_resp.status_code == 200
+    items = rows_resp.json()["items"]
+    assert len(items) == 2
+    assert items[0]["id"] == "ROW-0001"
+    assert items[1]["id"] == "ROW-0002"
+    assert items[0]["source"] == "upload"
+
+def test_insights_for_upload_with_missing_rating_includes_warnings():
+    """Verify that insights endpoint surfaces data_warnings when dataset lacks rating/date."""
+    csv_simple = (
+        "id,text\n"
+        "WARN-01,Weekly SIP options would help align with freelance payouts\n"
+        "WARN-02,Payment mandate failed twice with bank fine\n"
+        "WARN-03,Very clean interface for beginners\n"
+    )
+    file_obj = io.BytesIO(csv_simple.encode("utf-8"))
+    resp = client.post(
+        "/api/upload",
+        files={"file": ("simple.csv", file_obj, "text/csv")}
+    )
+    assert resp.status_code == 200
+    job_id = resp.json()["job_id"]
+
+    insights_resp = client.get(f"/api/insights?dataset={job_id}")
+    assert insights_resp.status_code == 200
+    ins_data = insights_resp.json()
+    assert "data_warnings" in ins_data
+    assert any("rating" in w.lower() for w in ins_data["data_warnings"])
+    assert len(ins_data["cards"]) > 0 or ins_data["computed_stats"]["total_records"] == 3

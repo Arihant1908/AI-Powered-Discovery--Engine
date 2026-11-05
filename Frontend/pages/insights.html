@@ -126,6 +126,15 @@
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           <!-- Left Column: 3 Insight Cards + Next Questions (8 cols) -->
           <div class="lg:col-span-8 flex flex-col gap-6">
+            <!-- Dataset Quality Notice Banner (e.g. Missing Rating or Date) -->
+            <div id="dataNoticeBanner" class="hidden p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 text-on-surface flex items-start gap-3">
+              <span class="material-symbols-outlined text-amber-500 text-[22px] shrink-0 mt-0.5">info</span>
+              <div>
+                <h4 class="font-bold text-xs text-amber-600 uppercase tracking-wider">Dataset Notice</h4>
+                <p id="dataNoticeMessage" class="text-xs text-on-surface-variant mt-0.5 leading-relaxed"></p>
+              </div>
+            </div>
+
             <!-- Cards Container (Populated dynamically) -->
             <div id="cardsContainer" class="flex flex-col gap-6">
               <!-- Loading Skeleton / Placeholder -->

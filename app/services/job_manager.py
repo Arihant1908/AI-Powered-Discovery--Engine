@@ -38,7 +38,12 @@ class JobManager:
             except Exception:
                 pass
 
-    def create_job(self, total_rows: int) -> str:
+    def create_job(
+        self,
+        total_rows: int,
+        data_warnings: Optional[List[str]] = None,
+        missing_columns: Optional[List[str]] = None,
+    ) -> str:
         job_id = str(uuid.uuid4())
         job = {
             "job_id": job_id,
@@ -47,6 +52,8 @@ class JobManager:
             "total": total_rows,
             "fallback_count": 0,
             "error_message": None,
+            "data_warnings": list(data_warnings or []),
+            "missing_columns": list(missing_columns or []),
             "created_at": datetime.now(timezone.utc).isoformat(),
             "rows": []
         }

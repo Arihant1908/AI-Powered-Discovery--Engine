@@ -94,6 +94,7 @@ class TaggedRecord(BaseModel):
     id: str
     source: str
     date: Optional[str] = None
+    rating: Optional[float] = None
     text: str
     stage: str
     main_driver: str
@@ -193,6 +194,8 @@ class UploadJobInitResponse(BaseModel):
     job_id: str
     state: str
     total: int
+    data_warnings: List[str] = []
+    missing_columns: List[str] = []
 
 class JobStatusResponse(BaseModel):
     job_id: str
@@ -201,6 +204,8 @@ class JobStatusResponse(BaseModel):
     total: int
     fallback_count: int
     error_message: Optional[str] = None
+    data_warnings: List[str] = []
+    missing_columns: List[str] = []
 
 class PaginatedJobRowsResponse(BaseModel):
     items: List[TaggedRecord]
@@ -255,6 +260,7 @@ class InsightsResponse(BaseModel):
     suggested_questions: List[str] = []
     generated_at: Optional[str] = None
     cached: bool = False
+    data_warnings: List[str] = []
 
 class RegenerateInsightsRequest(BaseModel):
     dataset: Optional[str] = "preloaded"
