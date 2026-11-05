@@ -30,15 +30,15 @@ def main():
     total = r_sample.json()["total"]
     print(f"[PASS] POST /api/upload/sample started job: {job_id} with {total} items")
 
-    # 4. Poll status until done
-    for _ in range(20):
+    # 4. Poll status until done (supports both fast mock and real LLM tagging)
+    for _ in range(60):
         r_stat = client.get(f"/api/upload/{job_id}/status")
         assert r_stat.status_code == 200
         st = r_stat.json()
         if st["state"] == "done":
             print(f"[PASS] Status reached done: {st['rows_tagged']}/{st['total']} tagged (fallbacks: {st['fallback_count']})")
             break
-        time.sleep(0.3)
+        time.sleep(1.0)
     else:
         raise AssertionError("Job did not complete in time")
 

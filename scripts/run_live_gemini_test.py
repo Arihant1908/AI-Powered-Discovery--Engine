@@ -3,6 +3,10 @@ import sys
 import time
 import json
 from pathlib import Path
+
+# Ensure project root in sys.path
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
 from starlette.testclient import TestClient
 
 # Ensure MOCK_LLM is disabled
