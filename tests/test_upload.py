@@ -396,3 +396,43 @@ def test_column_aliases_and_text_warning():
     # type was NOT used as source -> defaulted to upload
     assert items[0]["source"] == "upload"
 
+def test_job_export_csv_and_stage_update():
+    """Verify that stage updates persist and are reflected in export.csv."""
+    csv_content = (
+        "id,source,date,rating,text\n"
+        "EXP-001,playstore,2026-10-01,5,Love the app and automated SIP payments\n"
+        "EXP-002,playstore,2026-10-02,1,Returns look low after first month thinking of stopping\n"
+    )
+    file_obj = io.BytesIO(csv_content.encode("utf-8"))
+    resp = client.post(
+        "/api/upload",
+        files={"file": ("export_test.csv", file_obj, "text/csv")}
+    )
+    assert resp.status_code == 200
+    job_id = resp.json()["job_id"]
+
+    # Update stage on EXP-001
+    patch_resp = client.patch(
+        f"/api/upload/{job_id}/rows/EXP-001",
+        json={"stage": "Month 4-6"}
+    )
+    assert patch_resp.status_code == 200
+    updated_rec = patch_resp.json()
+    assert updated_rec["stage"] == "Month 4-6"
+    assert updated_rec["label_origin"] == "user_corrected"
+
+    # Export CSV
+    export_resp = client.get(f"/api/upload/{job_id}/export.csv")
+    assert export_resp.status_code == 200
+    assert "text/csv" in export_resp.headers["content-type"]
+    csv_text = export_resp.text
+    assert "EXP-001" in csv_text
+    assert "Month 4-6" in csv_text
+    assert "user_corrected" in csv_text
+
+    # Nonexistent job returns 404
+    missing_resp = client.get("/api/upload/nonexistent-job-xyz/export.csv")
+    assert missing_resp.status_code == 404
+    assert "expired" in missing_resp.json()["error"]["message"].lower()
+
+

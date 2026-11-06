@@ -377,6 +377,27 @@ def update_row_label(
 
     return TaggedRecord(**updated_row)
 
+@router.get("/upload/{job_id}/export.csv")
+def export_job_csv(job_id: str):
+    job = job_manager.get_job(job_id)
+    if not job:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Job '{job_id}' not found. The upload session has expired or the server restarted. Please upload your dataset again."
+        )
+    rows = job.get("rows", [])
+    if not rows:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Job '{job_id}' contains no tagged rows yet."
+        )
+    df = pd.DataFrame(rows)
+    return Response(
+        content=df.to_csv(index=False),
+        media_type="text/csv",
+        headers={"Content-Disposition": f"attachment; filename=job_{job_id}_export.csv"}
+    )
+
 @router.get("/template.csv")
 def download_template():
     # Header row plus one clearly invented example row

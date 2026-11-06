@@ -417,12 +417,25 @@ export async function loadInsights(forceRegenerate = false) {
     }
   } catch (err) {
     console.error('Failed to load insights:', err);
+    const parsedErr = parseApiError(err);
+    if (cardsContainer) {
+      cardsContainer.innerHTML = `
+        <div class="p-8 rounded-xl bg-surface-container-lowest border border-outline-variant/30 text-center flex flex-col items-center justify-center">
+          <span class="material-symbols-outlined text-outline text-[32px] mb-2">info</span>
+          <h3 class="text-base font-bold text-on-surface">Insights Unavailable</h3>
+          <p class="text-xs text-on-surface-variant max-w-md mt-1 leading-relaxed">${escapeHtml(parsedErr)}</p>
+        </div>
+      `;
+    }
+    const nextQuestionsSection = document.getElementById('nextQuestionsSection');
+    if (nextQuestionsSection) {
+      nextQuestionsSection.classList.add('hidden');
+    }
     if (errorContainer && errorMsg) {
-      const errMsg = parseApiError(err);
-      if (errMsg.toLowerCase().includes('expired') || errMsg.toLowerCase().includes('restarted')) {
-        errorMsg.innerHTML = `${escapeHtml(errMsg)}<div class="mt-3"><a href="/upload" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-primary text-on-primary rounded text-xs font-semibold hover:opacity-90"><span class="material-symbols-outlined text-[15px]">upload_file</span>Upload Dataset Again</a></div>`;
+      if (parsedErr.toLowerCase().includes('expired') || parsedErr.toLowerCase().includes('restarted')) {
+        errorMsg.innerHTML = `${escapeHtml(parsedErr)}<div class="mt-3"><a href="/upload" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-primary text-on-primary rounded text-xs font-semibold hover:opacity-90"><span class="material-symbols-outlined text-[15px]">upload_file</span>Upload Dataset Again</a></div>`;
       } else {
-        errorMsg.textContent = errMsg;
+        errorMsg.textContent = parsedErr;
       }
       errorContainer.classList.remove('hidden');
     }

@@ -213,19 +213,20 @@
               <div class="p-3 bg-secondary-container/30 border-b border-outline-variant/20 flex items-center gap-2">
                 <span class="material-symbols-outlined text-secondary text-[20px] shrink-0">edit_note</span>
                 <p class="text-xs text-on-secondary-container font-medium">
-                  Labels are AI-drafted. Click any dropdown in the <span class="font-semibold text-on-surface">Main driver</span> or <span class="font-semibold text-on-surface">Outcome</span> columns to edit. Changes save immediately.
+                  Labels are AI-drafted. Click any dropdown in the <span class="font-semibold text-on-surface">Journey stage</span>, <span class="font-semibold text-on-surface">Main driver</span>, or <span class="font-semibold text-on-surface">Outcome</span> columns to edit. Changes save immediately.
                 </p>
               </div>
 
-              <!-- 5-Column Table -->
+              <!-- 6-Column Table -->
               <div class="w-full overflow-x-auto">
-                <table class="w-full table-fixed text-left border-collapse min-w-[620px]">
+                <table class="w-full table-fixed text-left border-collapse min-w-[720px]">
                   <thead>
                     <tr class="bg-surface-container-low text-outline text-xs uppercase tracking-wider border-y border-outline-variant/30">
-                      <th class="py-2.5 px-3 w-[15%]">ID</th>
-                      <th class="py-2.5 px-3 w-[15%]">Source</th>
-                      <th class="py-2.5 px-3 w-[36%]">Text preview</th>
-                      <th class="py-2.5 px-3 w-[20%]">Main driver</th>
+                      <th class="py-2.5 px-3 w-[12%]">ID</th>
+                      <th class="py-2.5 px-3 w-[12%]">Source</th>
+                      <th class="py-2.5 px-3 w-[28%]">Text preview</th>
+                      <th class="py-2.5 px-3 w-[16%]">Journey stage</th>
+                      <th class="py-2.5 px-3 w-[18%]">Main driver</th>
                       <th class="py-2.5 px-3 w-[14%] text-right">Outcome</th>
                     </tr>
                   </thead>
@@ -261,7 +262,11 @@
               <span>Fallback labels: <strong id="summaryFallbackCount" class="text-on-surface font-semibold">0</strong></span>
             </div>
           </div>
-          <div>
+          <div class="flex items-center gap-3">
+            <a id="btnExportJobCsv" class="px-4 py-2.5 rounded-lg bg-surface-container border border-outline-variant/40 text-on-surface font-semibold text-sm hover:bg-surface-container-high transition-all inline-flex items-center gap-2 shadow-sm cursor-pointer opacity-50 pointer-events-none" href="#">
+              <span class="material-symbols-outlined text-[18px]">download</span>
+              <span>Export CSV</span>
+            </a>
             <a id="btnViewInsights" class="px-6 py-2.5 rounded-lg bg-primary text-on-primary font-bold text-sm hover:bg-primary-container transition-all inline-flex items-center gap-2 shadow-sm cursor-pointer opacity-50 pointer-events-none" href="#">
               <span>View insights</span>
               <span class="material-symbols-outlined text-[18px]">arrow_forward</span>

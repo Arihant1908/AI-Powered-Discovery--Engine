@@ -155,11 +155,22 @@ function updateStatusUI(status) {
   const summaryTotalTagged = document.getElementById('summaryTotalTagged');
   const summaryFallbackCount = document.getElementById('summaryFallbackCount');
   const summaryEditedCount = document.getElementById('summaryEditedCount');
+  const btnExportJobCsv = document.getElementById('btnExportJobCsv');
   const btnViewInsights = document.getElementById('btnViewInsights');
 
   if (summaryTotalTagged) summaryTotalTagged.textContent = `${tagged} of ${total}`;
   if (summaryFallbackCount) summaryFallbackCount.textContent = fallbacks;
   if (summaryEditedCount) summaryEditedCount.textContent = editedRowIds.size;
+
+  if (btnExportJobCsv) {
+    if (tagged > 0 || status.state === 'done') {
+      btnExportJobCsv.href = `/api/upload/${encodeURIComponent(status.job_id)}/export.csv`;
+      btnExportJobCsv.setAttribute('download', `job_${status.job_id}_export.csv`);
+      btnExportJobCsv.classList.remove('opacity-50', 'pointer-events-none');
+    } else {
+      btnExportJobCsv.classList.add('opacity-50', 'pointer-events-none');
+    }
+  }
 
   if (btnViewInsights) {
     if (tagged > 0 || status.state === 'done') {
@@ -198,7 +209,7 @@ function renderTableRows(items) {
   if (!items || items.length === 0) {
     tbody.innerHTML = `
       <tr>
-        <td colspan="5" class="py-8 px-4 text-center text-on-surface-variant font-medium">
+        <td colspan="6" class="py-8 px-4 text-center text-on-surface-variant font-medium">
           No records tagged yet. Tagging in progress...
         </td>
       </tr>
@@ -206,12 +217,19 @@ function renderTableRows(items) {
     return;
   }
 
-  const allowedDrivers = (metaData && metaData.main_driver) || [];
-  const allowedOutcomes = (metaData && metaData.outcome) || [];
+  const allowedStages = (metaData && (metaData.stage || (metaData.allowed_values && metaData.allowed_values.stage))) || [];
+  const allowedDrivers = (metaData && (metaData.main_driver || (metaData.allowed_values && metaData.main_driver))) || [];
+  const allowedOutcomes = (metaData && (metaData.outcome || (metaData.allowed_values && metaData.outcome))) || [];
 
   const html = items.map(item => {
     const isFallback = item.label_origin === 'fallback';
     const isEdited = editedRowIds.has(item.id);
+
+    // Build Stage Select Options
+    const stageOptions = allowedStages.map(s => {
+      const sel = s === item.stage ? 'selected' : '';
+      return `<option value="${escapeHtml(s)}" ${sel}>${escapeHtml(s)}</option>`;
+    }).join('');
 
     // Build Driver Select Options
     const driverOptions = allowedDrivers.map(d => {
@@ -229,7 +247,7 @@ function renderTableRows(items) {
 
     return `
       <tr class="hover:bg-surface-container-low/60 transition-colors border-b border-outline-variant/15" data-row-id="${escapeHtml(item.id)}">
-        <td class="py-3 px-3 font-mono font-semibold text-on-surface text-xs truncate max-w-[110px]" title="${escapeHtml(item.id)}">
+        <td class="py-3 px-3 font-mono font-semibold text-on-surface text-xs truncate max-w-[100px]" title="${escapeHtml(item.id)}">
           ${escapeHtml(item.id)}
           ${isEdited ? '<span class="ml-1 inline-block w-1.5 h-1.5 rounded-full bg-emerald-500" title="User edited"></span>' : ''}
           ${isFallback && !isEdited ? '<span class="ml-1 inline-block w-1.5 h-1.5 rounded-full bg-amber-500" title="Fallback label"></span>' : ''}
@@ -238,9 +256,19 @@ function renderTableRows(items) {
           ${sourceBadge}
         </td>
         <td class="py-3 px-3">
-          <p class="truncate text-on-surface max-w-[280px]" title="${escapeHtml(item.text)}">
+          <p class="truncate text-on-surface max-w-[220px]" title="${escapeHtml(item.text)}">
             "${escapeHtml(item.text)}"
           </p>
+        </td>
+        <td class="py-3 px-3">
+          <select 
+            data-row-id="${escapeHtml(item.id)}" 
+            data-field="stage"
+            class="row-select w-full text-xs py-1 px-2 rounded-lg bg-surface-container border border-outline-variant/40 focus:border-primary focus:ring-1 focus:ring-primary text-on-surface transition-all cursor-pointer truncate"
+            title="Edit Journey Stage"
+          >
+            ${stageOptions}
+          </select>
         </td>
         <td class="py-3 px-3">
           <select 
