@@ -13,6 +13,14 @@ def test_serve_dashboard_page():
     assert 'href="/insights"' in html
     assert "Export (.csv)" in html
 
+    # Updated dashboard labels
+    assert "Total items collected" in html
+    assert "Corpus items" in html
+    assert "AI-tagged records" in html
+    assert "telemetry" not in html.lower()
+    assert "Total items analysed" not in html
+    assert "Verified snippets" not in html
+
     # Rule 1 verification: no hardcoded Stitch placeholder records or IDs
     assert "ID-00101" not in html
     assert "ID-00102" not in html

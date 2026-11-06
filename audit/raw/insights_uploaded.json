@@ -1,7 +1,7 @@
 {
   "status_code": 200,
   "body": {
-    "dataset": "f1dfa56f-cdfd-45c2-8860-dc9cbded0ba3",
+    "dataset": "33f190c3-027b-4629-8b8e-f0b56d073f9b",
     "total_records": 36,
     "computed_stats": {
       "total_records": 36,
@@ -31,28 +31,36 @@
           "n": 5,
           "negative_count": 0,
           "negative_share": 0.0,
-          "percentage": 0.0
+          "percentage": 0.0,
+          "known_outcome_count": 1,
+          "display_text": "0 of 1 (n=5)"
         },
         {
           "income_stability": "Variable income (freelance/business)",
           "n": 2,
           "negative_count": 0,
           "negative_share": 0.0,
-          "percentage": 0.0
+          "percentage": 0.0,
+          "known_outcome_count": 1,
+          "display_text": "0 of 1 (n=2)"
         },
         {
           "income_stability": "Student or dependent",
           "n": 1,
           "negative_count": 0,
           "negative_share": 0.0,
-          "percentage": 0.0
+          "percentage": 0.0,
+          "known_outcome_count": 0,
+          "display_text": "0 of 0 (n=1)"
         },
         {
           "income_stability": "Unclear",
           "n": 28,
           "negative_count": 0,
           "negative_share": 0.0,
-          "percentage": 0.0
+          "percentage": 0.0,
+          "known_outcome_count": 0,
+          "display_text": "0 of 0 (n=28)"
         }
       ],
       "top_unmet_needs": [
@@ -130,37 +138,45 @@
         "n": 5,
         "negative_count": 0,
         "negative_share": 0.0,
-        "percentage": 0.0
+        "percentage": 0.0,
+        "known_outcome_count": 1,
+        "display_text": "0 of 1 (n=5)"
       },
       {
         "income_stability": "Variable income (freelance/business)",
         "n": 2,
         "negative_count": 0,
         "negative_share": 0.0,
-        "percentage": 0.0
+        "percentage": 0.0,
+        "known_outcome_count": 1,
+        "display_text": "0 of 1 (n=2)"
       },
       {
         "income_stability": "Student or dependent",
         "n": 1,
         "negative_count": 0,
         "negative_share": 0.0,
-        "percentage": 0.0
+        "percentage": 0.0,
+        "known_outcome_count": 0,
+        "display_text": "0 of 0 (n=1)"
       },
       {
         "income_stability": "Unclear",
         "n": 28,
         "negative_count": 0,
         "negative_share": 0.0,
-        "percentage": 0.0
+        "percentage": 0.0,
+        "known_outcome_count": 0,
+        "display_text": "0 of 0 (n=28)"
       }
     ],
     "ai_summary_available": true,
     "message": null,
     "cards": [
       {
-        "headline": "3 records cite payment or mandate failure",
-        "explanation": "Users report difficulties with mandate failures and express frustration regarding penalty charges for missed SIP payments. Outcome breakdown: 3 Unknown.",
-        "proposed_pm_action": "Implement a grace period notification system and provide an in-app mechanism to retry failed mandates without manual intervention.",
+        "headline": "Operational friction regarding payment mandates",
+        "explanation": "Users encounter difficulties when automated payment mandates fail due to insufficient account balances. The current interface lacks clear pathways for users to reinitiate failed transactions or manage payment schedules effectively. Outcome breakdown: 3 Unknown.",
+        "proposed_pm_action": "Implement an automated retry mechanism for failed mandates and provide clear in-app notifications with actionable steps to resolve payment issues.",
         "supporting_evidence_ids": [
           "AS-00022",
           "PS-00034",
@@ -169,12 +185,13 @@
         "supporting_count": 3,
         "strength": "Medium",
         "strength_label": "Medium signal, 3 records",
-        "filter": "main_driver = 'Payment or mandate failure'"
+        "filter": "main_driver = 'Payment or mandate failure'",
+        "source_mix": "2 playstore, 1 appstore"
       },
       {
-        "headline": "19 records cite advice or question regarding SIP experience",
-        "explanation": "Beginner investors frequently request guidance on fund selection, investment strategies, and educational resources to improve their financial literacy. Outcome breakdown: 1 Continuing, 18 Unknown.",
-        "proposed_pm_action": "Develop an integrated 'Learning Hub' within the app featuring curated tutorials and personalized SIP planning tools for beginners.",
+        "headline": "High demand for foundational investment education",
+        "explanation": "A significant portion of the user base expresses a need for basic knowledge regarding systematic investment planning and fund selection. Many individuals seek guidance on how to align their personal financial goals with appropriate investment strategies. Outcome breakdown: 1 Continuing, 18 Unknown.",
+        "proposed_pm_action": "Develop an integrated educational hub within the application featuring beginner-friendly tutorials and interactive planning tools.",
         "supporting_evidence_ids": [
           "YT-00027",
           "RD-00011",
@@ -199,12 +216,13 @@
         "supporting_count": 19,
         "strength": "Strong",
         "strength_label": "Strong signal, 19 records",
-        "filter": "main_driver = 'Advice or question (no SIP experience)'"
+        "filter": "main_driver = 'Advice or question (no SIP experience)'",
+        "source_mix": "13 youtube, 5 reddit, 1 playstore"
       },
       {
-        "headline": "10 records cite praise or general feedback",
-        "explanation": "Users appreciate the user-friendly interface and SIP calculator tools, though some request more human-centric customer support. Outcome breakdown: 1 Continuing, 9 Unknown.",
-        "proposed_pm_action": "Enhance customer support accessibility by introducing a hybrid model that combines automated FAQs with direct access to human support agents.",
+        "headline": "Positive reception of interface simplicity",
+        "explanation": "Users frequently commend the platform for its intuitive design and accessible calculation tools. While the interface is praised for its ease of use, there is a recurring request for more human-centric support channels. Outcome breakdown: 1 Continuing, 9 Unknown.",
+        "proposed_pm_action": "Enhance customer support accessibility by integrating a live chat feature or a more responsive help desk system.",
         "supporting_evidence_ids": [
           "YT-00513",
           "PS-00051",
@@ -220,12 +238,13 @@
         "supporting_count": 10,
         "strength": "Strong",
         "strength_label": "Strong signal, 10 records",
-        "filter": "main_driver = 'Praise or general feedback'"
+        "filter": "main_driver = 'Praise or general feedback'",
+        "source_mix": "5 playstore, 3 appstore, 1 youtube, 1 reddit"
       },
       {
-        "headline": "4 records cite other issues including redemption and KYC",
-        "explanation": "Reports indicate dissatisfaction with redemption timelines and concerns regarding KYC status and plan types. Outcome breakdown: 4 Unknown.",
-        "proposed_pm_action": "Create a transparent status tracker for redemption requests and KYC verification to provide users with real-time visibility into their account processes.",
+        "headline": "Concerns regarding transaction transparency and service reliability",
+        "explanation": "Some users report frustration regarding delayed redemption processing and perceived lack of clarity in investment plan types. These experiences highlight a need for improved communication regarding transaction status and account management. Outcome breakdown: 4 Unknown.",
+        "proposed_pm_action": "Provide real-time status tracking for all redemption requests and clarify the distinction between regular and direct investment plans within the user dashboard.",
         "supporting_evidence_ids": [
           "AS-00013",
           "PS-00049",
@@ -235,18 +254,20 @@
         "supporting_count": 4,
         "strength": "Medium",
         "strength_label": "Medium signal, 4 records",
-        "filter": "main_driver = 'Other'"
+        "filter": "main_driver = 'Other'",
+        "source_mix": "2 appstore, 2 playstore"
       }
     ],
     "suggested_questions": [
-      "What specific barriers prevent users from transitioning from 'Unknown' status to 'Continuing'?",
-      "How does the lack of educational resources correlate with the high volume of 'Advice or question' inquiries?",
-      "What is the impact of mandate failure penalties on long-term user retention?"
+      "What specific barriers prevent users from successfully re-applying after a mandate failure?",
+      "Which educational topics show the highest correlation with long-term platform engagement?",
+      "How can we improve the visibility of redemption status updates to reduce user anxiety?"
     ],
-    "generated_at": "2026-11-06T09:49:17.506246+00:00",
+    "generated_at": "2026-11-06T11:09:39.774535+00:00",
     "cached": false,
     "data_warnings": [
       "Using column 'text' as text"
-    ]
+    ],
+    "segment_footnote": "Share is among records that state an outcome. Most public reviews do not."
   }
 }

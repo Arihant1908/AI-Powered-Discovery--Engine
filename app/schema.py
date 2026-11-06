@@ -233,6 +233,8 @@ class SegmentItem(BaseModel):
     negative_count: int
     negative_share: float
     percentage: float
+    known_outcome_count: int = 0
+    display_text: str = ""
 
 class InsightCard(BaseModel):
     headline: str
@@ -243,6 +245,7 @@ class InsightCard(BaseModel):
     strength: str
     strength_label: str
     filter: Optional[str] = None
+    source_mix: Optional[str] = None
 
 class InsightsComputedStats(BaseModel):
     total_records: int
@@ -264,6 +267,7 @@ class InsightsResponse(BaseModel):
     generated_at: Optional[str] = None
     cached: bool = False
     data_warnings: List[str] = []
+    segment_footnote: str = "Share is among records that state an outcome. Most public reviews do not."
 
 class RegenerateInsightsRequest(BaseModel):
     dataset: Optional[str] = "preloaded"

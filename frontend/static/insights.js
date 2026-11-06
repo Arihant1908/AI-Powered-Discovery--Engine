@@ -29,27 +29,28 @@ function parseApiError(err) {
 
 function getStrengthBadge(strength, count, label) {
   const safeCount = count !== undefined ? count : 0;
-  const countStr = safeCount === 1 ? '1 item' : `${safeCount} items`;
+  const countStr = safeCount === 1 ? '1 record' : `${safeCount} records`;
+  const text = label || `${strength} signal, ${countStr}`;
 
   if (strength === 'Strong') {
     return `
       <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary-fixed text-on-primary-fixed font-semibold text-xs tracking-tight shadow-xs">
         <span class="material-symbols-outlined text-[15px]">verified</span>
-        <span>Strong signal (${countStr})</span>
+        <span>${escapeHtml(text)}</span>
       </span>
     `;
   } else if (strength === 'Medium') {
     return `
       <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-secondary-fixed text-on-secondary-fixed font-semibold text-xs tracking-tight shadow-xs">
         <span class="material-symbols-outlined text-[15px]">tune</span>
-        <span>Medium signal (${countStr})</span>
+        <span>${escapeHtml(text)}</span>
       </span>
     `;
   } else {
     return `
       <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container-high text-on-surface-variant font-semibold text-xs tracking-tight shadow-xs">
         <span class="material-symbols-outlined text-[15px]">help_outline</span>
-        <span>Weak signal (${countStr})</span>
+        <span>${escapeHtml(text)}</span>
       </span>
     `;
   }
@@ -118,6 +119,12 @@ function renderCards(cards) {
 
   const html = cards.map(card => {
     const badge = getStrengthBadge(card.strength, card.supporting_count, card.strength_label);
+    const sourceMixHtml = card.source_mix ? `
+      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-surface-container text-on-surface-variant font-medium text-xs tracking-tight shadow-xs">
+        <span class="material-symbols-outlined text-[14px]">category</span>
+        <span>${escapeHtml(card.source_mix)}</span>
+      </span>
+    ` : '';
     const explanationFormatted = escapeHtml(card.explanation).replace(/\n/g, '<br/>');
 
     // Evidence chips
@@ -134,9 +141,10 @@ function renderCards(cards) {
 
     return `
       <article class="flex flex-col gap-4 p-6 rounded-xl bg-surface-container-lowest shadow-sm border border-outline-variant/20 hover:shadow-md transition-all">
-        <!-- Top row: Strength Tag -->
+        <!-- Top row: Strength Tag & Source Mix -->
         <div class="flex flex-wrap items-center justify-between gap-2">
           ${badge}
+          ${sourceMixHtml}
         </div>
 
         <!-- Headline & Explanation -->
@@ -239,6 +247,7 @@ function renderSegmentView(segmentView) {
     const bar = barColors[item.income_stability] || 'bg-primary';
     const pct = item.percentage !== undefined ? item.percentage : 0;
     const n = item.n !== undefined ? item.n : 0;
+    const displayText = item.display_text || `${item.negative_count} of ${item.known_outcome_count || n} (n=${n})`;
 
     return `
       <div class="flex flex-col gap-1.5 p-3 rounded-lg bg-surface-container-low border border-outline-variant/20">
@@ -247,7 +256,7 @@ function renderSegmentView(segmentView) {
             <span class="w-2.5 h-2.5 rounded-full ${dot} shrink-0"></span>
             <span class="truncate" title="${escapeHtml(item.income_stability)}">${escapeHtml(item.income_stability)}</span>
           </span>
-          <span class="font-mono font-bold shrink-0 ml-2">${pct}% <span class="text-[11px] text-outline font-normal">(n=${n})</span></span>
+          <span class="font-mono font-bold shrink-0 ml-2">${pct}% <span class="text-[11px] text-outline font-normal">(${escapeHtml(displayText)})</span></span>
         </div>
         <div class="w-full bg-surface-container-highest h-2 rounded-full overflow-hidden">
           <div class="${bar} h-2 rounded-full transition-all duration-500 ease-out" style="width: ${Math.min(pct, 100)}%"></div>

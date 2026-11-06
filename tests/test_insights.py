@@ -1,4 +1,5 @@
 import json
+import re
 from pathlib import Path
 import pytest
 from fastapi.testclient import TestClient
@@ -77,33 +78,41 @@ def test_segment_shares_and_n_correct_on_preloaded_data():
     group_map = {item["income_stability"]: item for item in segment_view}
     assert len(group_map) == 4
 
-    # 1. Fixed salary: 12 total, 2 negative (Paused/Stopped/Reduced), 16.7%
+    # 1. Fixed salary: 12 total, 11 known, 2 negative (Paused/Stopped/Reduced), 18.2%
     fixed = group_map["Fixed salary"]
     assert fixed["n"] == 12
+    assert fixed["known_outcome_count"] == 11
     assert fixed["negative_count"] == 2
-    assert pytest.approx(fixed["negative_share"], 0.001) == 2 / 12
-    assert fixed["percentage"] == 16.7
+    assert pytest.approx(fixed["negative_share"], 0.001) == 2 / 11
+    assert fixed["percentage"] == 18.2
+    assert fixed["display_text"] == "2 of 11 (n=12)"
 
-    # 2. Variable income: 7 total, 4 negative, 57.1%
+    # 2. Variable income: 7 total, 6 known, 4 negative, 66.7%
     variable = group_map["Variable income (freelance/business)"]
     assert variable["n"] == 7
+    assert variable["known_outcome_count"] == 6
     assert variable["negative_count"] == 4
-    assert pytest.approx(variable["negative_share"], 0.001) == 4 / 7
-    assert variable["percentage"] == 57.1
+    assert pytest.approx(variable["negative_share"], 0.001) == 4 / 6
+    assert variable["percentage"] == 66.7
+    assert variable["display_text"] == "4 of 6 (n=7)"
 
-    # 3. Student or dependent: 5 total, 2 negative, 40.0%
+    # 3. Student or dependent: 5 total, 3 known, 2 negative, 66.7%
     student = group_map["Student or dependent"]
     assert student["n"] == 5
+    assert student["known_outcome_count"] == 3
     assert student["negative_count"] == 2
-    assert pytest.approx(student["negative_share"], 0.001) == 2 / 5
-    assert student["percentage"] == 40.0
+    assert pytest.approx(student["negative_share"], 0.001) == 2 / 3
+    assert student["percentage"] == 66.7
+    assert student["display_text"] == "2 of 3 (n=5)"
 
-    # 4. Unclear: 30 total, 2 negative, 6.7%
+    # 4. Unclear: 30 total, 9 known, 2 negative, 22.2%
     unclear = group_map["Unclear"]
     assert unclear["n"] == 30
+    assert unclear["known_outcome_count"] == 9
     assert unclear["negative_count"] == 2
-    assert pytest.approx(unclear["negative_share"], 0.001) == 2 / 30
-    assert unclear["percentage"] == 6.7
+    assert pytest.approx(unclear["negative_share"], 0.001) == 2 / 9
+    assert unclear["percentage"] == 22.2
+    assert unclear["display_text"] == "2 of 9 (n=30)"
 
     # Sum of n across groups must equal total dataset size (54)
     total_n = sum(item["n"] for item in segment_view)
@@ -112,6 +121,9 @@ def test_segment_shares_and_n_correct_on_preloaded_data():
     # Sum of negative counts must equal total Paused (3) + Stopped (4) + Reduced (3) = 10
     total_neg = sum(item["negative_count"] for item in segment_view)
     assert total_neg == 10
+
+    # Footnote must match requirement
+    assert data["segment_footnote"] == "Share is among records that state an outcome. Most public reviews do not."
 
 def test_insight_cards_id_validation_and_invalid_id_dropped():
     """
@@ -256,7 +268,10 @@ def test_insight_cards_filtered_evidence_and_variable_income_ids():
     assert var_card["supporting_count"] == 4
     assert var_card["strength"] == "Medium"
     assert var_card["strength_label"] == "Medium signal, 4 records"
-    assert "4 of 7 variable-income records paused, stopped or reduced" in var_card["explanation"]
+    assert var_card["source_mix"] == "2 survey, 2 interviews"
+    assert not re.search(r'\d', var_card["headline"]), "Headline must contain zero digits"
+    assert not re.search(r'\d', var_card["explanation"].split("Outcome breakdown:")[0]), "Explanation before breakdown must contain zero digits"
+    assert "Outcome breakdown:" in var_card["explanation"]
 
     # Specific check for the Drop-off drivers card:
     drop_card = next((c for c in cards if c.get("filter") == "outcome in ('Paused', 'Stopped', 'Reduced')"), None)
@@ -266,6 +281,69 @@ def test_insight_cards_filtered_evidence_and_variable_income_ids():
     assert drop_card["strength_label"] == "Strong signal, 10 records"
     assert "Cash crunch" in drop_card["explanation"]
     assert "Low early returns" in drop_card["explanation"]
+    assert not re.search(r'\d', drop_card["headline"])
+    assert not re.search(r'\d', drop_card["explanation"].split("Outcome breakdown:")[0])
+
+def test_no_card_contains_two_breakdowns_and_counts_equal_computed():
+    """
+    Verify:
+    1. The model text must NOT contain any digits in headline or explanation.
+    2. The backend appends exactly one 'Outcome breakdown: ...' line.
+    3. The breakdown numbers equal the computed outcome counts for qualifying records.
+    4. Each card includes the computed source mix.
+    5. Feature claims ('struggle to find', 'cannot find') only appear if at least half of cited records mention it.
+    """
+    response = client.post("/api/insights/regenerate?dataset=preloaded")
+    assert response.status_code == 200
+    data = response.json()
+    cards = data["cards"]
+    assert len(cards) == 4
+
+    import pandas as pd
+    from scripts.audit_check import evaluate_card_filter
+    engine_df = pd.read_csv("data/engine_dataset.csv")
+
+    for card in cards:
+        hl = card["headline"]
+        expl = card["explanation"]
+        card_filter = card.get("filter")
+
+        # 1. Headline must contain NO digits
+        assert not re.search(r'\d', hl), f"Headline contains digits: '{hl}'"
+
+        # 2. Exactly one Outcome breakdown line
+        assert expl.lower().count("outcome breakdown:") == 1, f"Expected 1 breakdown line in: '{expl}'"
+
+        # 3. Text preceding Outcome breakdown must contain NO digits
+        parts = expl.split("Outcome breakdown:")
+        preceding = parts[0]
+        assert not re.search(r'\d', preceding), f"Preceding explanation contains digits: '{preceding}'"
+
+        # 4. Source mix is present and non-empty
+        assert card.get("source_mix"), f"Card {hl} missing source_mix"
+        assert re.search(r"\d+\s+[a-z]+", card["source_mix"]), f"Invalid source_mix format: {card['source_mix']}"
+
+        # 5. Feature find claim requires at least half of cited records to mention it
+        if re.search(r"\b(struggle to find|cannot find|can't find)\b", expl, re.I):
+            cited = engine_df[engine_df["id"].isin(card["supporting_evidence_ids"])]
+            find_mentions = cited["text"].str.contains(r"\b(find|locate|button|where|hidden)\b", case=False, regex=True).sum()
+            assert find_mentions >= (len(cited) / 2.0)
+
+        # 6. Breakdown counts must equal computed outcome counts from qualifying records
+        breakdown_str = parts[1].strip().rstrip(".")
+        breakdown_counts = {}
+        for item in breakdown_str.split(","):
+            item = item.strip()
+            if item:
+                m = re.match(r"(\d+)\s+(.+)", item)
+                assert m, f"Could not parse breakdown item: '{item}'"
+                cnt = int(m.group(1))
+                out_name = m.group(2).strip()
+                breakdown_counts[out_name] = cnt
+
+        qualifying_df = evaluate_card_filter(engine_df, card_filter)
+        expected_counts = qualifying_df["outcome"].value_counts().to_dict()
+        assert breakdown_counts == expected_counts, f"Breakdown {breakdown_counts} does not match expected {expected_counts} for filter '{card_filter}'"
 
 def test_suggested_questions():
     """Verify 3 suggested next questions are generated based on data gaps."""
@@ -332,4 +410,81 @@ def test_graceful_fallback_when_ai_unavailable():
     group_map = {item["income_stability"]: item for item in data["segment_view"]}
     assert group_map["Fixed salary"]["n"] == 12
     assert group_map["Fixed salary"]["negative_count"] == 2
-    assert group_map["Variable income (freelance/business)"]["percentage"] == 57.1
+    assert group_map["Variable income (freelance/business)"]["percentage"] == 66.7
+    assert group_map["Variable income (freelance/business)"]["display_text"] == "4 of 6 (n=7)"
+
+def test_preloaded_insights_never_shows_rating_notice():
+    """Verify rating-column notice is never shown for the pre-loaded dataset."""
+    response = client.post("/api/insights/regenerate?dataset=preloaded")
+    assert response.status_code == 200
+    data = response.json()
+    warnings = data.get("data_warnings", [])
+    assert not any("rating" in w.lower() for w in warnings)
+
+def test_digit_validator_rejects_and_falls_back_to_template(monkeypatch):
+    """
+    Verify that if the LLM produces digits or numbers in the headline or explanation,
+    the validator rejects it and falls back to a template sentence,
+    with no digits in the narrative and exactly one outcome breakdown line.
+    """
+    from app.services.llm import llm_service
+    # Mock LLM returning text with digits in headline and explanation
+    bad_cards_json = json.dumps({
+        "insight_cards": [
+            {
+                "headline": "4 of 7 investors face issues",
+                "explanation": "10 users reported 5 issues during testing. Outcome breakdown: 3 Paused.",
+                "proposed_pm_action": "Fix it.",
+                "supporting_evidence_ids": ["SV-00007", "SV-00011", "INT-03", "INT-07"]
+            }
+        ],
+        "suggested_questions": ["Q1?", "Q2?", "Q3?"]
+    })
+    monkeypatch.setattr(llm_service, "generate_json", lambda prompt, system_instruction=None: bad_cards_json)
+
+    response = client.post("/api/insights/regenerate?dataset=preloaded")
+    assert response.status_code == 200
+    data = response.json()
+    cards = data["cards"]
+    assert len(cards) == 4
+
+    for card in cards:
+        # Every card headline must have zero digits
+        assert not re.search(r'\d', card["headline"])
+        # Explanation preceding breakdown must have zero digits
+        preceding = card["explanation"].split("Outcome breakdown:")[0]
+        assert not re.search(r'\d', preceding)
+        # Exactly one outcome breakdown line
+        assert card["explanation"].count("Outcome breakdown:") == 1
+
+def test_feature_claim_validator_enforces_evidence_threshold(monkeypatch):
+    """
+    Verify that if the LLM produces a claim that users 'struggle to find' or 'cannot find'
+    a feature, but fewer than half of cited records mention it, the validator rejects it
+    and falls back to describing only the cash-flow pattern.
+    """
+    from app.services.llm import llm_service
+    # Mock LLM returning "struggle to find" for Card 1 (where only 1 of 4 records mentions a button/finding)
+    bad_cards_json = json.dumps({
+        "insight_cards": [
+            {
+                "headline": "Variable income investors struggle to find pause controls",
+                "explanation": "Users experiencing cash flow shifts struggle to find pause controls during critical billing windows.",
+                "proposed_pm_action": "Add pause button.",
+                "supporting_evidence_ids": ["SV-00007", "SV-00011", "INT-03", "INT-07"]
+            }
+        ],
+        "suggested_questions": ["Q1?", "Q2?", "Q3?"]
+    })
+    monkeypatch.setattr(llm_service, "generate_json", lambda prompt, system_instruction=None: bad_cards_json)
+
+    response = client.post("/api/insights/regenerate?dataset=preloaded")
+    assert response.status_code == 200
+    data = response.json()
+    cards = data["cards"]
+    var_card = next(c for c in cards if "variable" in c["headline"].lower() or "variable" in str(c.get("filter")).lower())
+
+    # Must NOT contain "struggle to find" because < half mention it
+    assert "struggle to find" not in var_card["explanation"].lower()
+    # Must describe only cash-flow pattern
+    assert "cash-flow" in var_card["explanation"].lower() or "cash flow" in var_card["explanation"].lower()

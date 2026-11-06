@@ -30,29 +30,37 @@
           "income_stability": "Fixed salary",
           "n": 12,
           "negative_count": 2,
-          "negative_share": 0.16666666666666666,
-          "percentage": 16.7
+          "negative_share": 0.18181818181818182,
+          "percentage": 18.2,
+          "known_outcome_count": 11,
+          "display_text": "2 of 11 (n=12)"
         },
         {
           "income_stability": "Variable income (freelance/business)",
           "n": 7,
           "negative_count": 4,
-          "negative_share": 0.5714285714285714,
-          "percentage": 57.1
+          "negative_share": 0.6666666666666666,
+          "percentage": 66.7,
+          "known_outcome_count": 6,
+          "display_text": "4 of 6 (n=7)"
         },
         {
           "income_stability": "Student or dependent",
           "n": 5,
           "negative_count": 2,
-          "negative_share": 0.4,
-          "percentage": 40.0
+          "negative_share": 0.6666666666666666,
+          "percentage": 66.7,
+          "known_outcome_count": 3,
+          "display_text": "2 of 3 (n=5)"
         },
         {
           "income_stability": "Unclear",
           "n": 30,
           "negative_count": 2,
-          "negative_share": 0.06666666666666667,
-          "percentage": 6.7
+          "negative_share": 0.2222222222222222,
+          "percentage": 22.2,
+          "known_outcome_count": 9,
+          "display_text": "2 of 9 (n=30)"
         }
       ],
       "top_unmet_needs": [
@@ -157,38 +165,46 @@
         "income_stability": "Fixed salary",
         "n": 12,
         "negative_count": 2,
-        "negative_share": 0.16666666666666666,
-        "percentage": 16.7
+        "negative_share": 0.18181818181818182,
+        "percentage": 18.2,
+        "known_outcome_count": 11,
+        "display_text": "2 of 11 (n=12)"
       },
       {
         "income_stability": "Variable income (freelance/business)",
         "n": 7,
         "negative_count": 4,
-        "negative_share": 0.5714285714285714,
-        "percentage": 57.1
+        "negative_share": 0.6666666666666666,
+        "percentage": 66.7,
+        "known_outcome_count": 6,
+        "display_text": "4 of 6 (n=7)"
       },
       {
         "income_stability": "Student or dependent",
         "n": 5,
         "negative_count": 2,
-        "negative_share": 0.4,
-        "percentage": 40.0
+        "negative_share": 0.6666666666666666,
+        "percentage": 66.7,
+        "known_outcome_count": 3,
+        "display_text": "2 of 3 (n=5)"
       },
       {
         "income_stability": "Unclear",
         "n": 30,
         "negative_count": 2,
-        "negative_share": 0.06666666666666667,
-        "percentage": 6.7
+        "negative_share": 0.2222222222222222,
+        "percentage": 22.2,
+        "known_outcome_count": 9,
+        "display_text": "2 of 9 (n=30)"
       }
     ],
     "ai_summary_available": true,
     "message": null,
     "cards": [
       {
-        "headline": "4 of 7 variable-income records paused, stopped or reduced",
-        "explanation": "4 of 7 variable-income records paused, stopped or reduced, with 3 records citing cash crunch and 1 citing low early returns. Users like those in INT-03 and INT-07 report that rigid payment schedules conflict with fluctuating income. Outcome breakdown: 2 Paused, 1 Stopped, 1 Reduced.",
-        "proposed_pm_action": "Implement a flexible SIP 'skip' feature to allow users to pause payments during months of low income without terminating the mandate.",
+        "headline": "Variable income volatility impacts investment consistency",
+        "explanation": "Investors with fluctuating earnings frequently encounter liquidity constraints during specific billing periods. These variable-income investors face cash-flow volatility during billing windows, which complicates their ability to maintain regular payment schedules. Outcome breakdown: 2 Paused, 1 Stopped, 1 Reduced.",
+        "proposed_pm_action": "Introduce a flexible payment skip feature that allows users to pause a single installment without terminating the entire mandate.",
         "supporting_evidence_ids": [
           "SV-00007",
           "SV-00011",
@@ -198,12 +214,13 @@
         "supporting_count": 4,
         "strength": "Medium",
         "strength_label": "Medium signal, 4 records",
-        "filter": "income_stability = 'Variable income (freelance/business)' AND outcome in ('Paused', 'Stopped', 'Reduced')"
+        "filter": "income_stability = 'Variable income (freelance/business)' AND outcome in ('Paused', 'Stopped', 'Reduced')",
+        "source_mix": "2 survey, 2 interviews"
       },
       {
-        "headline": "10 records with outcome in Paused, Stopped, or Reduced",
-        "explanation": "Among records with outcome in Paused, Stopped, or Reduced, count by main_driver: 5 Cash crunch, 2 Low early returns, 1 Payment or mandate failure, 1 Other, 1 Confusion about the app. Quotes like PS-00139 and INT-01 highlight that financial constraints and technical friction influence these outcomes. Outcome breakdown: 3 Paused, 4 Stopped, 3 Reduced.",
-        "proposed_pm_action": "Introduce proactive payment reminders and a simplified dashboard to manage mandate status, reducing reliance on manual intervention.",
+        "headline": "Cash flow constraints remain the primary barrier to investment continuity",
+        "explanation": "Users frequently report that unexpected financial obligations or limited liquidity force them to adjust their investment behavior. This pattern suggests that rigid payment structures are incompatible with the unpredictable nature of personal cash flow. Outcome breakdown: 3 Paused, 4 Stopped, 3 Reduced.",
+        "proposed_pm_action": "Implement a dynamic SIP adjustment tool that enables users to temporarily lower or defer contributions based on real-time financial status.",
         "supporting_evidence_ids": [
           "SV-00007",
           "SV-00009",
@@ -219,12 +236,13 @@
         "supporting_count": 10,
         "strength": "Strong",
         "strength_label": "Strong signal, 10 records",
-        "filter": "outcome in ('Paused', 'Stopped', 'Reduced')"
+        "filter": "outcome in ('Paused', 'Stopped', 'Reduced')",
+        "source_mix": "4 survey, 4 interviews, 2 playstore"
       },
       {
-        "headline": "4 records cite Payment or mandate failure",
-        "explanation": "4 records cite Payment or mandate failure, with users reporting issues regarding auto-retry functionality and transaction processing. Evidence from PS-00066 and AS-00014 indicates that users struggle when mandates do not execute as expected. Outcome breakdown: 1 Stopped, 3 Unknown.",
-        "proposed_pm_action": "Develop an automated retry mechanism for failed SIP payments and provide clearer error messaging for mandate synchronization issues.",
+        "headline": "Automated payment failures create friction in the investment experience",
+        "explanation": "Users report significant frustration when automated payment systems fail to execute as expected. The lack of an automated retry mechanism forces users to perform manual interventions to keep their investments active. Outcome breakdown: 1 Stopped, 3 Unknown.",
+        "proposed_pm_action": "Develop an intelligent auto-retry system that automatically attempts to process failed payments on subsequent days without requiring user intervention.",
         "supporting_evidence_ids": [
           "PS-00066",
           "PS-00139",
@@ -234,12 +252,13 @@
         "supporting_count": 4,
         "strength": "Medium",
         "strength_label": "Medium signal, 4 records",
-        "filter": "main_driver = 'Payment or mandate failure'"
+        "filter": "main_driver = 'Payment or mandate failure'",
+        "source_mix": "2 playstore, 2 appstore"
       },
       {
-        "headline": "7 records cite Low early returns",
-        "explanation": "7 records cite Low early returns, reflecting user anxiety when market performance impacts principal value. As noted in INT-02 and YT-00135, seeing negative returns can influence user sentiment. Outcome breakdown: 4 Continuing, 1 Paused, 1 Reduced, 1 Unknown.",
-        "proposed_pm_action": "Enhance educational content within the app to explain long-term market volatility and the benefits of rupee cost averaging.",
+        "headline": "Market volatility perceptions influence investor confidence",
+        "explanation": "Investors often express anxiety when observing short-term fluctuations in their portfolio value. While some continue their investments, others feel compelled to pause or reduce their contributions due to fear of capital loss. Outcome breakdown: 4 Continuing, 1 Paused, 1 Reduced, 1 Unknown.",
+        "proposed_pm_action": "Enhance the user dashboard with educational content that contextualizes short-term market movements within long-term wealth creation goals.",
         "supporting_evidence_ids": [
           "SV-00002",
           "SV-00004",
@@ -252,18 +271,18 @@
         "supporting_count": 7,
         "strength": "Strong",
         "strength_label": "Strong signal, 7 records",
-        "filter": "main_driver = 'Low early returns'"
+        "filter": "main_driver = 'Low early returns'",
+        "source_mix": "5 survey, 1 youtube, 1 interviews"
       }
     ],
     "suggested_questions": [
-      "What specific features would encourage users with variable income to resume their SIPs after a pause?",
-      "How does the frequency of app usage correlate with the likelihood of a user continuing their SIP despite market volatility?",
-      "What is the primary reason for the high volume of 'Unknown' outcomes in the current dataset?"
+      "What specific communication channels are most effective for notifying users about upcoming payment dates to help them manage cash flow?",
+      "How does the frequency of market updates impact the emotional response of new investors compared to experienced ones?",
+      "What are the primary technical barriers preventing successful mandate execution for users experiencing repeated payment failures?"
     ],
-    "generated_at": "2026-11-06T09:49:21.384982+00:00",
+    "generated_at": "2026-11-06T11:09:44.409997+00:00",
     "cached": false,
-    "data_warnings": [
-      "Rating column not provided. Numerical satisfaction scores are not available."
-    ]
+    "data_warnings": [],
+    "segment_footnote": "Share is among records that state an outcome. Most public reviews do not."
   }
 }

@@ -84,25 +84,25 @@ class LLMService:
                 "insight_cards": [
                     {
                         "headline": "Variable-income investors report cash flow crunches during billing windows",
-                        "explanation": "4 of 7 variable-income records paused, stopped or reduced. Users experiencing periodic cash flow shifts struggle to locate temporary pause controls during critical billing windows. Outcome breakdown: 3 Paused, 1 Reduced.",
-                        "proposed_pm_action": "Introduce a streamlined 1-click pause option directly inside the cancellation workflow with automated resumption reminders.",
+                        "explanation": "Variable-income investors face irregular income cycles and liquidity constraints during scheduled debit windows. Portfolio reviews highlight recurring cash flow timing mismatches rather than structural platform dissatisfaction.",
+                        "proposed_pm_action": "Introduce a streamlined pause option directly inside the cancellation workflow with automated resumption reminders.",
                         "supporting_evidence_ids": card1_ids,
                     },
                     {
-                        "headline": "Drop-off drivers: cash crunch and low early returns dominate churn",
-                        "explanation": "Among 10 records with outcome in Paused, Stopped, or Reduced, the main drivers reported are: 5 Cash crunch, 2 Low early returns, 1 Payment or mandate failure, 1 Confusion about the app, 1 Other. Outcome breakdown: 4 Stopped, 3 Paused, 3 Reduced.",
+                        "headline": "Drop-off drivers: cash crunch and performance concerns dominate churn",
+                        "explanation": "Investors pausing, stopping, or reducing commitments cite Cash crunch and Low early returns as primary considerations.",
                         "proposed_pm_action": "Implement proactive pause options and educational check-ins prior to scheduled SIP debits.",
                         "supporting_evidence_ids": card2_ids,
                     },
                     {
-                        "headline": "4 records cite Payment or mandate failure across bank debits",
-                        "explanation": "4 records cite Payment or mandate failure: 4 Continuing. Mandate authorizations encounter bank server timeouts and response delays during account setup. Outcome breakdown: 4 Continuing.",
-                        "proposed_pm_action": "Implement a 3-day flexible debit retry grace window before marking mandates as failed.",
+                        "headline": "Investors cite Payment or mandate failure across bank debits",
+                        "explanation": "Mandate authorizations encounter bank server timeouts and response delays during account setup.",
+                        "proposed_pm_action": "Implement a flexible debit retry grace window before marking mandates as failed.",
                         "supporting_evidence_ids": card3_ids_with_invalid,
                     },
                     {
-                        "headline": "7 records cite Low early returns during initial investment period",
-                        "explanation": "7 records cite Low early returns: 4 Continuing, 1 Paused, 1 Reduced, 1 Unknown. Feedback mentions portfolio value fluctuations and expectations during initial investment months. Outcome breakdown: 4 Continuing, 1 Paused, 1 Reduced, 1 Unknown.",
+                        "headline": "Investors cite Low early returns during initial investment period",
+                        "explanation": "Feedback mentions portfolio value fluctuations and expectations during initial investment months.",
                         "proposed_pm_action": "Embed an interactive averaging and volatility context explainer highlighting long-horizon accumulation milestones.",
                         "supporting_evidence_ids": card4_ids,
                     }

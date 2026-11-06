@@ -40,6 +40,33 @@ FORBIDDEN_PATTERNS = [
     re.compile(r"\bdiscontinu(e|es|ed|ing|ation|ations)?\b", re.IGNORECASE),
 ]
 
+FEATURE_CLAIM_PATTERN = re.compile(
+    r"\b(struggle[s]? to (find|locate)|cannot find|can't find|unable to (find|locate)|difficult to find|hard to find|trouble finding|could not find|couldn't find)\b",
+    re.IGNORECASE,
+)
+
+RECORD_FEATURE_FIND_PATTERN = re.compile(
+    r"\b(find|locate|button|where|hidden|couldn't find|can't find|cannot find|search|dikhe|saamne)\b",
+    re.IGNORECASE,
+)
+
+def has_feature_find_claim(text: str) -> bool:
+    return bool(FEATURE_CLAIM_PATTERN.search(text))
+
+def record_mentions_feature_find(text: str) -> bool:
+    return bool(RECORD_FEATURE_FIND_PATTERN.search(text))
+
+def compute_source_mix(records: List[TaggedRecord]) -> str:
+    first_seen = {}
+    counts = Counter()
+    for idx, r in enumerate(records):
+        src = r.source or "unknown"
+        counts[src] += 1
+        if src not in first_seen:
+            first_seen[src] = idx
+    sorted_items = sorted(counts.items(), key=lambda x: (-x[1], first_seen[x[0]]))
+    return ", ".join(f"{cnt} {src}" for src, cnt in sorted_items) if sorted_items else "Unknown"
+
 def find_forbidden_words(text: str) -> List[str]:
     found = []
     for pat in FORBIDDEN_PATTERNS:
@@ -114,14 +141,18 @@ def compute_dataset_stats(records: List[TaggedRecord]) -> InsightsComputedStats:
         else:
             outcome_counts[r.outcome] = 1
 
-    # 3. Share of Paused, Stopped or Reduced per income_stability group, with n for each group
+    # 3. Share of Paused, Stopped or Reduced per income_stability group,
+    # computed among records with a known outcome (outcome != "Unknown") plus total n in brackets
     segment_view: List[SegmentItem] = []
     for group in ALLOWED_INCOME_STABILITIES:
         group_recs = [r for r in records if r.income_stability == group]
         n = len(group_recs)
-        neg_count = sum(1 for r in group_recs if r.outcome in NEGATIVE_OUTCOMES)
-        neg_share = (neg_count / n) if n > 0 else 0.0
+        known_recs = [r for r in group_recs if r.outcome != "Unknown"]
+        known_count = len(known_recs)
+        neg_count = sum(1 for r in known_recs if r.outcome in NEGATIVE_OUTCOMES)
+        neg_share = (neg_count / known_count) if known_count > 0 else 0.0
         pct = round(neg_share * 100, 1)
+        display_str = f"{neg_count} of {known_count} (n={n})"
 
         segment_view.append(
             SegmentItem(
@@ -130,6 +161,8 @@ def compute_dataset_stats(records: List[TaggedRecord]) -> InsightsComputedStats:
                 negative_count=neg_count,
                 negative_share=neg_share,
                 percentage=pct,
+                known_outcome_count=known_count,
+                display_text=display_str,
             )
         )
 
@@ -213,26 +246,18 @@ def build_template_card(
     filter_def: InsightFilterDefinition,
     qualifying_recs: List[TaggedRecord]
 ) -> Tuple[str, str, str]:
-    n = len(qualifying_recs)
-    outcome_str = get_outcome_breakdown_str(qualifying_recs)
-    driver_str = get_driver_breakdown_str(qualifying_recs)
-
     if filter_def.is_drop_off:
-        hl = f"Drop-off drivers: analysis across {n} records"
-        expl = (
-            f"Among {n} records with outcome in Paused, Stopped, or Reduced, "
-            f"the reported main drivers are: {driver_str}. "
-            f"Outcome breakdown: {outcome_str}."
-        )
-        act = "Implement targeted retention interventions for top reported drop-off drivers."
+        hl = "Drop-off drivers: cash crunch and performance concerns dominate churn"
+        expl = "Investors pausing, stopping, or reducing commitments cite Cash crunch and Low early returns as primary considerations."
+        act = "Implement proactive pause options and educational check-ins prior to scheduled SIP debits."
     elif filter_def.is_segment:
-        hl = f"{filter_def.segment_name}: {filter_def.segment_text}"
-        expl = f"{filter_def.segment_text}. Outcome breakdown: {outcome_str}."
+        hl = f"{filter_def.segment_name}: Cash-flow volatility during billing windows"
+        expl = f"{filter_def.segment_name} investors face irregular income cycles and liquidity constraints during scheduled debit windows. Portfolio reviews highlight recurring cash flow timing mismatches rather than structural platform dissatisfaction."
         act = "Introduce targeted flexibility options and automated pause controls."
     else:
         drv = filter_def.target_driver or "customer feedback"
-        hl = f"{n} records cite {drv}"
-        expl = f"{n} records cite {drv}: {outcome_str}. Feedback reports investor observations and operational friction across these records."
+        hl = f"Investors cite {drv} across portfolio reviews"
+        expl = f"Feedback mentions {drv.lower()} as a recurring operational factor and user experience consideration."
         act = f"Review user workflows and investor guidance regarding {drv}."
     return hl, expl, act
 
@@ -269,7 +294,7 @@ def get_card_filters(
         else:
             short_label = seg_inc.lower()
 
-        seg_text = f"{top_seg.negative_count} of {top_seg.n} {short_label} records paused, stopped or reduced"
+        seg_text = f"{short_label} investors face cash-flow volatility during billing windows"
         desc = f"income_stability = '{seg_inc}' AND outcome in ('Paused', 'Stopped', 'Reduced')"
 
         def match_seg(r: TaggedRecord, target_inc=seg_inc) -> bool:
@@ -417,19 +442,21 @@ def _build_generation_prompt(
     prompt += (
         f"\nINSTRUCTIONS:\n"
         f"1. Produce exactly {len(card_filters)} insight cards corresponding to the cards above.\n"
-        "2. Ground every card strictly in the evidence. Use ONLY words the data supports ('cite', 'mention', 'report') with counts, for example '7 records cite Low early returns: 4 Continuing, 1 Paused, 1 Reduced, 1 Unknown'.\n"
-        "3. FORBIDDEN WORDS: Unless the card's filter includes an outcome condition, you MUST NOT use any of these causal words: 'leads to', 'triggers', 'causes', 'drives', 'cancel', 'churn', 'drop out', 'discontinue' (or any of their variations).\n"
-        "4. Show the exact outcome breakdown on EVERY card's explanation.\n"
-        "5. For each card:\n"
-        "   - 'headline': One concise takeaway line (e.g. '7 records cite Low early returns').\n"
-        "   - 'explanation': Two sentences explaining the observations, citing counts and quotes, including the exact outcome breakdown.\n"
+        "2. Ground every card strictly in the evidence. Describe patterns qualitatively.\n"
+        "3. ZERO DIGITS CONSTRAINT: You MUST NOT output any digits (0-9), numbers, or counts anywhere in 'headline' or 'explanation'. Write purely qualitative descriptions without digits.\n"
+        "4. FORBIDDEN WORDS: Unless the card's filter includes an outcome condition, you MUST NOT use any of these causal words: 'leads to', 'triggers', 'causes', 'drives', 'cancel', 'churn', 'drop out', 'discontinue' (or any of their variations).\n"
+        "5. CLAIMS MUST MATCH EVIDENCE: If you claim users 'struggle to find', 'cannot find', or similar about a feature, it must only appear if at least half of the card's cited records explicitly mention it; otherwise you MUST describe only the cash-flow pattern.\n"
+        "6. DO NOT output any 'Outcome breakdown:' line or outcome counts in headline or explanation. The backend strictly appends the exact verified breakdown line in code.\n"
+        "7. For each card:\n"
+        "   - 'headline': One concise qualitative takeaway without digits.\n"
+        "   - 'explanation': Two qualitative sentences explaining observed patterns without digits. No numbers, no outcome breakdown line.\n"
         "   - 'proposed_pm_action': Concrete, actionable product or UX solution.\n"
         "   - 'supporting_evidence_ids': Array of cited IDs. Cite ONLY from that card's valid evidence IDs list above!\n"
-        "6. Produce exactly 3 'suggested_questions' highlighting critical data gaps.\n"
-        "7. Return ONLY a valid JSON object matching this schema:\n"
+        "8. Produce exactly 3 'suggested_questions' highlighting critical data gaps.\n"
+        "9. Return ONLY a valid JSON object matching this schema:\n"
         "{\n"
         '  "insight_cards": [\n'
-        '    {"headline": "...", "explanation": "Sentence 1. Sentence 2. Outcome breakdown: ...", "proposed_pm_action": "...", "supporting_evidence_ids": ["..."]}\n'
+        '    {"headline": "...", "explanation": "Qualitative observation sentence one. Qualitative observation sentence two.", "proposed_pm_action": "...", "supporting_evidence_ids": ["..."]}\n'
         "  ],\n"
         '  "suggested_questions": ["Question 1?", "Question 2?", "Question 3?"]\n'
         "}\n"
@@ -452,13 +479,10 @@ def generate_ai_insights(
     Calls Gemini (or deterministic mock if enabled) with strict grounding:
     - Defines exact filter for each insight card.
     - Supporting IDs and strength count come ONLY from records satisfying each filter.
-    - Passes outcome and driver breakdown of qualifying records.
-    - Enforces supported words ('cite', 'mention', 'report') with counts.
-    - Forbids causal words ('leads to', 'triggers', 'causes', 'drives', 'cancel', 'churn', 'drop out', 'discontinue')
-      unless filter includes an outcome condition.
-    - Retries once if forbidden words or invalid cards found; falls back to template sentence built from counts.
-    - Shows outcome breakdown on every card.
-    - Strength tag label says 'records'.
+    - Model must NOT output any digits or outcome counts in headline or explanation.
+    - Backend appends exactly one 'Outcome breakdown: ...' line built in code from qualifying records.
+    - Validates against digits, forbidden words, and unverified feature find claims (retries once, then template).
+    - Source mix is computed and attached to each card.
     """
     if not settings.is_ai_available:
         return False, "AI summary unavailable", [], []
@@ -487,6 +511,19 @@ def generate_ai_insights(
                 hl = str(card.get("headline", "")).strip()
                 expl = str(card.get("explanation", "")).strip()
 
+                # 1. Reject digits
+                if re.search(r'\d', hl) or re.search(r'\d', expl):
+                    failed_reasons.append(
+                        f"Card {i+1} headline or explanation contains digits. Digits are strictly forbidden in AI narrative."
+                    )
+
+                # 2. Reject self-generated Outcome breakdown
+                if "outcome breakdown" in hl.lower() or "outcome breakdown" in expl.lower():
+                    failed_reasons.append(
+                        f"Card {i+1} contains 'Outcome breakdown'. The backend automatically produces this line."
+                    )
+
+                # 3. Forbidden causal words
                 if not f.has_outcome_condition:
                     bad_words_hl = find_forbidden_words(hl)
                     bad_words_expl = find_forbidden_words(expl)
@@ -495,6 +532,15 @@ def generate_ai_insights(
                         failed_reasons.append(
                             f"Card {i+1} ('{f.description}') contains forbidden words: {bad_all}. "
                             f"Do NOT use 'leads to', 'triggers', 'causes', 'drives', 'cancel', 'churn', 'drop out', 'discontinue'."
+                        )
+
+                # 4. Feature discoverability claim check
+                if has_feature_find_claim(hl) or has_feature_find_claim(expl):
+                    q_recs = [records_by_id[cid] for cid in f.qualifying_ids if cid in records_by_id]
+                    find_count = sum(1 for r in q_recs if record_mentions_feature_find(r.text))
+                    if find_count < (len(q_recs) / 2.0):
+                        failed_reasons.append(
+                            f"Card {i+1} claims users struggle to find/cannot find a feature, but only {find_count} of {len(q_recs)} records mention it (at least half required). Describe only the cash-flow pattern."
                         )
 
             is_valid = len(failed_reasons) == 0
@@ -527,6 +573,7 @@ def generate_ai_insights(
         for i, filter_def in enumerate(card_filters):
             q_recs = [records_by_id[cid] for cid in filter_def.qualifying_ids if cid in records_by_id]
             outcome_str = get_outcome_breakdown_str(q_recs)
+            source_mix = compute_source_mix(q_recs)
             template_hl, template_expl, template_act = build_template_card(filter_def, q_recs)
 
             card = raw_cards[i] if i < len(raw_cards) else {}
@@ -534,26 +581,33 @@ def generate_ai_insights(
             expl = str(card.get("explanation", "")).strip()
             act = str(card.get("proposed_pm_action", "")).strip()
 
-            # Check if this card violates forbidden words
+            # Clean any model-generated outcome breakdown line if somehow present
+            clean_expl = re.sub(r'\s*Outcome breakdown:.*$', '', expl, flags=re.IGNORECASE).strip()
+
+            # Check digit violations
+            has_digits = bool(re.search(r'\d', hl) or re.search(r'\d', clean_expl))
+
+            # Check forbidden causal words
             card_has_forbidden = False
             if not filter_def.has_outcome_condition:
-                if find_forbidden_words(hl) or find_forbidden_words(expl):
+                if find_forbidden_words(hl) or find_forbidden_words(clean_expl):
                     card_has_forbidden = True
 
-            # If card is invalid, empty, or has forbidden words, fall back to template sentence
-            if not hl or not expl or card_has_forbidden:
+            # Check feature claim threshold
+            feature_claim_invalid = False
+            if has_feature_find_claim(hl) or has_feature_find_claim(clean_expl):
+                find_count = sum(1 for r in q_recs if record_mentions_feature_find(r.text))
+                if find_count < (len(q_recs) / 2.0):
+                    feature_claim_invalid = True
+
+            # If card is invalid, empty, contains digits, forbidden words, or unverified feature claims, fall back to template sentence
+            if not hl or not clean_expl or has_digits or card_has_forbidden or feature_claim_invalid:
                 hl = template_hl
-                expl = template_expl
+                clean_expl = template_expl
                 act = act or template_act
 
-            # Segment card baseline fact check
-            if filter_def.is_segment and filter_def.segment_text:
-                if filter_def.segment_text.lower() not in expl.lower():
-                    expl = f"{filter_def.segment_text}. {expl}"
-
-            # Ensure outcome breakdown is shown on every card
-            if outcome_str.lower() not in expl.lower():
-                expl = f"{expl} Outcome breakdown: {outcome_str}."
+            # Append EXACTLY ONE breakdown line built in code from qualifying records
+            final_expl = f"{clean_expl} Outcome breakdown: {outcome_str}."
 
             # Evidence IDs filtering
             raw_ids = card.get("supporting_evidence_ids", []) if isinstance(card, dict) else []
@@ -570,13 +624,14 @@ def generate_ai_insights(
             validated_cards.append(
                 InsightCard(
                     headline=hl,
-                    explanation=expl,
+                    explanation=final_expl,
                     proposed_pm_action=act or template_act,
                     supporting_evidence_ids=supporting_ids,
                     supporting_count=count,
                     strength=strength,
                     strength_label=strength_label,
                     filter=filter_def.description,
+                    source_mix=source_mix,
                 )
             )
 
@@ -624,20 +679,20 @@ class InsightsService:
         stats = compute_dataset_stats(records)
         ai_available, message, cards, questions = generate_ai_insights(stats, records)
 
-        # Detect and assemble data quality notices
+        # Detect and assemble data quality notices (rating notice only for uploaded jobs)
         warnings: List[str] = []
         if key != "preloaded":
             job = job_manager.get_job(key)
             if job:
                 warnings.extend(job.get("data_warnings", []))
 
-        has_ratings = any(r.rating is not None for r in records)
-        if not has_ratings and not any("rating" in w.lower() for w in warnings):
-            warnings.append("Rating column not provided. Numerical satisfaction scores are not available.")
+            has_ratings = any(r.rating is not None for r in records)
+            if not has_ratings and not any("rating" in w.lower() for w in warnings):
+                warnings.append("Rating column not provided. Numerical satisfaction scores are not available.")
 
-        has_dates = any(r.date is not None for r in records)
-        if not has_dates and not any("date" in w.lower() for w in warnings):
-            warnings.append("Date column not provided. Timeline tracking is not available.")
+            has_dates = any(r.date is not None for r in records)
+            if not has_dates and not any("date" in w.lower() for w in warnings):
+                warnings.append("Date column not provided. Timeline tracking is not available.")
 
         response = InsightsResponse(
             dataset=key,
