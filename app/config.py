@@ -10,7 +10,16 @@ class Settings:
     PROJECT_NAME: str = "SIP Discovery Engine"
     BASE_DIR: Path = BASE_DIR
     DATA_DIR: Path = BASE_DIR / "data"
-    RUNTIME_DIR: Path = BASE_DIR / "runtime"
+    # Runtime cache directory (uses /tmp on serverless platforms like Vercel)
+    @property
+    def RUNTIME_DIR(self) -> Path:
+        if os.getenv("VERCEL") or os.getenv("AWS_LAMBDA_FUNCTION_NAME"):
+            tmp_runtime = Path("/tmp/runtime")
+            tmp_runtime.mkdir(parents=True, exist_ok=True)
+            return tmp_runtime
+        r = self.BASE_DIR / "runtime"
+        r.mkdir(parents=True, exist_ok=True)
+        return r
     
     # Secrets & Model configs
     GEMINI_API_KEY: str | None = os.getenv("GEMINI_API_KEY") or None
