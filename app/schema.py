@@ -213,6 +213,9 @@ class PaginatedJobRowsResponse(BaseModel):
     page: int
     page_size: int
     total_pages: int
+    job_state: str = "done"
+    is_complete: bool = True
+    warning: Optional[str] = None
 
 class UpdateRowLabelRequest(BaseModel):
     stage: Optional[str] = None

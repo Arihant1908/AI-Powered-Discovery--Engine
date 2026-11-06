@@ -120,6 +120,7 @@ def tag_batch(batch: List[Dict[str, Any]], system_prompt: str) -> List[TaggedRec
         item_id = str(item["id"]).strip().lower()
         candidate = parsed_by_id.get(item_id)
         if candidate and is_valid_tag_item(candidate):
+            origin = str(candidate.get("label_origin", "ai_drafted")).strip()
             validated_results[item_id] = {
                 "stage": str(candidate["stage"]).strip(),
                 "main_driver": str(candidate["main_driver"]).strip(),
@@ -128,7 +129,7 @@ def tag_batch(batch: List[Dict[str, Any]], system_prompt: str) -> List[TaggedRec
                 "income_stability": str(candidate["income_stability"]).strip(),
                 "age_band": str(candidate["age_band"]).strip(),
                 "influence": str(candidate["influence"]).strip(),
-                "label_origin": "ai_drafted",
+                "label_origin": origin if origin == "fallback" else "ai_drafted",
             }
         else:
             invalid_indices.append(idx)
@@ -151,6 +152,7 @@ def tag_batch(batch: List[Dict[str, Any]], system_prompt: str) -> List[TaggedRec
                     if not obj_id and idx < len(retry_payload):
                         obj_id = retry_payload[idx]["id"].lower()
                     if obj_id and is_valid_tag_item(obj):
+                        origin = str(obj.get("label_origin", "ai_drafted")).strip()
                         validated_results[obj_id] = {
                             "stage": str(obj["stage"]).strip(),
                             "main_driver": str(obj["main_driver"]).strip(),
@@ -159,7 +161,7 @@ def tag_batch(batch: List[Dict[str, Any]], system_prompt: str) -> List[TaggedRec
                             "income_stability": str(obj["income_stability"]).strip(),
                             "age_band": str(obj["age_band"]).strip(),
                             "influence": str(obj["influence"]).strip(),
-                            "label_origin": "ai_drafted",
+                            "label_origin": origin if origin == "fallback" else "ai_drafted",
                         }
 
     # Construct final TaggedRecord instances in exact original order and with original IDs

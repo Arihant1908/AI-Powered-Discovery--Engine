@@ -115,7 +115,7 @@ def test_segment_shares_and_n_correct_on_preloaded_data():
 
 def test_insight_cards_id_validation_and_invalid_id_dropped():
     """
-    Verify AI returns exactly 3 insight cards, every cited ID is validated against
+    Verify AI returns exactly 4 insight cards, every cited ID is validated against
     the dataset, and any hallucinated or non-existent ID (like NONEXISTENT-ID-9999) is dropped.
     """
     response = client.post("/api/insights/regenerate?dataset=preloaded")
@@ -123,7 +123,7 @@ def test_insight_cards_id_validation_and_invalid_id_dropped():
     data = response.json()
 
     cards = data["cards"]
-    assert len(cards) == 3
+    assert len(cards) == 4
 
     # Fetch valid IDs from dataset
     stats_resp = client.get("/api/dashboard/evidence?page_size=100")
@@ -146,16 +146,16 @@ def test_insight_cards_id_validation_and_invalid_id_dropped():
 def test_strength_rule_and_no_confidence_percentages():
     """
     Verify strength tag rule:
-    - Strong = 6 or more supporting items
-    - Medium = 3 to 5 supporting items
-    - Weak signal = 1 to 2 supporting items
-    Count shown, NO confidence percentages anywhere.
+    - Strong = 6 or more supporting records
+    - Medium = 3 to 5 supporting records
+    - Weak signal = 1 to 2 supporting records
+    Count shown with label 'records', NO confidence percentages anywhere.
     """
     from app.services.insights import calculate_strength
-    assert calculate_strength(7) == ("Strong", "Strong signal (7 items)")
-    assert calculate_strength(4) == ("Medium", "Medium signal (4 items)")
-    assert calculate_strength(2) == ("Weak signal", "Weak signal (2 items)")
-    assert calculate_strength(1) == ("Weak signal", "Weak signal (1 item)")
+    assert calculate_strength(7) == ("Strong", "Strong signal, 7 records")
+    assert calculate_strength(4) == ("Medium", "Medium signal, 4 records")
+    assert calculate_strength(2) == ("Weak signal", "Weak signal, 2 records")
+    assert calculate_strength(1) == ("Weak signal", "Weak signal, 1 record")
 
     response = client.post("/api/insights/regenerate?dataset=preloaded")
     assert response.status_code == 200
@@ -184,6 +184,9 @@ def test_strength_rule_and_no_confidence_percentages():
             assert "Weak signal" in strength_label
             assert str(count) in strength_label
 
+        # Ensure label says 'records' (or 'record' for 1)
+        assert "record" in strength_label
+
         # Ensure no confidence percentages anywhere in cards or strength
         assert "%" not in card["strength"]
         assert "%" not in card["strength_label"]
@@ -197,12 +200,14 @@ def test_insight_cards_filtered_evidence_and_variable_income_ids():
     3. The variable income card on the pre-loaded data cites exactly SV-00007, SV-00011, INT-03, INT-07.
     4. When a card talks about a segment, show the segment size and base in the text
        (e.g., '4 of 7 variable-income records paused, stopped or reduced').
+    5. Drop-off drivers card is present with 10 records and expected driver counts.
+    6. Outcome breakdown shown on every card.
     """
     response = client.post("/api/insights/regenerate?dataset=preloaded")
     assert response.status_code == 200
     data = response.json()
     cards = data["cards"]
-    assert len(cards) == 3
+    assert len(cards) == 4
 
     from app.services.data_store import get_all_tagged_records
     records_by_id = {r.id: r for r in get_all_tagged_records()}
@@ -212,6 +217,9 @@ def test_insight_cards_filtered_evidence_and_variable_income_ids():
         assert card_filter, "Card must define its filter"
         cited_ids = card["supporting_evidence_ids"]
         assert len(cited_ids) == card["supporting_count"]
+
+        # Outcome breakdown is shown on every card
+        assert "outcome breakdown" in card["explanation"].lower()
 
         # Strength tag matches the number of qualifying records
         count = card["supporting_count"]
@@ -228,6 +236,10 @@ def test_insight_cards_filtered_evidence_and_variable_income_ids():
                 r = records_by_id[cid]
                 assert r.income_stability == "Variable income (freelance/business)"
                 assert r.outcome in {"Paused", "Stopped", "Reduced"}
+        elif card_filter == "outcome in ('Paused', 'Stopped', 'Reduced')":
+            for cid in cited_ids:
+                r = records_by_id[cid]
+                assert r.outcome in {"Paused", "Stopped", "Reduced"}
         elif "Payment or mandate failure" in card_filter:
             for cid in cited_ids:
                 r = records_by_id[cid]
@@ -243,8 +255,17 @@ def test_insight_cards_filtered_evidence_and_variable_income_ids():
     assert set(var_card["supporting_evidence_ids"]) == {"SV-00007", "SV-00011", "INT-03", "INT-07"}
     assert var_card["supporting_count"] == 4
     assert var_card["strength"] == "Medium"
-    assert var_card["strength_label"] == "Medium signal (4 items)"
+    assert var_card["strength_label"] == "Medium signal, 4 records"
     assert "4 of 7 variable-income records paused, stopped or reduced" in var_card["explanation"]
+
+    # Specific check for the Drop-off drivers card:
+    drop_card = next((c for c in cards if c.get("filter") == "outcome in ('Paused', 'Stopped', 'Reduced')"), None)
+    assert drop_card is not None, "Drop-off drivers card must be present"
+    assert drop_card["supporting_count"] == 10
+    assert drop_card["strength"] == "Strong"
+    assert drop_card["strength_label"] == "Strong signal, 10 records"
+    assert "Cash crunch" in drop_card["explanation"]
+    assert "Low early returns" in drop_card["explanation"]
 
 def test_suggested_questions():
     """Verify 3 suggested next questions are generated based on data gaps."""

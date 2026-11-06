@@ -98,12 +98,12 @@ def validate_dataframe(df: pd.DataFrame) -> Tuple[List[Dict[str, Any]], List[str
             detail="Missing required columns: text. No feedback or text column found in the file."
         )
 
-    id_col = find_col(["id", "item_id", "row_id", "record_id", "uid", "user_id"])
-    source_col = find_col(["source", "channel", "platform", "source_name", "type"])
+    id_col = find_col(["id", "item_id", "row_id", "record_id", "uid"])
+    source_col = find_col(["source", "channel", "platform", "source_name"])
     date_col = find_col(["date", "created_at", "timestamp", "time", "date_time", "posted_at"])
     rating_col = find_col(["rating", "score", "stars", "star_rating", "rating_score"])
 
-    data_warnings: List[str] = []
+    data_warnings: List[str] = [f"Using column '{text_col}' as text"]
     missing_columns: List[str] = []
 
     if not rating_col:
@@ -296,6 +296,10 @@ def get_job_rows(
             detail=f"Job '{job_id}' not found. The upload session has expired or the server restarted. Please upload your dataset again."
         )
 
+    job_state = job.get("state", "unknown")
+    is_complete = (job_state == "done")
+    warning = None if is_complete else f"Job is in '{job_state}' state; rows requested before job completion."
+
     rows = job.get("rows", [])
     total = len(rows)
     total_pages = math.ceil(total / page_size) if total > 0 else 0
@@ -312,6 +316,9 @@ def get_job_rows(
         page=page,
         page_size=page_size,
         total_pages=total_pages,
+        job_state=job_state,
+        is_complete=is_complete,
+        warning=warning,
     )
 
 @router.patch("/upload/{job_id}/rows/{row_id}", response_model=TaggedRecord)

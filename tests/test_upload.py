@@ -368,3 +368,31 @@ def test_insights_for_upload_with_missing_rating_includes_warnings():
     assert "data_warnings" in ins_data
     assert any("rating" in w.lower() for w in ins_data["data_warnings"])
     assert len(ins_data["cards"]) > 0 or ins_data["computed_stats"]["total_records"] == 3
+
+def test_column_aliases_and_text_warning():
+    """Verify user_id and type are not aliases, and text column warning is recorded."""
+    csv_content = (
+        "user_id,type,feedback\n"
+        "USER_123,twitter,Loved the quick goal setup\n"
+        "USER_456,reddit,Auto debit failed on non-business day\n"
+    )
+    file_obj = io.BytesIO(csv_content.encode("utf-8"))
+    resp = client.post(
+        "/api/upload",
+        files={"file": ("aliases_test.csv", file_obj, "text/csv")}
+    )
+    assert resp.status_code == 200
+    data = resp.json()
+    warnings = data["data_warnings"]
+    assert any("Using column 'feedback' as text" in w for w in warnings)
+    assert "id" in data["missing_columns"]
+    assert "source" in data["missing_columns"]
+
+    rows_resp = client.get(f"/api/upload/{data['job_id']}/rows")
+    assert rows_resp.status_code == 200
+    items = rows_resp.json()["items"]
+    # user_id was NOT used as id -> generated ROW-0001
+    assert items[0]["id"] == "ROW-0001"
+    # type was NOT used as source -> defaulted to upload
+    assert items[0]["source"] == "upload"
+

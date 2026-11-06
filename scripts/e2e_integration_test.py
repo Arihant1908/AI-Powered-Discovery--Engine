@@ -233,7 +233,7 @@ def run_e2e_tests():
 
     # Cards and strength tags (or graceful degradation if no key and MOCK_LLM=0)
     if pre_ins["ai_summary_available"]:
-        assert len(pre_ins["cards"]) == 3
+        assert len(pre_ins["cards"]) == 4
         for c in pre_ins["cards"]:
             assert c["strength"] in ["Strong", "Medium", "Weak signal"]
             assert c["supporting_count"] == len(c["supporting_evidence_ids"])

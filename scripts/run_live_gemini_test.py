@@ -89,7 +89,7 @@ def main():
     print(f"Preloaded insights generated in {t_ins_pre_elapsed:.2f}s.")
     print(f"AI Summary Available: {preloaded_insights.ai_summary_available}")
     assert preloaded_insights.ai_summary_available, "AI summary should be available"
-    assert len(preloaded_insights.cards) == 3, f"Expected 3 cards, got {len(preloaded_insights.cards)}"
+    assert len(preloaded_insights.cards) == 4, f"Expected 4 cards, got {len(preloaded_insights.cards)}"
 
     pre_records = get_dataset_records("preloaded")
     pre_ids = {r.id for r in pre_records}
@@ -117,7 +117,7 @@ def main():
     print(f"Job insights generated in {t_ins_job_elapsed:.2f}s.")
     print(f"Job AI Summary Available: {job_insights.ai_summary_available}")
     assert job_insights.ai_summary_available, "Job AI summary should be available"
-    assert len(job_insights.cards) == 3, f"Expected 3 cards, got {len(job_insights.cards)}"
+    assert len(job_insights.cards) == 4, f"Expected 4 cards, got {len(job_insights.cards)}"
 
     job_records = get_dataset_records(job_id)
     job_ids = {r.id for r in job_records}

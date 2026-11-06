@@ -43,7 +43,7 @@ def test_insights_page_with_preloaded_dataset():
     assert data["dataset"] == "preloaded"
     assert data["total_records"] == 54
     assert len(data["segment_view"]) == 4
-    assert len(data["cards"]) == 3
+    assert len(data["cards"]) == 4
     assert len(data["suggested_questions"]) == 3
 
     # 3. Test evidence lookup for a cited chip ID from the preloaded dataset
@@ -86,7 +86,7 @@ def test_insights_page_with_finished_upload_job():
     assert insights["dataset"] == job_id
     assert insights["total_records"] == total
     assert len(insights["segment_view"]) == 4
-    assert len(insights["cards"]) == 3
+    assert len(insights["cards"]) == 4
     assert len(insights["suggested_questions"]) == 3
 
     # Verify cited evidence IDs belong to this job

@@ -40,7 +40,7 @@ def test_configuration_mock_mode():
     assert r_ins.status_code == 200
     ins_data = r_ins.json()
     assert ins_data["ai_summary_available"] is True
-    assert len(ins_data["cards"]) == 3
+    assert len(ins_data["cards"]) == 4
     assert len(ins_data["suggested_questions"]) == 3
     for c in ins_data["cards"]:
         assert c["strength"] in ["Strong", "Medium", "Weak signal"]

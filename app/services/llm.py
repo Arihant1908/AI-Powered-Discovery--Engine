@@ -34,8 +34,9 @@ class LLMService:
 
         last_error: Optional[Exception] = None
 
-        # Try once + one retry with backoff
-        for attempt in range(2):
+        # Try initial call + up to 2 retries with backoff (total 3 attempts)
+        backoffs = [self.retry_backoff_seconds, self.retry_backoff_seconds * 2]
+        for attempt in range(3):
             try:
                 response = client.models.generate_content(
                     model=settings.GEMINI_MODEL,
@@ -46,11 +47,11 @@ class LLMService:
             except Exception as exc:
                 last_error = exc
                 logger.warning(f"Gemini API attempt {attempt + 1} failed: {exc}")
-                if attempt == 0:
-                    time.sleep(self.retry_backoff_seconds)
+                if attempt < 2:
+                    time.sleep(backoffs[attempt])
 
-        # If both attempts failed, fall back to mock to ensure graceful degradation
-        logger.error(f"Gemini API failed after 1 retry: {last_error}. Utilizing deterministic fallback mock.")
+        # If all attempts failed, fall back to mock to ensure graceful degradation
+        logger.error(f"Gemini API failed after 2 retries: {last_error}. Utilizing deterministic fallback mock.")
         return self._mock_generate(prompt, system_instruction)
 
     def _mock_generate(self, prompt: str, system_instruction: Optional[str] = None) -> str:
@@ -66,33 +67,44 @@ class LLMService:
             card1_match = re.search(r'Valid evidence IDs for Card 1:\s*(\[[^\]]+\])', prompt)
             card2_match = re.search(r'Valid evidence IDs for Card 2:\s*(\[[^\]]+\])', prompt)
             card3_match = re.search(r'Valid evidence IDs for Card 3:\s*(\[[^\]]+\])', prompt)
+            card4_match = re.search(r'Valid evidence IDs for Card 4:\s*(\[[^\]]+\])', prompt)
 
             card1_ids = json.loads(card1_match.group(1)) if card1_match else ["SV-00007", "SV-00011", "INT-03", "INT-07"]
-            card2_ids = json.loads(card2_match.group(1)) if card2_match else ["PS-00066", "PS-00139", "AS-00014", "AS-00060"]
-            card3_ids = json.loads(card3_match.group(1)) if card3_match else ["SV-00002", "SV-00004", "SV-00006", "SV-00009", "SV-00011", "YT-00135", "INT-02"]
+            card2_ids = json.loads(card2_match.group(1)) if card2_match else [
+                "SV-00007", "SV-00008", "SV-00009", "SV-00011", "SV-00012",
+                "INT-03", "INT-07", "PS-00067", "PS-00139", "AS-00018"
+            ]
+            card3_ids = json.loads(card3_match.group(1)) if card3_match else ["PS-00066", "PS-00139", "AS-00014", "AS-00060"]
+            card4_ids = json.loads(card4_match.group(1)) if card4_match else ["SV-00002", "SV-00004", "SV-00006", "SV-00009", "SV-00011", "YT-00135", "INT-02"]
 
-            # Add an invalid/out-of-filter ID to card 2 to test that invalid/out-of-filter IDs are dropped
-            card2_ids_with_invalid = list(card2_ids) + ["NONEXISTENT-ID-9999"]
+            # Add an invalid/out-of-filter ID to card 3 to test that invalid/out-of-filter IDs are dropped
+            card3_ids_with_invalid = list(card3_ids) + ["NONEXISTENT-ID-9999"]
 
             mock_insights = {
                 "insight_cards": [
                     {
-                        "headline": "Variable-income investors cancel instead of pausing during cash flow crunches",
-                        "explanation": "4 of 7 variable-income records paused, stopped or reduced. Users experiencing periodic cash flow shifts struggle to locate temporary pause controls during critical billing windows, opting for complete cancellation to avoid bank overdraft charges.",
+                        "headline": "Variable-income investors report cash flow crunches during billing windows",
+                        "explanation": "4 of 7 variable-income records paused, stopped or reduced. Users experiencing periodic cash flow shifts struggle to locate temporary pause controls during critical billing windows. Outcome breakdown: 3 Paused, 1 Reduced.",
                         "proposed_pm_action": "Introduce a streamlined 1-click pause option directly inside the cancellation workflow with automated resumption reminders.",
                         "supporting_evidence_ids": card1_ids,
                     },
                     {
-                        "headline": "Payment mandate friction leads to involuntary SIP cancellations",
-                        "explanation": "Mandate authorizations frequently fail when bank server response windows expire or salary credits arrive on non-business days. Users receive bank failure charges and hesitate to re-verify debit instructions.",
-                        "proposed_pm_action": "Implement a 3-day flexible debit retry grace window before marking mandates as failed.",
-                        "supporting_evidence_ids": card2_ids_with_invalid,
+                        "headline": "Drop-off drivers: cash crunch and low early returns dominate churn",
+                        "explanation": "Among 10 records with outcome in Paused, Stopped, or Reduced, the main drivers reported are: 5 Cash crunch, 2 Low early returns, 1 Payment or mandate failure, 1 Confusion about the app, 1 Other. Outcome breakdown: 4 Stopped, 3 Paused, 3 Reduced.",
+                        "proposed_pm_action": "Implement proactive pause options and educational check-ins prior to scheduled SIP debits.",
+                        "supporting_evidence_ids": card2_ids,
                     },
                     {
-                        "headline": "Short-term volatility triggers early discontinuation in first-time investors",
-                        "explanation": "First-time investors entering growth funds observe initial downward market variance and interpret it as underperformance. Unprepared for regular short-cycle portfolio movement, users discontinue commitments early in the investment lifecycle.",
+                        "headline": "4 records cite Payment or mandate failure across bank debits",
+                        "explanation": "4 records cite Payment or mandate failure: 4 Continuing. Mandate authorizations encounter bank server timeouts and response delays during account setup. Outcome breakdown: 4 Continuing.",
+                        "proposed_pm_action": "Implement a 3-day flexible debit retry grace window before marking mandates as failed.",
+                        "supporting_evidence_ids": card3_ids_with_invalid,
+                    },
+                    {
+                        "headline": "7 records cite Low early returns during initial investment period",
+                        "explanation": "7 records cite Low early returns: 4 Continuing, 1 Paused, 1 Reduced, 1 Unknown. Feedback mentions portfolio value fluctuations and expectations during initial investment months. Outcome breakdown: 4 Continuing, 1 Paused, 1 Reduced, 1 Unknown.",
                         "proposed_pm_action": "Embed an interactive averaging and volatility context explainer highlighting long-horizon accumulation milestones.",
-                        "supporting_evidence_ids": card3_ids,
+                        "supporting_evidence_ids": card4_ids,
                     }
                 ],
                 "suggested_questions": [
@@ -136,7 +148,8 @@ class LLMService:
                 "unmet_need": "none",
                 "income_stability": "Unclear",
                 "age_band": "Unclear",
-                "influence": "Unclear"
+                "influence": "Unclear",
+                "label_origin": "fallback",
             }
             for item_id in item_ids
         ]
