@@ -1,0 +1,18 @@
+{
+  "status_code": 200,
+  "body": {
+    "id": "AS-00022",
+    "source": "appstore",
+    "date": "2026-09-22",
+    "rating": 5.0,
+    "text": "weekly sip for mutual funds please also add weekly sip options for mutual funds",
+    "stage": "Unclear",
+    "main_driver": "Payment or mandate failure",
+    "outcome": "Unknown",
+    "unmet_need": "Enable weekly SIP investment options",
+    "income_stability": "Unclear",
+    "age_band": "Unclear",
+    "influence": "Unclear",
+    "label_origin": "user_corrected"
+  }
+}

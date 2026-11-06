@@ -1,0 +1,9 @@
+{
+  "status_code": 200,
+  "body": {
+    "total_items_collected": 1094,
+    "distinct_sources": 6,
+    "labelled_evidence_items": 54,
+    "deep_interviews": 8
+  }
+}

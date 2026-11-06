@@ -1,0 +1,9 @@
+{
+  "status_code": 400,
+  "body": {
+    "error": {
+      "code": "HTTP_400",
+      "message": "Empty text found in row with ID 'EMP-01'."
+    }
+  }
+}

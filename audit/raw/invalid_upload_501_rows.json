@@ -1,0 +1,9 @@
+{
+  "status_code": 400,
+  "body": {
+    "error": {
+      "code": "HTTP_400",
+      "message": "File exceeds maximum row limit of 500 rows (501 rows found)."
+    }
+  }
+}

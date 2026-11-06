@@ -1,0 +1,118 @@
+{
+  "status_code": 200,
+  "body": {
+    "allowed_values": {
+      "stage": [
+        "Month 0-1",
+        "Month 2-3",
+        "Month 4-6",
+        "Month 7-12",
+        "Month 13-17",
+        "Month 18-24",
+        "Month 24+",
+        "Unclear"
+      ],
+      "main_driver": [
+        "Expectation gap",
+        "Low early returns",
+        "Confusion about the app",
+        "Cash crunch",
+        "Payment or mandate failure",
+        "Outside influence",
+        "Forgot about it",
+        "Working well / no issue",
+        "Advice or question (no SIP experience)",
+        "Praise or general feedback",
+        "Other"
+      ],
+      "outcome": [
+        "Continuing",
+        "Paused",
+        "Reduced",
+        "Stopped",
+        "Unknown"
+      ],
+      "income_stability": [
+        "Fixed salary",
+        "Variable income (freelance/business)",
+        "Student or dependent",
+        "Unclear"
+      ],
+      "age_band": [
+        "Under 23",
+        "23-27",
+        "28-35",
+        "36+",
+        "Unclear"
+      ],
+      "influence": [
+        "Family",
+        "Friends",
+        "YouTube or social media",
+        "Own research",
+        "Other",
+        "Unclear"
+      ]
+    },
+    "sources": [
+      "appstore",
+      "interviews",
+      "playstore",
+      "reddit",
+      "survey",
+      "youtube"
+    ],
+    "stage": [
+      "Month 0-1",
+      "Month 2-3",
+      "Month 4-6",
+      "Month 7-12",
+      "Month 13-17",
+      "Month 18-24",
+      "Month 24+",
+      "Unclear"
+    ],
+    "main_driver": [
+      "Expectation gap",
+      "Low early returns",
+      "Confusion about the app",
+      "Cash crunch",
+      "Payment or mandate failure",
+      "Outside influence",
+      "Forgot about it",
+      "Working well / no issue",
+      "Advice or question (no SIP experience)",
+      "Praise or general feedback",
+      "Other"
+    ],
+    "outcome": [
+      "Continuing",
+      "Paused",
+      "Reduced",
+      "Stopped",
+      "Unknown"
+    ],
+    "income_stability": [
+      "Fixed salary",
+      "Variable income (freelance/business)",
+      "Student or dependent",
+      "Unclear"
+    ],
+    "age_band": [
+      "Under 23",
+      "23-27",
+      "28-35",
+      "36+",
+      "Unclear"
+    ],
+    "influence": [
+      "Family",
+      "Friends",
+      "YouTube or social media",
+      "Own research",
+      "Other",
+      "Unclear"
+    ],
+    "ai_available": true
+  }
+}

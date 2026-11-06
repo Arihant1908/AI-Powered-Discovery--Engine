@@ -1,0 +1,269 @@
+{
+  "status_code": 200,
+  "body": {
+    "dataset": "preloaded",
+    "total_records": 54,
+    "computed_stats": {
+      "total_records": 54,
+      "main_driver_counts": {
+        "Expectation gap": 1,
+        "Low early returns": 7,
+        "Confusion about the app": 3,
+        "Cash crunch": 12,
+        "Payment or mandate failure": 4,
+        "Outside influence": 3,
+        "Forgot about it": 0,
+        "Working well / no issue": 5,
+        "Advice or question (no SIP experience)": 13,
+        "Praise or general feedback": 0,
+        "Other": 6
+      },
+      "outcome_counts": {
+        "Continuing": 19,
+        "Paused": 3,
+        "Reduced": 3,
+        "Stopped": 4,
+        "Unknown": 25
+      },
+      "segment_view": [
+        {
+          "income_stability": "Fixed salary",
+          "n": 12,
+          "negative_count": 2,
+          "negative_share": 0.16666666666666666,
+          "percentage": 16.7
+        },
+        {
+          "income_stability": "Variable income (freelance/business)",
+          "n": 7,
+          "negative_count": 4,
+          "negative_share": 0.5714285714285714,
+          "percentage": 57.1
+        },
+        {
+          "income_stability": "Student or dependent",
+          "n": 5,
+          "negative_count": 2,
+          "negative_share": 0.4,
+          "percentage": 40.0
+        },
+        {
+          "income_stability": "Unclear",
+          "n": 30,
+          "negative_count": 2,
+          "negative_share": 0.06666666666666667,
+          "percentage": 6.7
+        }
+      ],
+      "top_unmet_needs": [
+        {
+          "theme": "Good returns",
+          "count": 1
+        },
+        {
+          "theme": "Understand how returns work",
+          "count": 1
+        },
+        {
+          "theme": "Principal stays safe or grows",
+          "count": 1
+        },
+        {
+          "theme": "Auto-retry for failed SIP payments",
+          "count": 1
+        },
+        {
+          "theme": "Reliable autopay for SIPs",
+          "count": 1
+        }
+      ],
+      "supporting_ids_by_driver": {
+        "Expectation gap": [
+          "INT-05"
+        ],
+        "Low early returns": [
+          "SV-00002",
+          "SV-00004",
+          "SV-00006",
+          "SV-00009",
+          "SV-00011",
+          "YT-00135",
+          "INT-02"
+        ],
+        "Confusion about the app": [
+          "AS-00056",
+          "YT-00394",
+          "INT-06"
+        ],
+        "Cash crunch": [
+          "SV-00001",
+          "SV-00007",
+          "SV-00010",
+          "SV-00012",
+          "YT-00209",
+          "YT-00284",
+          "YT-00416",
+          "YT-00441",
+          "INT-01",
+          "INT-03",
+          "INT-04",
+          "INT-07"
+        ],
+        "Payment or mandate failure": [
+          "PS-00066",
+          "PS-00139",
+          "AS-00014",
+          "AS-00060"
+        ],
+        "Outside influence": [
+          "YT-00403",
+          "YT-00411",
+          "YT-00477"
+        ],
+        "Working well / no issue": [
+          "SV-00003",
+          "PS-00007",
+          "PS-00160",
+          "PS-00072",
+          "INT-08"
+        ],
+        "Advice or question (no SIP experience)": [
+          "YT-00393",
+          "YT-00232",
+          "YT-00253",
+          "YT-00149",
+          "YT-00002",
+          "YT-00125",
+          "YT-00277",
+          "YT-00360",
+          "YT-00386",
+          "YT-00400",
+          "YT-00301",
+          "YT-00371",
+          "YT-00225"
+        ],
+        "Other": [
+          "SV-00005",
+          "SV-00008",
+          "PS-00316",
+          "AS-00002",
+          "PS-00328",
+          "PS-00087"
+        ]
+      }
+    },
+    "segment_view": [
+      {
+        "income_stability": "Fixed salary",
+        "n": 12,
+        "negative_count": 2,
+        "negative_share": 0.16666666666666666,
+        "percentage": 16.7
+      },
+      {
+        "income_stability": "Variable income (freelance/business)",
+        "n": 7,
+        "negative_count": 4,
+        "negative_share": 0.5714285714285714,
+        "percentage": 57.1
+      },
+      {
+        "income_stability": "Student or dependent",
+        "n": 5,
+        "negative_count": 2,
+        "negative_share": 0.4,
+        "percentage": 40.0
+      },
+      {
+        "income_stability": "Unclear",
+        "n": 30,
+        "negative_count": 2,
+        "negative_share": 0.06666666666666667,
+        "percentage": 6.7
+      }
+    ],
+    "ai_summary_available": true,
+    "message": null,
+    "cards": [
+      {
+        "headline": "4 of 7 variable-income records paused, stopped or reduced",
+        "explanation": "4 of 7 variable-income records paused, stopped or reduced, with 3 records citing cash crunch and 1 citing low early returns. Users like those in INT-03 and INT-07 report that rigid payment schedules conflict with fluctuating income. Outcome breakdown: 2 Paused, 1 Stopped, 1 Reduced.",
+        "proposed_pm_action": "Implement a flexible SIP 'skip' feature to allow users to pause payments during months of low income without terminating the mandate.",
+        "supporting_evidence_ids": [
+          "SV-00007",
+          "SV-00011",
+          "INT-03",
+          "INT-07"
+        ],
+        "supporting_count": 4,
+        "strength": "Medium",
+        "strength_label": "Medium signal, 4 records",
+        "filter": "income_stability = 'Variable income (freelance/business)' AND outcome in ('Paused', 'Stopped', 'Reduced')"
+      },
+      {
+        "headline": "10 records with outcome in Paused, Stopped, or Reduced",
+        "explanation": "Among records with outcome in Paused, Stopped, or Reduced, count by main_driver: 5 Cash crunch, 2 Low early returns, 1 Payment or mandate failure, 1 Other, 1 Confusion about the app. Quotes like PS-00139 and INT-01 highlight that financial constraints and technical friction influence these outcomes. Outcome breakdown: 3 Paused, 4 Stopped, 3 Reduced.",
+        "proposed_pm_action": "Introduce proactive payment reminders and a simplified dashboard to manage mandate status, reducing reliance on manual intervention.",
+        "supporting_evidence_ids": [
+          "SV-00007",
+          "SV-00009",
+          "SV-00011",
+          "SV-00012",
+          "PS-00139",
+          "PS-00087",
+          "INT-01",
+          "INT-03",
+          "INT-06",
+          "INT-07"
+        ],
+        "supporting_count": 10,
+        "strength": "Strong",
+        "strength_label": "Strong signal, 10 records",
+        "filter": "outcome in ('Paused', 'Stopped', 'Reduced')"
+      },
+      {
+        "headline": "4 records cite Payment or mandate failure",
+        "explanation": "4 records cite Payment or mandate failure, with users reporting issues regarding auto-retry functionality and transaction processing. Evidence from PS-00066 and AS-00014 indicates that users struggle when mandates do not execute as expected. Outcome breakdown: 1 Stopped, 3 Unknown.",
+        "proposed_pm_action": "Develop an automated retry mechanism for failed SIP payments and provide clearer error messaging for mandate synchronization issues.",
+        "supporting_evidence_ids": [
+          "PS-00066",
+          "PS-00139",
+          "AS-00014",
+          "AS-00060"
+        ],
+        "supporting_count": 4,
+        "strength": "Medium",
+        "strength_label": "Medium signal, 4 records",
+        "filter": "main_driver = 'Payment or mandate failure'"
+      },
+      {
+        "headline": "7 records cite Low early returns",
+        "explanation": "7 records cite Low early returns, reflecting user anxiety when market performance impacts principal value. As noted in INT-02 and YT-00135, seeing negative returns can influence user sentiment. Outcome breakdown: 4 Continuing, 1 Paused, 1 Reduced, 1 Unknown.",
+        "proposed_pm_action": "Enhance educational content within the app to explain long-term market volatility and the benefits of rupee cost averaging.",
+        "supporting_evidence_ids": [
+          "SV-00002",
+          "SV-00004",
+          "SV-00006",
+          "SV-00009",
+          "SV-00011",
+          "YT-00135",
+          "INT-02"
+        ],
+        "supporting_count": 7,
+        "strength": "Strong",
+        "strength_label": "Strong signal, 7 records",
+        "filter": "main_driver = 'Low early returns'"
+      }
+    ],
+    "suggested_questions": [
+      "What specific features would encourage users with variable income to resume their SIPs after a pause?",
+      "How does the frequency of app usage correlate with the likelihood of a user continuing their SIP despite market volatility?",
+      "What is the primary reason for the high volume of 'Unknown' outcomes in the current dataset?"
+    ],
+    "generated_at": "2026-11-06T09:49:21.384982+00:00",
+    "cached": false,
+    "data_warnings": [
+      "Rating column not provided. Numerical satisfaction scores are not available."
+    ]
+  }
+}

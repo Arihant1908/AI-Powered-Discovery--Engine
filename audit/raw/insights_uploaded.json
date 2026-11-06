@@ -1,0 +1,252 @@
+{
+  "status_code": 200,
+  "body": {
+    "dataset": "f1dfa56f-cdfd-45c2-8860-dc9cbded0ba3",
+    "total_records": 36,
+    "computed_stats": {
+      "total_records": 36,
+      "main_driver_counts": {
+        "Expectation gap": 0,
+        "Low early returns": 0,
+        "Confusion about the app": 0,
+        "Cash crunch": 0,
+        "Payment or mandate failure": 3,
+        "Outside influence": 0,
+        "Forgot about it": 0,
+        "Working well / no issue": 0,
+        "Advice or question (no SIP experience)": 19,
+        "Praise or general feedback": 10,
+        "Other": 4
+      },
+      "outcome_counts": {
+        "Continuing": 2,
+        "Paused": 0,
+        "Reduced": 0,
+        "Stopped": 0,
+        "Unknown": 34
+      },
+      "segment_view": [
+        {
+          "income_stability": "Fixed salary",
+          "n": 5,
+          "negative_count": 0,
+          "negative_share": 0.0,
+          "percentage": 0.0
+        },
+        {
+          "income_stability": "Variable income (freelance/business)",
+          "n": 2,
+          "negative_count": 0,
+          "negative_share": 0.0,
+          "percentage": 0.0
+        },
+        {
+          "income_stability": "Student or dependent",
+          "n": 1,
+          "negative_count": 0,
+          "negative_share": 0.0,
+          "percentage": 0.0
+        },
+        {
+          "income_stability": "Unclear",
+          "n": 28,
+          "negative_count": 0,
+          "negative_share": 0.0,
+          "percentage": 0.0
+        }
+      ],
+      "top_unmet_needs": [
+        {
+          "theme": "Guidance on selecting SIP funds",
+          "count": 2
+        },
+        {
+          "theme": "Enable weekly SIP investment options",
+          "count": 1
+        },
+        {
+          "theme": "Guidance on SIP versus lump sum",
+          "count": 1
+        },
+        {
+          "theme": "Faster resolution for redemption issues",
+          "count": 1
+        },
+        {
+          "theme": "Educational resources for mutual funds",
+          "count": 1
+        }
+      ],
+      "supporting_ids_by_driver": {
+        "Payment or mandate failure": [
+          "AS-00022",
+          "PS-00034",
+          "PS-00344"
+        ],
+        "Advice or question (no SIP experience)": [
+          "YT-00027",
+          "RD-00011",
+          "YT-00548",
+          "YT-00128",
+          "YT-00347",
+          "RD-00039",
+          "RD-00030",
+          "YT-00443",
+          "YT-00358",
+          "PS-00178",
+          "YT-00273",
+          "YT-00249",
+          "YT-00189",
+          "RD-00105",
+          "YT-00127",
+          "YT-00365",
+          "RD-00042",
+          "YT-00312",
+          "YT-00055"
+        ],
+        "Praise or general feedback": [
+          "YT-00513",
+          "PS-00051",
+          "PS-00268",
+          "AS-00052",
+          "PS-00305",
+          "RD-00046",
+          "PS-00130",
+          "AS-00003",
+          "PS-00238",
+          "AS-00037"
+        ],
+        "Other": [
+          "AS-00013",
+          "PS-00049",
+          "AS-00015",
+          "PS-00201"
+        ]
+      }
+    },
+    "segment_view": [
+      {
+        "income_stability": "Fixed salary",
+        "n": 5,
+        "negative_count": 0,
+        "negative_share": 0.0,
+        "percentage": 0.0
+      },
+      {
+        "income_stability": "Variable income (freelance/business)",
+        "n": 2,
+        "negative_count": 0,
+        "negative_share": 0.0,
+        "percentage": 0.0
+      },
+      {
+        "income_stability": "Student or dependent",
+        "n": 1,
+        "negative_count": 0,
+        "negative_share": 0.0,
+        "percentage": 0.0
+      },
+      {
+        "income_stability": "Unclear",
+        "n": 28,
+        "negative_count": 0,
+        "negative_share": 0.0,
+        "percentage": 0.0
+      }
+    ],
+    "ai_summary_available": true,
+    "message": null,
+    "cards": [
+      {
+        "headline": "3 records cite payment or mandate failure",
+        "explanation": "Users report difficulties with mandate failures and express frustration regarding penalty charges for missed SIP payments. Outcome breakdown: 3 Unknown.",
+        "proposed_pm_action": "Implement a grace period notification system and provide an in-app mechanism to retry failed mandates without manual intervention.",
+        "supporting_evidence_ids": [
+          "AS-00022",
+          "PS-00034",
+          "PS-00344"
+        ],
+        "supporting_count": 3,
+        "strength": "Medium",
+        "strength_label": "Medium signal, 3 records",
+        "filter": "main_driver = 'Payment or mandate failure'"
+      },
+      {
+        "headline": "19 records cite advice or question regarding SIP experience",
+        "explanation": "Beginner investors frequently request guidance on fund selection, investment strategies, and educational resources to improve their financial literacy. Outcome breakdown: 1 Continuing, 18 Unknown.",
+        "proposed_pm_action": "Develop an integrated 'Learning Hub' within the app featuring curated tutorials and personalized SIP planning tools for beginners.",
+        "supporting_evidence_ids": [
+          "YT-00027",
+          "RD-00011",
+          "YT-00548",
+          "YT-00128",
+          "YT-00347",
+          "RD-00039",
+          "RD-00030",
+          "YT-00443",
+          "YT-00358",
+          "PS-00178",
+          "YT-00273",
+          "YT-00249",
+          "YT-00189",
+          "RD-00105",
+          "YT-00127",
+          "YT-00365",
+          "RD-00042",
+          "YT-00312",
+          "YT-00055"
+        ],
+        "supporting_count": 19,
+        "strength": "Strong",
+        "strength_label": "Strong signal, 19 records",
+        "filter": "main_driver = 'Advice or question (no SIP experience)'"
+      },
+      {
+        "headline": "10 records cite praise or general feedback",
+        "explanation": "Users appreciate the user-friendly interface and SIP calculator tools, though some request more human-centric customer support. Outcome breakdown: 1 Continuing, 9 Unknown.",
+        "proposed_pm_action": "Enhance customer support accessibility by introducing a hybrid model that combines automated FAQs with direct access to human support agents.",
+        "supporting_evidence_ids": [
+          "YT-00513",
+          "PS-00051",
+          "PS-00268",
+          "AS-00052",
+          "PS-00305",
+          "RD-00046",
+          "PS-00130",
+          "AS-00003",
+          "PS-00238",
+          "AS-00037"
+        ],
+        "supporting_count": 10,
+        "strength": "Strong",
+        "strength_label": "Strong signal, 10 records",
+        "filter": "main_driver = 'Praise or general feedback'"
+      },
+      {
+        "headline": "4 records cite other issues including redemption and KYC",
+        "explanation": "Reports indicate dissatisfaction with redemption timelines and concerns regarding KYC status and plan types. Outcome breakdown: 4 Unknown.",
+        "proposed_pm_action": "Create a transparent status tracker for redemption requests and KYC verification to provide users with real-time visibility into their account processes.",
+        "supporting_evidence_ids": [
+          "AS-00013",
+          "PS-00049",
+          "AS-00015",
+          "PS-00201"
+        ],
+        "supporting_count": 4,
+        "strength": "Medium",
+        "strength_label": "Medium signal, 4 records",
+        "filter": "main_driver = 'Other'"
+      }
+    ],
+    "suggested_questions": [
+      "What specific barriers prevent users from transitioning from 'Unknown' status to 'Continuing'?",
+      "How does the lack of educational resources correlate with the high volume of 'Advice or question' inquiries?",
+      "What is the impact of mandate failure penalties on long-term user retention?"
+    ],
+    "generated_at": "2026-11-06T09:49:17.506246+00:00",
+    "cached": false,
+    "data_warnings": [
+      "Using column 'text' as text"
+    ]
+  }
+}

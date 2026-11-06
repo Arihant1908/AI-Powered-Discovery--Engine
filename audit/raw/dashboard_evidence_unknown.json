@@ -1,0 +1,9 @@
+{
+  "status_code": 404,
+  "body": {
+    "error": {
+      "code": "HTTP_404",
+      "message": "Evidence item with id 'UNKNOWN-99999' not found"
+    }
+  }
+}

@@ -1,0 +1,134 @@
+{
+  "status_code": 200,
+  "body": {
+    "main_driver": [
+      {
+        "label": "Expectation gap",
+        "count": 1,
+        "percentage": 1.85
+      },
+      {
+        "label": "Low early returns",
+        "count": 7,
+        "percentage": 12.96
+      },
+      {
+        "label": "Confusion about the app",
+        "count": 3,
+        "percentage": 5.56
+      },
+      {
+        "label": "Cash crunch",
+        "count": 12,
+        "percentage": 22.22
+      },
+      {
+        "label": "Payment or mandate failure",
+        "count": 4,
+        "percentage": 7.41
+      },
+      {
+        "label": "Outside influence",
+        "count": 3,
+        "percentage": 5.56
+      },
+      {
+        "label": "Forgot about it",
+        "count": 0,
+        "percentage": 0.0
+      },
+      {
+        "label": "Working well / no issue",
+        "count": 5,
+        "percentage": 9.26
+      },
+      {
+        "label": "Advice or question (no SIP experience)",
+        "count": 13,
+        "percentage": 24.07
+      },
+      {
+        "label": "Praise or general feedback",
+        "count": 0,
+        "percentage": 0.0
+      },
+      {
+        "label": "Other",
+        "count": 6,
+        "percentage": 11.11
+      }
+    ],
+    "outcome": [
+      {
+        "label": "Continuing",
+        "count": 19,
+        "percentage": 35.19
+      },
+      {
+        "label": "Paused",
+        "count": 3,
+        "percentage": 5.56
+      },
+      {
+        "label": "Reduced",
+        "count": 3,
+        "percentage": 5.56
+      },
+      {
+        "label": "Stopped",
+        "count": 4,
+        "percentage": 7.41
+      },
+      {
+        "label": "Unknown",
+        "count": 25,
+        "percentage": 46.3
+      }
+    ],
+    "total_records": 54,
+    "counts": {
+      "main_driver": {
+        "Expectation gap": 1,
+        "Low early returns": 7,
+        "Confusion about the app": 3,
+        "Cash crunch": 12,
+        "Payment or mandate failure": 4,
+        "Outside influence": 3,
+        "Forgot about it": 0,
+        "Working well / no issue": 5,
+        "Advice or question (no SIP experience)": 13,
+        "Praise or general feedback": 0,
+        "Other": 6
+      },
+      "outcome": {
+        "Continuing": 19,
+        "Paused": 3,
+        "Reduced": 3,
+        "Stopped": 4,
+        "Unknown": 25
+      }
+    },
+    "percentages": {
+      "main_driver": {
+        "Expectation gap": 1.85,
+        "Low early returns": 12.96,
+        "Confusion about the app": 5.56,
+        "Cash crunch": 22.22,
+        "Payment or mandate failure": 7.41,
+        "Outside influence": 5.56,
+        "Forgot about it": 0.0,
+        "Working well / no issue": 9.26,
+        "Advice or question (no SIP experience)": 24.07,
+        "Praise or general feedback": 0.0,
+        "Other": 11.11
+      },
+      "outcome": {
+        "Continuing": 35.19,
+        "Paused": 5.56,
+        "Reduced": 5.56,
+        "Stopped": 7.41,
+        "Unknown": 46.3
+      }
+    }
+  }
+}

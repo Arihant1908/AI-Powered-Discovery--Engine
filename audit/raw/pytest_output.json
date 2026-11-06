@@ -1,0 +1,8 @@
+{
+  "status_code": 200,
+  "body": {
+    "returncode": 0,
+    "stdout": ".....................................................................    [100%]\n============================== warnings summary ===============================\n.venv\\Lib\\site-packages\\starlette\\testclient.py:36\n  C:\\Users\\ariha\\Desktop\\sip engine\\.venv\\Lib\\site-packages\\starlette\\testclient.py:36: DeprecationWarning: The anyio.abc.BlockingPortal alias is deprecated, use anyio.from_thread.BlockingPortal instead.\n    _PortalFactoryType = typing.Callable[[], typing.ContextManager[anyio.abc.BlockingPortal]]\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n69 passed, 1 warning in 4.58s\n",
+    "stderr": ""
+  }
+}

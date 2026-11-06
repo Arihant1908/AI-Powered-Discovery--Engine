@@ -1,0 +1,30 @@
+{
+  "status_code": 200,
+  "body": [
+    {
+      "file": "data/corpus_all.csv",
+      "size_bytes": 259045,
+      "sha256": "a0cbae1e0801fe2957b401b9c5d0eebce29c1579106ed053337ce55d15631d3f"
+    },
+    {
+      "file": "data/engine_dataset.csv",
+      "size_bytes": 22825,
+      "sha256": "b304906ad8cf9deef41e1b418c1f415c546b8ce9e0b69850fbca7ff482ea6f2e"
+    },
+    {
+      "file": "data/sample_upload.csv",
+      "size_bytes": 9010,
+      "sha256": "e914ca69a26f921981a96182fd2eda09f76d2e64f5b727cb03a3d39e37cd142a"
+    },
+    {
+      "file": "data/tagging_prompt.txt",
+      "size_bytes": 3273,
+      "sha256": "5a47727c3a5d9f0428a67728eb6d8166595d2e010cd515ac26c22f7cfe35df64"
+    },
+    {
+      "file": "data/golden/golden_set_20_-_golden_set - golden_set.csv",
+      "size_bytes": 8246,
+      "sha256": "bbddf5bcd1e75da3c401235b580c3e59c4ca61ab3ae6733d418bc6812350d048"
+    }
+  ]
+}

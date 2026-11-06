@@ -1,0 +1,12 @@
+{
+  "status_code": 200,
+  "body": {
+    "job_id": "f1dfa56f-cdfd-45c2-8860-dc9cbded0ba3",
+    "state": "running",
+    "total": 36,
+    "data_warnings": [
+      "Using column 'text' as text"
+    ],
+    "missing_columns": []
+  }
+}

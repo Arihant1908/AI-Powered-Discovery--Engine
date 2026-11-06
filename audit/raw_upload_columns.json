@@ -1,0 +1,2747 @@
+{
+  "case_1_id_text_only": {
+    "upload_response": {
+      "status_code": 200,
+      "body": {
+        "job_id": "4767ad3f-99fc-4a1e-8c5d-c4b31f4411b1",
+        "state": "running",
+        "total": 3,
+        "data_warnings": [
+          "Rating column not provided. Numerical satisfaction scores will not be displayed.",
+          "Date column not provided. Temporal tracking will not be displayed.",
+          "Source column not provided (defaulted to 'upload')."
+        ],
+        "missing_columns": [
+          "rating",
+          "date",
+          "source"
+        ]
+      }
+    },
+    "poll_timeline": [
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "4767ad3f-99fc-4a1e-8c5d-c4b31f4411b1",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [
+            "Rating column not provided. Numerical satisfaction scores will not be displayed.",
+            "Date column not provided. Temporal tracking will not be displayed.",
+            "Source column not provided (defaulted to 'upload')."
+          ],
+          "missing_columns": [
+            "rating",
+            "date",
+            "source"
+          ]
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "4767ad3f-99fc-4a1e-8c5d-c4b31f4411b1",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [
+            "Rating column not provided. Numerical satisfaction scores will not be displayed.",
+            "Date column not provided. Temporal tracking will not be displayed.",
+            "Source column not provided (defaulted to 'upload')."
+          ],
+          "missing_columns": [
+            "rating",
+            "date",
+            "source"
+          ]
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "4767ad3f-99fc-4a1e-8c5d-c4b31f4411b1",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [
+            "Rating column not provided. Numerical satisfaction scores will not be displayed.",
+            "Date column not provided. Temporal tracking will not be displayed.",
+            "Source column not provided (defaulted to 'upload')."
+          ],
+          "missing_columns": [
+            "rating",
+            "date",
+            "source"
+          ]
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "4767ad3f-99fc-4a1e-8c5d-c4b31f4411b1",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [
+            "Rating column not provided. Numerical satisfaction scores will not be displayed.",
+            "Date column not provided. Temporal tracking will not be displayed.",
+            "Source column not provided (defaulted to 'upload')."
+          ],
+          "missing_columns": [
+            "rating",
+            "date",
+            "source"
+          ]
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "4767ad3f-99fc-4a1e-8c5d-c4b31f4411b1",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [
+            "Rating column not provided. Numerical satisfaction scores will not be displayed.",
+            "Date column not provided. Temporal tracking will not be displayed.",
+            "Source column not provided (defaulted to 'upload')."
+          ],
+          "missing_columns": [
+            "rating",
+            "date",
+            "source"
+          ]
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "4767ad3f-99fc-4a1e-8c5d-c4b31f4411b1",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [
+            "Rating column not provided. Numerical satisfaction scores will not be displayed.",
+            "Date column not provided. Temporal tracking will not be displayed.",
+            "Source column not provided (defaulted to 'upload')."
+          ],
+          "missing_columns": [
+            "rating",
+            "date",
+            "source"
+          ]
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "4767ad3f-99fc-4a1e-8c5d-c4b31f4411b1",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [
+            "Rating column not provided. Numerical satisfaction scores will not be displayed.",
+            "Date column not provided. Temporal tracking will not be displayed.",
+            "Source column not provided (defaulted to 'upload')."
+          ],
+          "missing_columns": [
+            "rating",
+            "date",
+            "source"
+          ]
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "4767ad3f-99fc-4a1e-8c5d-c4b31f4411b1",
+          "state": "done",
+          "rows_tagged": 3,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [
+            "Rating column not provided. Numerical satisfaction scores will not be displayed.",
+            "Date column not provided. Temporal tracking will not be displayed.",
+            "Source column not provided (defaulted to 'upload')."
+          ],
+          "missing_columns": [
+            "rating",
+            "date",
+            "source"
+          ]
+        }
+      }
+    ],
+    "rows_response": {
+      "status_code": 200,
+      "body": {
+        "items": [
+          {
+            "id": "C1-01",
+            "source": "upload",
+            "date": null,
+            "rating": null,
+            "text": "Bank mandate rejected due to signature mismatch on auto debit setup",
+            "stage": "Unclear",
+            "main_driver": "Other",
+            "outcome": "Unknown",
+            "unmet_need": "none",
+            "income_stability": "Unclear",
+            "age_band": "Unclear",
+            "influence": "Unclear",
+            "label_origin": "ai_drafted"
+          },
+          {
+            "id": "C1-02",
+            "source": "upload",
+            "date": null,
+            "rating": null,
+            "text": "Markets fell 5% this month, pausing my SIP until recovery",
+            "stage": "Unclear",
+            "main_driver": "Other",
+            "outcome": "Unknown",
+            "unmet_need": "none",
+            "income_stability": "Unclear",
+            "age_band": "Unclear",
+            "influence": "Unclear",
+            "label_origin": "ai_drafted"
+          },
+          {
+            "id": "C1-03",
+            "source": "upload",
+            "date": null,
+            "rating": null,
+            "text": "Urgent medical expense in family, had to stop the monthly investment",
+            "stage": "Unclear",
+            "main_driver": "Other",
+            "outcome": "Unknown",
+            "unmet_need": "none",
+            "income_stability": "Unclear",
+            "age_band": "Unclear",
+            "influence": "Unclear",
+            "label_origin": "ai_drafted"
+          }
+        ],
+        "total": 3,
+        "page": 1,
+        "page_size": 50,
+        "total_pages": 1
+      }
+    },
+    "extracted_row_fields": [
+      {
+        "id": "C1-01",
+        "source": "upload",
+        "date": null,
+        "rating": null,
+        "text": "Bank mandate rejected due to signature mismatch on auto debit setup",
+        "main_driver": "Other",
+        "outcome": "Unknown"
+      },
+      {
+        "id": "C1-02",
+        "source": "upload",
+        "date": null,
+        "rating": null,
+        "text": "Markets fell 5% this month, pausing my SIP until recovery",
+        "main_driver": "Other",
+        "outcome": "Unknown"
+      },
+      {
+        "id": "C1-03",
+        "source": "upload",
+        "date": null,
+        "rating": null,
+        "text": "Urgent medical expense in family, had to stop the monthly investment",
+        "main_driver": "Other",
+        "outcome": "Unknown"
+      }
+    ],
+    "insights_response": {
+      "status_code": 200,
+      "body": {
+        "dataset": "4767ad3f-99fc-4a1e-8c5d-c4b31f4411b1",
+        "total_records": 3,
+        "computed_stats": {
+          "total_records": 3,
+          "main_driver_counts": {
+            "Expectation gap": 0,
+            "Low early returns": 0,
+            "Confusion about the app": 0,
+            "Cash crunch": 0,
+            "Payment or mandate failure": 0,
+            "Outside influence": 0,
+            "Forgot about it": 0,
+            "Working well / no issue": 0,
+            "Advice or question (no SIP experience)": 0,
+            "Praise or general feedback": 0,
+            "Other": 3
+          },
+          "outcome_counts": {
+            "Continuing": 0,
+            "Paused": 0,
+            "Reduced": 0,
+            "Stopped": 0,
+            "Unknown": 3
+          },
+          "segment_view": [
+            {
+              "income_stability": "Fixed salary",
+              "n": 0,
+              "negative_count": 0,
+              "negative_share": 0.0,
+              "percentage": 0.0
+            },
+            {
+              "income_stability": "Variable income (freelance/business)",
+              "n": 0,
+              "negative_count": 0,
+              "negative_share": 0.0,
+              "percentage": 0.0
+            },
+            {
+              "income_stability": "Student or dependent",
+              "n": 0,
+              "negative_count": 0,
+              "negative_share": 0.0,
+              "percentage": 0.0
+            },
+            {
+              "income_stability": "Unclear",
+              "n": 3,
+              "negative_count": 0,
+              "negative_share": 0.0,
+              "percentage": 0.0
+            }
+          ],
+          "top_unmet_needs": [],
+          "supporting_ids_by_driver": {
+            "Other": [
+              "C1-01",
+              "C1-02",
+              "C1-03"
+            ]
+          }
+        },
+        "segment_view": [
+          {
+            "income_stability": "Fixed salary",
+            "n": 0,
+            "negative_count": 0,
+            "negative_share": 0.0,
+            "percentage": 0.0
+          },
+          {
+            "income_stability": "Variable income (freelance/business)",
+            "n": 0,
+            "negative_count": 0,
+            "negative_share": 0.0,
+            "percentage": 0.0
+          },
+          {
+            "income_stability": "Student or dependent",
+            "n": 0,
+            "negative_count": 0,
+            "negative_share": 0.0,
+            "percentage": 0.0
+          },
+          {
+            "income_stability": "Unclear",
+            "n": 3,
+            "negative_count": 0,
+            "negative_share": 0.0,
+            "percentage": 0.0
+          }
+        ],
+        "ai_summary_available": true,
+        "message": null,
+        "cards": [
+          {
+            "headline": "Variable-income investors cancel instead of pausing during cash flow crunches",
+            "explanation": "4 of 7 variable-income records paused, stopped or reduced. Users experiencing periodic cash flow shifts struggle to locate temporary pause controls during critical billing windows, opting for complete cancellation to avoid bank overdraft charges.",
+            "proposed_pm_action": "Introduce a streamlined 1-click pause option directly inside the cancellation workflow with automated resumption reminders.",
+            "supporting_evidence_ids": [
+              "C1-01",
+              "C1-02",
+              "C1-03"
+            ],
+            "supporting_count": 3,
+            "strength": "Medium",
+            "strength_label": "Medium signal (3 items)",
+            "filter": "main_driver = 'Other'"
+          },
+          {
+            "headline": "Payment mandate friction leads to involuntary SIP cancellations",
+            "explanation": "Mandate authorizations frequently fail when bank server response windows expire or salary credits arrive on non-business days. Users receive bank failure charges and hesitate to re-verify debit instructions.",
+            "proposed_pm_action": "Implement a 3-day flexible debit retry grace window before marking mandates as failed.",
+            "supporting_evidence_ids": [
+              "C1-01",
+              "C1-02",
+              "C1-03"
+            ],
+            "supporting_count": 3,
+            "strength": "Medium",
+            "strength_label": "Medium signal (3 items)",
+            "filter": "General feedback records"
+          },
+          {
+            "headline": "Short-term volatility triggers early discontinuation in first-time investors",
+            "explanation": "First-time investors entering growth funds observe initial downward market variance and interpret it as underperformance. Unprepared for regular short-cycle portfolio movement, users discontinue commitments early in the investment lifecycle.",
+            "proposed_pm_action": "Embed an interactive averaging and volatility context explainer highlighting long-horizon accumulation milestones.",
+            "supporting_evidence_ids": [
+              "C1-01",
+              "C1-02",
+              "C1-03"
+            ],
+            "supporting_count": 3,
+            "strength": "Medium",
+            "strength_label": "Medium signal (3 items)",
+            "filter": "General feedback records"
+          }
+        ],
+        "suggested_questions": [
+          "What percentage of paused SIPs resume within 60 days of cancellation flow interventions?",
+          "How do payment mandate retries perform across different banking partner cohorts?",
+          "Does an onboarding volatility explainer decrease early drop-offs among first-time investors?"
+        ],
+        "generated_at": "2026-11-06T08:26:59.564027+00:00",
+        "cached": false,
+        "data_warnings": [
+          "Rating column not provided. Numerical satisfaction scores will not be displayed.",
+          "Date column not provided. Temporal tracking will not be displayed.",
+          "Source column not provided (defaulted to 'upload')."
+        ]
+      }
+    },
+    "data_warnings": [
+      "Rating column not provided. Numerical satisfaction scores will not be displayed.",
+      "Date column not provided. Temporal tracking will not be displayed.",
+      "Source column not provided (defaulted to 'upload')."
+    ],
+    "main_driver_counts": {
+      "Expectation gap": 0,
+      "Low early returns": 0,
+      "Confusion about the app": 0,
+      "Cash crunch": 0,
+      "Payment or mandate failure": 0,
+      "Outside influence": 0,
+      "Forgot about it": 0,
+      "Working well / no issue": 0,
+      "Advice or question (no SIP experience)": 0,
+      "Praise or general feedback": 0,
+      "Other": 3
+    },
+    "missing_columns": [
+      "rating",
+      "date",
+      "source"
+    ]
+  },
+  "case_2_id_text_rating": {
+    "upload_response": {
+      "status_code": 200,
+      "body": {
+        "job_id": "be50ae8a-2692-4abf-bbbd-154747edb15e",
+        "state": "running",
+        "total": 3,
+        "data_warnings": [
+          "Date column not provided. Temporal tracking will not be displayed.",
+          "Source column not provided (defaulted to 'upload')."
+        ],
+        "missing_columns": [
+          "date",
+          "source"
+        ]
+      }
+    },
+    "poll_timeline": [
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "be50ae8a-2692-4abf-bbbd-154747edb15e",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [
+            "Date column not provided. Temporal tracking will not be displayed.",
+            "Source column not provided (defaulted to 'upload')."
+          ],
+          "missing_columns": [
+            "date",
+            "source"
+          ]
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "be50ae8a-2692-4abf-bbbd-154747edb15e",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [
+            "Date column not provided. Temporal tracking will not be displayed.",
+            "Source column not provided (defaulted to 'upload')."
+          ],
+          "missing_columns": [
+            "date",
+            "source"
+          ]
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "be50ae8a-2692-4abf-bbbd-154747edb15e",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [
+            "Date column not provided. Temporal tracking will not be displayed.",
+            "Source column not provided (defaulted to 'upload')."
+          ],
+          "missing_columns": [
+            "date",
+            "source"
+          ]
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "be50ae8a-2692-4abf-bbbd-154747edb15e",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [
+            "Date column not provided. Temporal tracking will not be displayed.",
+            "Source column not provided (defaulted to 'upload')."
+          ],
+          "missing_columns": [
+            "date",
+            "source"
+          ]
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "be50ae8a-2692-4abf-bbbd-154747edb15e",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [
+            "Date column not provided. Temporal tracking will not be displayed.",
+            "Source column not provided (defaulted to 'upload')."
+          ],
+          "missing_columns": [
+            "date",
+            "source"
+          ]
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "be50ae8a-2692-4abf-bbbd-154747edb15e",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [
+            "Date column not provided. Temporal tracking will not be displayed.",
+            "Source column not provided (defaulted to 'upload')."
+          ],
+          "missing_columns": [
+            "date",
+            "source"
+          ]
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "be50ae8a-2692-4abf-bbbd-154747edb15e",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [
+            "Date column not provided. Temporal tracking will not be displayed.",
+            "Source column not provided (defaulted to 'upload')."
+          ],
+          "missing_columns": [
+            "date",
+            "source"
+          ]
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "be50ae8a-2692-4abf-bbbd-154747edb15e",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [
+            "Date column not provided. Temporal tracking will not be displayed.",
+            "Source column not provided (defaulted to 'upload')."
+          ],
+          "missing_columns": [
+            "date",
+            "source"
+          ]
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "be50ae8a-2692-4abf-bbbd-154747edb15e",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [
+            "Date column not provided. Temporal tracking will not be displayed.",
+            "Source column not provided (defaulted to 'upload')."
+          ],
+          "missing_columns": [
+            "date",
+            "source"
+          ]
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "be50ae8a-2692-4abf-bbbd-154747edb15e",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [
+            "Date column not provided. Temporal tracking will not be displayed.",
+            "Source column not provided (defaulted to 'upload')."
+          ],
+          "missing_columns": [
+            "date",
+            "source"
+          ]
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "be50ae8a-2692-4abf-bbbd-154747edb15e",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [
+            "Date column not provided. Temporal tracking will not be displayed.",
+            "Source column not provided (defaulted to 'upload')."
+          ],
+          "missing_columns": [
+            "date",
+            "source"
+          ]
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "be50ae8a-2692-4abf-bbbd-154747edb15e",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [
+            "Date column not provided. Temporal tracking will not be displayed.",
+            "Source column not provided (defaulted to 'upload')."
+          ],
+          "missing_columns": [
+            "date",
+            "source"
+          ]
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "be50ae8a-2692-4abf-bbbd-154747edb15e",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [
+            "Date column not provided. Temporal tracking will not be displayed.",
+            "Source column not provided (defaulted to 'upload')."
+          ],
+          "missing_columns": [
+            "date",
+            "source"
+          ]
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "be50ae8a-2692-4abf-bbbd-154747edb15e",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [
+            "Date column not provided. Temporal tracking will not be displayed.",
+            "Source column not provided (defaulted to 'upload')."
+          ],
+          "missing_columns": [
+            "date",
+            "source"
+          ]
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "be50ae8a-2692-4abf-bbbd-154747edb15e",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [
+            "Date column not provided. Temporal tracking will not be displayed.",
+            "Source column not provided (defaulted to 'upload')."
+          ],
+          "missing_columns": [
+            "date",
+            "source"
+          ]
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "be50ae8a-2692-4abf-bbbd-154747edb15e",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [
+            "Date column not provided. Temporal tracking will not be displayed.",
+            "Source column not provided (defaulted to 'upload')."
+          ],
+          "missing_columns": [
+            "date",
+            "source"
+          ]
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "be50ae8a-2692-4abf-bbbd-154747edb15e",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [
+            "Date column not provided. Temporal tracking will not be displayed.",
+            "Source column not provided (defaulted to 'upload')."
+          ],
+          "missing_columns": [
+            "date",
+            "source"
+          ]
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "be50ae8a-2692-4abf-bbbd-154747edb15e",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [
+            "Date column not provided. Temporal tracking will not be displayed.",
+            "Source column not provided (defaulted to 'upload')."
+          ],
+          "missing_columns": [
+            "date",
+            "source"
+          ]
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "be50ae8a-2692-4abf-bbbd-154747edb15e",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [
+            "Date column not provided. Temporal tracking will not be displayed.",
+            "Source column not provided (defaulted to 'upload')."
+          ],
+          "missing_columns": [
+            "date",
+            "source"
+          ]
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "be50ae8a-2692-4abf-bbbd-154747edb15e",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [
+            "Date column not provided. Temporal tracking will not be displayed.",
+            "Source column not provided (defaulted to 'upload')."
+          ],
+          "missing_columns": [
+            "date",
+            "source"
+          ]
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "be50ae8a-2692-4abf-bbbd-154747edb15e",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [
+            "Date column not provided. Temporal tracking will not be displayed.",
+            "Source column not provided (defaulted to 'upload')."
+          ],
+          "missing_columns": [
+            "date",
+            "source"
+          ]
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "be50ae8a-2692-4abf-bbbd-154747edb15e",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [
+            "Date column not provided. Temporal tracking will not be displayed.",
+            "Source column not provided (defaulted to 'upload')."
+          ],
+          "missing_columns": [
+            "date",
+            "source"
+          ]
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "be50ae8a-2692-4abf-bbbd-154747edb15e",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [
+            "Date column not provided. Temporal tracking will not be displayed.",
+            "Source column not provided (defaulted to 'upload')."
+          ],
+          "missing_columns": [
+            "date",
+            "source"
+          ]
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "be50ae8a-2692-4abf-bbbd-154747edb15e",
+          "state": "done",
+          "rows_tagged": 3,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [
+            "Date column not provided. Temporal tracking will not be displayed.",
+            "Source column not provided (defaulted to 'upload')."
+          ],
+          "missing_columns": [
+            "date",
+            "source"
+          ]
+        }
+      }
+    ],
+    "rows_response": {
+      "status_code": 200,
+      "body": {
+        "items": [
+          {
+            "id": "C2-01",
+            "source": "upload",
+            "date": null,
+            "rating": 2.0,
+            "text": "Bank mandate rejected due to signature mismatch on auto debit setup",
+            "stage": "Unclear",
+            "main_driver": "Payment or mandate failure",
+            "outcome": "Unknown",
+            "unmet_need": "Easier process for bank mandate setup",
+            "income_stability": "Unclear",
+            "age_band": "Unclear",
+            "influence": "Unclear",
+            "label_origin": "ai_drafted"
+          },
+          {
+            "id": "C2-02",
+            "source": "upload",
+            "date": null,
+            "rating": 3.0,
+            "text": "Markets fell 5% this month, pausing my SIP until recovery",
+            "stage": "Unclear",
+            "main_driver": "Low early returns",
+            "outcome": "Paused",
+            "unmet_need": "Guidance on market volatility and SIPs",
+            "income_stability": "Unclear",
+            "age_band": "Unclear",
+            "influence": "Unclear",
+            "label_origin": "ai_drafted"
+          },
+          {
+            "id": "C2-03",
+            "source": "upload",
+            "date": null,
+            "rating": 1.0,
+            "text": "Urgent medical expense in family, had to stop the monthly investment",
+            "stage": "Unclear",
+            "main_driver": "Cash crunch",
+            "outcome": "Stopped",
+            "unmet_need": "none",
+            "income_stability": "Unclear",
+            "age_band": "Unclear",
+            "influence": "Unclear",
+            "label_origin": "ai_drafted"
+          }
+        ],
+        "total": 3,
+        "page": 1,
+        "page_size": 50,
+        "total_pages": 1
+      }
+    },
+    "extracted_row_fields": [
+      {
+        "id": "C2-01",
+        "source": "upload",
+        "date": null,
+        "rating": 2.0,
+        "text": "Bank mandate rejected due to signature mismatch on auto debit setup",
+        "main_driver": "Payment or mandate failure",
+        "outcome": "Unknown"
+      },
+      {
+        "id": "C2-02",
+        "source": "upload",
+        "date": null,
+        "rating": 3.0,
+        "text": "Markets fell 5% this month, pausing my SIP until recovery",
+        "main_driver": "Low early returns",
+        "outcome": "Paused"
+      },
+      {
+        "id": "C2-03",
+        "source": "upload",
+        "date": null,
+        "rating": 1.0,
+        "text": "Urgent medical expense in family, had to stop the monthly investment",
+        "main_driver": "Cash crunch",
+        "outcome": "Stopped"
+      }
+    ],
+    "insights_response": {
+      "status_code": 200,
+      "body": {
+        "dataset": "be50ae8a-2692-4abf-bbbd-154747edb15e",
+        "total_records": 3,
+        "computed_stats": {
+          "total_records": 3,
+          "main_driver_counts": {
+            "Expectation gap": 0,
+            "Low early returns": 1,
+            "Confusion about the app": 0,
+            "Cash crunch": 1,
+            "Payment or mandate failure": 1,
+            "Outside influence": 0,
+            "Forgot about it": 0,
+            "Working well / no issue": 0,
+            "Advice or question (no SIP experience)": 0,
+            "Praise or general feedback": 0,
+            "Other": 0
+          },
+          "outcome_counts": {
+            "Continuing": 0,
+            "Paused": 1,
+            "Reduced": 0,
+            "Stopped": 1,
+            "Unknown": 1
+          },
+          "segment_view": [
+            {
+              "income_stability": "Fixed salary",
+              "n": 0,
+              "negative_count": 0,
+              "negative_share": 0.0,
+              "percentage": 0.0
+            },
+            {
+              "income_stability": "Variable income (freelance/business)",
+              "n": 0,
+              "negative_count": 0,
+              "negative_share": 0.0,
+              "percentage": 0.0
+            },
+            {
+              "income_stability": "Student or dependent",
+              "n": 0,
+              "negative_count": 0,
+              "negative_share": 0.0,
+              "percentage": 0.0
+            },
+            {
+              "income_stability": "Unclear",
+              "n": 3,
+              "negative_count": 2,
+              "negative_share": 0.6666666666666666,
+              "percentage": 66.7
+            }
+          ],
+          "top_unmet_needs": [
+            {
+              "theme": "Easier process for bank mandate setup",
+              "count": 1
+            },
+            {
+              "theme": "Guidance on market volatility and SIPs",
+              "count": 1
+            }
+          ],
+          "supporting_ids_by_driver": {
+            "Low early returns": [
+              "C2-02"
+            ],
+            "Cash crunch": [
+              "C2-03"
+            ],
+            "Payment or mandate failure": [
+              "C2-01"
+            ]
+          }
+        },
+        "segment_view": [
+          {
+            "income_stability": "Fixed salary",
+            "n": 0,
+            "negative_count": 0,
+            "negative_share": 0.0,
+            "percentage": 0.0
+          },
+          {
+            "income_stability": "Variable income (freelance/business)",
+            "n": 0,
+            "negative_count": 0,
+            "negative_share": 0.0,
+            "percentage": 0.0
+          },
+          {
+            "income_stability": "Student or dependent",
+            "n": 0,
+            "negative_count": 0,
+            "negative_share": 0.0,
+            "percentage": 0.0
+          },
+          {
+            "income_stability": "Unclear",
+            "n": 3,
+            "negative_count": 2,
+            "negative_share": 0.6666666666666666,
+            "percentage": 66.7
+          }
+        ],
+        "ai_summary_available": true,
+        "message": null,
+        "cards": [
+          {
+            "headline": "Operational friction in mandate setup causes SIP abandonment",
+            "explanation": "Investors are experiencing involuntary SIP termination due to technical failures in the bank mandate process, as evidenced by signature mismatches (C2-01). This highlights a critical need for a more robust and user-friendly digital mandate verification system to prevent unnecessary churn.",
+            "proposed_pm_action": "Implement e-mandate integration via UPI or Netbanking to bypass manual signature verification processes.",
+            "supporting_evidence_ids": [
+              "C2-01"
+            ],
+            "supporting_count": 1,
+            "strength": "Weak signal",
+            "strength_label": "Weak signal (1 item)",
+            "filter": "main_driver = 'Payment or mandate failure'"
+          },
+          {
+            "headline": "Market volatility triggers reactive SIP pausing",
+            "explanation": "Investors lack the necessary guidance to navigate short-term market fluctuations, leading them to pause investments during downturns (C2-02). This behavior suggests that current communication strategies are failing to reinforce the long-term benefits of rupee-cost averaging.",
+            "proposed_pm_action": "Deploy in-app educational nudges and volatility-focused content to reassure investors during market corrections.",
+            "supporting_evidence_ids": [
+              "C2-02"
+            ],
+            "supporting_count": 1,
+            "strength": "Weak signal",
+            "strength_label": "Weak signal (1 item)",
+            "filter": "main_driver = 'Low early returns'"
+          },
+          {
+            "headline": "Unforeseen liquidity needs drive permanent SIP cessation",
+            "explanation": "Personal financial emergencies, such as medical expenses, force investors to stop their SIPs entirely (C2-03). The data indicates that users currently lack flexible options to temporarily suspend or adjust contributions without fully canceling their investment plans.",
+            "proposed_pm_action": "Introduce a 'SIP Holiday' feature that allows users to skip payments for a limited period without requiring a full mandate cancellation.",
+            "supporting_evidence_ids": [
+              "C2-03"
+            ],
+            "supporting_count": 1,
+            "strength": "Weak signal",
+            "strength_label": "Weak signal (1 item)",
+            "filter": "main_driver = 'Cash crunch'"
+          }
+        ],
+        "suggested_questions": [
+          "What is the demographic profile of the 'Unclear' income segment, and how does it correlate with churn rates?",
+          "What percentage of mandate failures are resolved by users versus those that result in permanent account closure?",
+          "How does the frequency of educational content consumption correlate with the likelihood of an investor pausing their SIP during market volatility?"
+        ],
+        "generated_at": "2026-11-06T08:27:48.479139+00:00",
+        "cached": false,
+        "data_warnings": [
+          "Date column not provided. Temporal tracking will not be displayed.",
+          "Source column not provided (defaulted to 'upload')."
+        ]
+      }
+    },
+    "data_warnings": [
+      "Date column not provided. Temporal tracking will not be displayed.",
+      "Source column not provided (defaulted to 'upload')."
+    ],
+    "main_driver_counts": {
+      "Expectation gap": 0,
+      "Low early returns": 1,
+      "Confusion about the app": 0,
+      "Cash crunch": 1,
+      "Payment or mandate failure": 1,
+      "Outside influence": 0,
+      "Forgot about it": 0,
+      "Working well / no issue": 0,
+      "Advice or question (no SIP experience)": 0,
+      "Praise or general feedback": 0,
+      "Other": 0
+    },
+    "missing_columns": [
+      "date",
+      "source"
+    ]
+  },
+  "case_3_full_columns": {
+    "upload_response": {
+      "status_code": 200,
+      "body": {
+        "job_id": "8755b7c3-3c6c-4d00-a5ca-ba4b86d99b43",
+        "state": "running",
+        "total": 3,
+        "data_warnings": [],
+        "missing_columns": []
+      }
+    },
+    "poll_timeline": [
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "8755b7c3-3c6c-4d00-a5ca-ba4b86d99b43",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [],
+          "missing_columns": []
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "8755b7c3-3c6c-4d00-a5ca-ba4b86d99b43",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [],
+          "missing_columns": []
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "8755b7c3-3c6c-4d00-a5ca-ba4b86d99b43",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [],
+          "missing_columns": []
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "8755b7c3-3c6c-4d00-a5ca-ba4b86d99b43",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [],
+          "missing_columns": []
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "8755b7c3-3c6c-4d00-a5ca-ba4b86d99b43",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [],
+          "missing_columns": []
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "8755b7c3-3c6c-4d00-a5ca-ba4b86d99b43",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [],
+          "missing_columns": []
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "8755b7c3-3c6c-4d00-a5ca-ba4b86d99b43",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [],
+          "missing_columns": []
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "8755b7c3-3c6c-4d00-a5ca-ba4b86d99b43",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [],
+          "missing_columns": []
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "8755b7c3-3c6c-4d00-a5ca-ba4b86d99b43",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [],
+          "missing_columns": []
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "8755b7c3-3c6c-4d00-a5ca-ba4b86d99b43",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [],
+          "missing_columns": []
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "8755b7c3-3c6c-4d00-a5ca-ba4b86d99b43",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [],
+          "missing_columns": []
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "8755b7c3-3c6c-4d00-a5ca-ba4b86d99b43",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [],
+          "missing_columns": []
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "8755b7c3-3c6c-4d00-a5ca-ba4b86d99b43",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [],
+          "missing_columns": []
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "8755b7c3-3c6c-4d00-a5ca-ba4b86d99b43",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [],
+          "missing_columns": []
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "8755b7c3-3c6c-4d00-a5ca-ba4b86d99b43",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [],
+          "missing_columns": []
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "8755b7c3-3c6c-4d00-a5ca-ba4b86d99b43",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [],
+          "missing_columns": []
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "8755b7c3-3c6c-4d00-a5ca-ba4b86d99b43",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [],
+          "missing_columns": []
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "8755b7c3-3c6c-4d00-a5ca-ba4b86d99b43",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [],
+          "missing_columns": []
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "8755b7c3-3c6c-4d00-a5ca-ba4b86d99b43",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [],
+          "missing_columns": []
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "8755b7c3-3c6c-4d00-a5ca-ba4b86d99b43",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [],
+          "missing_columns": []
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "8755b7c3-3c6c-4d00-a5ca-ba4b86d99b43",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [],
+          "missing_columns": []
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "8755b7c3-3c6c-4d00-a5ca-ba4b86d99b43",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [],
+          "missing_columns": []
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "8755b7c3-3c6c-4d00-a5ca-ba4b86d99b43",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [],
+          "missing_columns": []
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "8755b7c3-3c6c-4d00-a5ca-ba4b86d99b43",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [],
+          "missing_columns": []
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "8755b7c3-3c6c-4d00-a5ca-ba4b86d99b43",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [],
+          "missing_columns": []
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "8755b7c3-3c6c-4d00-a5ca-ba4b86d99b43",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [],
+          "missing_columns": []
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "8755b7c3-3c6c-4d00-a5ca-ba4b86d99b43",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [],
+          "missing_columns": []
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "8755b7c3-3c6c-4d00-a5ca-ba4b86d99b43",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [],
+          "missing_columns": []
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "8755b7c3-3c6c-4d00-a5ca-ba4b86d99b43",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [],
+          "missing_columns": []
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "8755b7c3-3c6c-4d00-a5ca-ba4b86d99b43",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [],
+          "missing_columns": []
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "8755b7c3-3c6c-4d00-a5ca-ba4b86d99b43",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [],
+          "missing_columns": []
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "8755b7c3-3c6c-4d00-a5ca-ba4b86d99b43",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [],
+          "missing_columns": []
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "8755b7c3-3c6c-4d00-a5ca-ba4b86d99b43",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [],
+          "missing_columns": []
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "8755b7c3-3c6c-4d00-a5ca-ba4b86d99b43",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [],
+          "missing_columns": []
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "8755b7c3-3c6c-4d00-a5ca-ba4b86d99b43",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [],
+          "missing_columns": []
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "8755b7c3-3c6c-4d00-a5ca-ba4b86d99b43",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [],
+          "missing_columns": []
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "8755b7c3-3c6c-4d00-a5ca-ba4b86d99b43",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [],
+          "missing_columns": []
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "8755b7c3-3c6c-4d00-a5ca-ba4b86d99b43",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [],
+          "missing_columns": []
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "8755b7c3-3c6c-4d00-a5ca-ba4b86d99b43",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [],
+          "missing_columns": []
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "8755b7c3-3c6c-4d00-a5ca-ba4b86d99b43",
+          "state": "done",
+          "rows_tagged": 3,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [],
+          "missing_columns": []
+        }
+      }
+    ],
+    "rows_response": {
+      "status_code": 200,
+      "body": {
+        "items": [
+          {
+            "id": "C3-01",
+            "source": "playstore",
+            "date": "2026-10-15",
+            "rating": 2.0,
+            "text": "Bank mandate rejected due to signature mismatch on auto debit setup",
+            "stage": "Unclear",
+            "main_driver": "Payment or mandate failure",
+            "outcome": "Unknown",
+            "unmet_need": "Easier way to fix mandate rejections",
+            "income_stability": "Unclear",
+            "age_band": "Unclear",
+            "influence": "Unclear",
+            "label_origin": "ai_drafted"
+          },
+          {
+            "id": "C3-02",
+            "source": "appstore",
+            "date": "2026-10-16",
+            "rating": 3.0,
+            "text": "Markets fell 5% this month, pausing my SIP until recovery",
+            "stage": "Unclear",
+            "main_driver": "Low early returns",
+            "outcome": "Paused",
+            "unmet_need": "none",
+            "income_stability": "Unclear",
+            "age_band": "Unclear",
+            "influence": "Unclear",
+            "label_origin": "ai_drafted"
+          },
+          {
+            "id": "C3-03",
+            "source": "survey",
+            "date": "2026-10-17",
+            "rating": 1.0,
+            "text": "Urgent medical expense in family, had to stop the monthly investment",
+            "stage": "Unclear",
+            "main_driver": "Cash crunch",
+            "outcome": "Stopped",
+            "unmet_need": "none",
+            "income_stability": "Unclear",
+            "age_band": "Unclear",
+            "influence": "Unclear",
+            "label_origin": "ai_drafted"
+          }
+        ],
+        "total": 3,
+        "page": 1,
+        "page_size": 50,
+        "total_pages": 1
+      }
+    },
+    "extracted_row_fields": [
+      {
+        "id": "C3-01",
+        "source": "playstore",
+        "date": "2026-10-15",
+        "rating": 2.0,
+        "text": "Bank mandate rejected due to signature mismatch on auto debit setup",
+        "main_driver": "Payment or mandate failure",
+        "outcome": "Unknown"
+      },
+      {
+        "id": "C3-02",
+        "source": "appstore",
+        "date": "2026-10-16",
+        "rating": 3.0,
+        "text": "Markets fell 5% this month, pausing my SIP until recovery",
+        "main_driver": "Low early returns",
+        "outcome": "Paused"
+      },
+      {
+        "id": "C3-03",
+        "source": "survey",
+        "date": "2026-10-17",
+        "rating": 1.0,
+        "text": "Urgent medical expense in family, had to stop the monthly investment",
+        "main_driver": "Cash crunch",
+        "outcome": "Stopped"
+      }
+    ],
+    "insights_response": {
+      "status_code": 200,
+      "body": {
+        "dataset": "8755b7c3-3c6c-4d00-a5ca-ba4b86d99b43",
+        "total_records": 3,
+        "computed_stats": {
+          "total_records": 3,
+          "main_driver_counts": {
+            "Expectation gap": 0,
+            "Low early returns": 1,
+            "Confusion about the app": 0,
+            "Cash crunch": 1,
+            "Payment or mandate failure": 1,
+            "Outside influence": 0,
+            "Forgot about it": 0,
+            "Working well / no issue": 0,
+            "Advice or question (no SIP experience)": 0,
+            "Praise or general feedback": 0,
+            "Other": 0
+          },
+          "outcome_counts": {
+            "Continuing": 0,
+            "Paused": 1,
+            "Reduced": 0,
+            "Stopped": 1,
+            "Unknown": 1
+          },
+          "segment_view": [
+            {
+              "income_stability": "Fixed salary",
+              "n": 0,
+              "negative_count": 0,
+              "negative_share": 0.0,
+              "percentage": 0.0
+            },
+            {
+              "income_stability": "Variable income (freelance/business)",
+              "n": 0,
+              "negative_count": 0,
+              "negative_share": 0.0,
+              "percentage": 0.0
+            },
+            {
+              "income_stability": "Student or dependent",
+              "n": 0,
+              "negative_count": 0,
+              "negative_share": 0.0,
+              "percentage": 0.0
+            },
+            {
+              "income_stability": "Unclear",
+              "n": 3,
+              "negative_count": 2,
+              "negative_share": 0.6666666666666666,
+              "percentage": 66.7
+            }
+          ],
+          "top_unmet_needs": [
+            {
+              "theme": "Easier way to fix mandate rejections",
+              "count": 1
+            }
+          ],
+          "supporting_ids_by_driver": {
+            "Low early returns": [
+              "C3-02"
+            ],
+            "Cash crunch": [
+              "C3-03"
+            ],
+            "Payment or mandate failure": [
+              "C3-01"
+            ]
+          }
+        },
+        "segment_view": [
+          {
+            "income_stability": "Fixed salary",
+            "n": 0,
+            "negative_count": 0,
+            "negative_share": 0.0,
+            "percentage": 0.0
+          },
+          {
+            "income_stability": "Variable income (freelance/business)",
+            "n": 0,
+            "negative_count": 0,
+            "negative_share": 0.0,
+            "percentage": 0.0
+          },
+          {
+            "income_stability": "Student or dependent",
+            "n": 0,
+            "negative_count": 0,
+            "negative_share": 0.0,
+            "percentage": 0.0
+          },
+          {
+            "income_stability": "Unclear",
+            "n": 3,
+            "negative_count": 2,
+            "negative_share": 0.6666666666666666,
+            "percentage": 66.7
+          }
+        ],
+        "ai_summary_available": true,
+        "message": null,
+        "cards": [
+          {
+            "headline": "Mandate friction causes involuntary SIP termination",
+            "explanation": "Investors are experiencing SIP disruptions due to technical banking failures such as signature mismatches during the auto-debit setup process, as noted in C3-01. This highlights a critical need for more robust digital verification methods to prevent unnecessary mandate rejections.",
+            "proposed_pm_action": "Implement an in-app digital mandate re-submission flow with real-time validation feedback to resolve signature or bank-side errors without requiring manual intervention.",
+            "supporting_evidence_ids": [
+              "C3-01"
+            ],
+            "supporting_count": 1,
+            "strength": "Weak signal",
+            "strength_label": "Weak signal (1 item)",
+            "filter": "main_driver = 'Payment or mandate failure'"
+          },
+          {
+            "headline": "Market volatility triggers reactive SIP pausing",
+            "explanation": "Investors are choosing to pause their SIPs in response to short-term market downturns, as evidenced by the user feedback in C3-02. This behavior indicates a lack of confidence or understanding regarding the benefits of rupee-cost averaging during market corrections.",
+            "proposed_pm_action": "Develop educational nudges and 'market-dip' alerts that explain the long-term benefits of maintaining SIPs during volatility to discourage reactive pausing.",
+            "supporting_evidence_ids": [
+              "C3-02"
+            ],
+            "supporting_count": 1,
+            "strength": "Weak signal",
+            "strength_label": "Weak signal (1 item)",
+            "filter": "main_driver = 'Low early returns'"
+          },
+          {
+            "headline": "Unforeseen liquidity needs drive permanent SIP cessation",
+            "explanation": "Personal financial emergencies, such as urgent medical expenses, are forcing investors to stop their monthly investments entirely, as cited in C3-03. This suggests that current product features do not offer enough flexibility for users to temporarily adjust their contributions during periods of financial stress.",
+            "proposed_pm_action": "Introduce a 'flexible SIP' feature that allows users to temporarily skip or reduce monthly installments without the friction of fully stopping the mandate.",
+            "supporting_evidence_ids": [
+              "C3-03"
+            ],
+            "supporting_count": 1,
+            "strength": "Weak signal",
+            "strength_label": "Weak signal (1 item)",
+            "filter": "main_driver = 'Cash crunch'"
+          }
+        ],
+        "suggested_questions": [
+          "What is the demographic profile of the 66.7% of users in the 'Unclear' income stability segment who are experiencing SIP churn?",
+          "How does the churn rate of users who receive proactive communication during market dips compare to those who do not?",
+          "What percentage of mandate rejections are successfully recovered through current manual support channels versus those that result in permanent churn?"
+        ],
+        "generated_at": "2026-11-06T08:29:08.732822+00:00",
+        "cached": false,
+        "data_warnings": []
+      }
+    },
+    "data_warnings": [],
+    "main_driver_counts": {
+      "Expectation gap": 0,
+      "Low early returns": 1,
+      "Confusion about the app": 0,
+      "Cash crunch": 1,
+      "Payment or mandate failure": 1,
+      "Outside influence": 0,
+      "Forgot about it": 0,
+      "Working well / no issue": 0,
+      "Advice or question (no SIP experience)": 0,
+      "Praise or general feedback": 0,
+      "Other": 0
+    },
+    "missing_columns": []
+  },
+  "case_4_missing_id": {
+    "upload_response": {
+      "status_code": 200,
+      "body": {
+        "job_id": "a039190e-702e-497f-9014-b58011f4165b",
+        "state": "running",
+        "total": 3,
+        "data_warnings": [
+          "ID column not provided. Sequential IDs (ROW-0001...) were auto-generated."
+        ],
+        "missing_columns": [
+          "id"
+        ]
+      }
+    }
+  },
+  "case_5_missing_text": {
+    "upload_response": {
+      "status_code": 400,
+      "body": {
+        "error": {
+          "code": "HTTP_400",
+          "message": "Missing required columns: text. No feedback or text column found in the file."
+        }
+      }
+    }
+  },
+  "case_6_extra_foo_column": {
+    "upload_response": {
+      "status_code": 200,
+      "body": {
+        "job_id": "7c54f8c3-b92f-48d0-9548-0b970b1529d4",
+        "state": "running",
+        "total": 3,
+        "data_warnings": [
+          "Rating column not provided. Numerical satisfaction scores will not be displayed.",
+          "Date column not provided. Temporal tracking will not be displayed.",
+          "Source column not provided (defaulted to 'upload')."
+        ],
+        "missing_columns": [
+          "rating",
+          "date",
+          "source"
+        ]
+      }
+    },
+    "poll_timeline": [
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "7c54f8c3-b92f-48d0-9548-0b970b1529d4",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [
+            "Rating column not provided. Numerical satisfaction scores will not be displayed.",
+            "Date column not provided. Temporal tracking will not be displayed.",
+            "Source column not provided (defaulted to 'upload')."
+          ],
+          "missing_columns": [
+            "rating",
+            "date",
+            "source"
+          ]
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "7c54f8c3-b92f-48d0-9548-0b970b1529d4",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [
+            "Rating column not provided. Numerical satisfaction scores will not be displayed.",
+            "Date column not provided. Temporal tracking will not be displayed.",
+            "Source column not provided (defaulted to 'upload')."
+          ],
+          "missing_columns": [
+            "rating",
+            "date",
+            "source"
+          ]
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "7c54f8c3-b92f-48d0-9548-0b970b1529d4",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [
+            "Rating column not provided. Numerical satisfaction scores will not be displayed.",
+            "Date column not provided. Temporal tracking will not be displayed.",
+            "Source column not provided (defaulted to 'upload')."
+          ],
+          "missing_columns": [
+            "rating",
+            "date",
+            "source"
+          ]
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "7c54f8c3-b92f-48d0-9548-0b970b1529d4",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [
+            "Rating column not provided. Numerical satisfaction scores will not be displayed.",
+            "Date column not provided. Temporal tracking will not be displayed.",
+            "Source column not provided (defaulted to 'upload')."
+          ],
+          "missing_columns": [
+            "rating",
+            "date",
+            "source"
+          ]
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "7c54f8c3-b92f-48d0-9548-0b970b1529d4",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [
+            "Rating column not provided. Numerical satisfaction scores will not be displayed.",
+            "Date column not provided. Temporal tracking will not be displayed.",
+            "Source column not provided (defaulted to 'upload')."
+          ],
+          "missing_columns": [
+            "rating",
+            "date",
+            "source"
+          ]
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "7c54f8c3-b92f-48d0-9548-0b970b1529d4",
+          "state": "done",
+          "rows_tagged": 3,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [
+            "Rating column not provided. Numerical satisfaction scores will not be displayed.",
+            "Date column not provided. Temporal tracking will not be displayed.",
+            "Source column not provided (defaulted to 'upload')."
+          ],
+          "missing_columns": [
+            "rating",
+            "date",
+            "source"
+          ]
+        }
+      }
+    ],
+    "rows_response": {
+      "status_code": 200,
+      "body": {
+        "items": [
+          {
+            "id": "C6-01",
+            "source": "upload",
+            "date": null,
+            "rating": null,
+            "text": "Bank mandate rejected due to signature mismatch on auto debit setup",
+            "stage": "Unclear",
+            "main_driver": "Payment or mandate failure",
+            "outcome": "Unknown",
+            "unmet_need": "Easier bank mandate verification process",
+            "income_stability": "Unclear",
+            "age_band": "Unclear",
+            "influence": "Unclear",
+            "label_origin": "ai_drafted"
+          },
+          {
+            "id": "C6-02",
+            "source": "upload",
+            "date": null,
+            "rating": null,
+            "text": "Markets fell 5% this month, pausing my SIP until recovery",
+            "stage": "Unclear",
+            "main_driver": "Low early returns",
+            "outcome": "Paused",
+            "unmet_need": "Guidance on market volatility impact",
+            "income_stability": "Unclear",
+            "age_band": "Unclear",
+            "influence": "Unclear",
+            "label_origin": "ai_drafted"
+          },
+          {
+            "id": "C6-03",
+            "source": "upload",
+            "date": null,
+            "rating": null,
+            "text": "Urgent medical expense in family, had to stop the monthly investment",
+            "stage": "Unclear",
+            "main_driver": "Cash crunch",
+            "outcome": "Stopped",
+            "unmet_need": "none",
+            "income_stability": "Unclear",
+            "age_band": "Unclear",
+            "influence": "Unclear",
+            "label_origin": "ai_drafted"
+          }
+        ],
+        "total": 3,
+        "page": 1,
+        "page_size": 50,
+        "total_pages": 1
+      }
+    },
+    "extracted_row_fields": [
+      {
+        "id": "C6-01",
+        "source": "upload",
+        "date": null,
+        "rating": null,
+        "text": "Bank mandate rejected due to signature mismatch on auto debit setup",
+        "main_driver": "Payment or mandate failure",
+        "outcome": "Unknown"
+      },
+      {
+        "id": "C6-02",
+        "source": "upload",
+        "date": null,
+        "rating": null,
+        "text": "Markets fell 5% this month, pausing my SIP until recovery",
+        "main_driver": "Low early returns",
+        "outcome": "Paused"
+      },
+      {
+        "id": "C6-03",
+        "source": "upload",
+        "date": null,
+        "rating": null,
+        "text": "Urgent medical expense in family, had to stop the monthly investment",
+        "main_driver": "Cash crunch",
+        "outcome": "Stopped"
+      }
+    ],
+    "insights_response": {
+      "status_code": 200,
+      "body": {
+        "dataset": "7c54f8c3-b92f-48d0-9548-0b970b1529d4",
+        "total_records": 3,
+        "computed_stats": {
+          "total_records": 3,
+          "main_driver_counts": {
+            "Expectation gap": 0,
+            "Low early returns": 1,
+            "Confusion about the app": 0,
+            "Cash crunch": 1,
+            "Payment or mandate failure": 1,
+            "Outside influence": 0,
+            "Forgot about it": 0,
+            "Working well / no issue": 0,
+            "Advice or question (no SIP experience)": 0,
+            "Praise or general feedback": 0,
+            "Other": 0
+          },
+          "outcome_counts": {
+            "Continuing": 0,
+            "Paused": 1,
+            "Reduced": 0,
+            "Stopped": 1,
+            "Unknown": 1
+          },
+          "segment_view": [
+            {
+              "income_stability": "Fixed salary",
+              "n": 0,
+              "negative_count": 0,
+              "negative_share": 0.0,
+              "percentage": 0.0
+            },
+            {
+              "income_stability": "Variable income (freelance/business)",
+              "n": 0,
+              "negative_count": 0,
+              "negative_share": 0.0,
+              "percentage": 0.0
+            },
+            {
+              "income_stability": "Student or dependent",
+              "n": 0,
+              "negative_count": 0,
+              "negative_share": 0.0,
+              "percentage": 0.0
+            },
+            {
+              "income_stability": "Unclear",
+              "n": 3,
+              "negative_count": 2,
+              "negative_share": 0.6666666666666666,
+              "percentage": 66.7
+            }
+          ],
+          "top_unmet_needs": [
+            {
+              "theme": "Easier bank mandate verification process",
+              "count": 1
+            },
+            {
+              "theme": "Guidance on market volatility impact",
+              "count": 1
+            }
+          ],
+          "supporting_ids_by_driver": {
+            "Low early returns": [
+              "C6-02"
+            ],
+            "Cash crunch": [
+              "C6-03"
+            ],
+            "Payment or mandate failure": [
+              "C6-01"
+            ]
+          }
+        },
+        "segment_view": [
+          {
+            "income_stability": "Fixed salary",
+            "n": 0,
+            "negative_count": 0,
+            "negative_share": 0.0,
+            "percentage": 0.0
+          },
+          {
+            "income_stability": "Variable income (freelance/business)",
+            "n": 0,
+            "negative_count": 0,
+            "negative_share": 0.0,
+            "percentage": 0.0
+          },
+          {
+            "income_stability": "Student or dependent",
+            "n": 0,
+            "negative_count": 0,
+            "negative_share": 0.0,
+            "percentage": 0.0
+          },
+          {
+            "income_stability": "Unclear",
+            "n": 3,
+            "negative_count": 2,
+            "negative_share": 0.6666666666666666,
+            "percentage": 66.7
+          }
+        ],
+        "ai_summary_available": true,
+        "message": null,
+        "cards": [
+          {
+            "headline": "Technical friction in mandate verification causes SIP abandonment",
+            "explanation": "Investors are experiencing involuntary SIP termination due to administrative errors like signature mismatches during the auto-debit setup process, as noted in C6-01. This highlights a critical failure point in the onboarding journey where manual verification requirements create unnecessary friction for users. The current dataset shows that 66.7% of users with unclear income stability are experiencing negative outcomes, making seamless mandate setup essential for retention.",
+            "proposed_pm_action": "Implement e-Mandate via UPI or Net Banking to replace manual signature-based verification and reduce rejection rates.",
+            "supporting_evidence_ids": [
+              "C6-01"
+            ],
+            "supporting_count": 1,
+            "strength": "Weak signal",
+            "strength_label": "Weak signal (1 item)",
+            "filter": "main_driver = 'Payment or mandate failure'"
+          },
+          {
+            "headline": "Market volatility triggers reactive SIP pausing behavior",
+            "explanation": "Investors are choosing to pause their SIPs in response to short-term market downturns, as evidenced by the user in C6-02 who halted investments following a 5% market drop. This behavior indicates a lack of investor confidence or understanding regarding the benefits of rupee-cost averaging during volatile periods. Given that 66.7% of the unclear income segment faces negative outcomes, proactive education is required to prevent churn during market corrections.",
+            "proposed_pm_action": "Introduce in-app educational nudges and 'market volatility' dashboards that explain the long-term benefits of maintaining SIPs during downturns.",
+            "supporting_evidence_ids": [
+              "C6-02"
+            ],
+            "supporting_count": 1,
+            "strength": "Weak signal",
+            "strength_label": "Weak signal (1 item)",
+            "filter": "main_driver = 'Low early returns'"
+          },
+          {
+            "headline": "Liquidity constraints drive permanent SIP cessation",
+            "explanation": "Unforeseen personal financial emergencies, such as medical expenses, are forcing investors to stop their SIPs entirely, as highlighted in C6-03. This suggests that the current product lacks flexible features that allow users to temporarily adjust or skip payments without fully canceling their investment mandate. With 66.7% of the unclear income segment experiencing negative outcomes, providing a 'pause' or 'skip' feature could help retain these users during temporary cash crunches.",
+            "proposed_pm_action": "Develop a 'Flexible SIP' feature that allows users to skip a monthly installment without the need to stop or restart the entire mandate.",
+            "supporting_evidence_ids": [
+              "C6-03"
+            ],
+            "supporting_count": 1,
+            "strength": "Weak signal",
+            "strength_label": "Weak signal (1 item)",
+            "filter": "main_driver = 'Cash crunch'"
+          }
+        ],
+        "suggested_questions": [
+          "What is the demographic breakdown of the 'Unclear' income segment to better tailor financial guidance?",
+          "How many users who 'Paused' their SIPs eventually resumed them, and what was the primary trigger for resumption?",
+          "Can we correlate the frequency of mandate rejections with specific banking partners to identify systemic integration issues?"
+        ],
+        "generated_at": "2026-11-06T08:29:28.571557+00:00",
+        "cached": false,
+        "data_warnings": [
+          "Rating column not provided. Numerical satisfaction scores will not be displayed.",
+          "Date column not provided. Temporal tracking will not be displayed.",
+          "Source column not provided (defaulted to 'upload')."
+        ]
+      }
+    },
+    "data_warnings": [
+      "Rating column not provided. Numerical satisfaction scores will not be displayed.",
+      "Date column not provided. Temporal tracking will not be displayed.",
+      "Source column not provided (defaulted to 'upload')."
+    ],
+    "main_driver_counts": {
+      "Expectation gap": 0,
+      "Low early returns": 1,
+      "Confusion about the app": 0,
+      "Cash crunch": 1,
+      "Payment or mandate failure": 1,
+      "Outside influence": 0,
+      "Forgot about it": 0,
+      "Working well / no issue": 0,
+      "Advice or question (no SIP experience)": 0,
+      "Praise or general feedback": 0,
+      "Other": 0
+    },
+    "missing_columns": [
+      "rating",
+      "date",
+      "source"
+    ]
+  },
+  "case_7_empty_source_value": {
+    "upload_response": {
+      "status_code": 200,
+      "body": {
+        "job_id": "1e7b2f2e-484f-4d43-8e5f-82486b2e15f4",
+        "state": "running",
+        "total": 3,
+        "data_warnings": [],
+        "missing_columns": []
+      }
+    },
+    "poll_timeline": [
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "1e7b2f2e-484f-4d43-8e5f-82486b2e15f4",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [],
+          "missing_columns": []
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "1e7b2f2e-484f-4d43-8e5f-82486b2e15f4",
+          "state": "running",
+          "rows_tagged": 0,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [],
+          "missing_columns": []
+        }
+      },
+      {
+        "status_code": 200,
+        "body": {
+          "job_id": "1e7b2f2e-484f-4d43-8e5f-82486b2e15f4",
+          "state": "done",
+          "rows_tagged": 3,
+          "total": 3,
+          "fallback_count": 0,
+          "error_message": null,
+          "data_warnings": [],
+          "missing_columns": []
+        }
+      }
+    ],
+    "rows_response": {
+      "status_code": 200,
+      "body": {
+        "items": [
+          {
+            "id": "C7-01",
+            "source": "playstore",
+            "date": "2026-10-15",
+            "rating": 2.0,
+            "text": "Bank mandate rejected due to signature mismatch on auto debit setup",
+            "stage": "Unclear",
+            "main_driver": "Payment or mandate failure",
+            "outcome": "Unknown",
+            "unmet_need": "Easier process for bank mandate setup",
+            "income_stability": "Unclear",
+            "age_band": "Unclear",
+            "influence": "Unclear",
+            "label_origin": "ai_drafted"
+          },
+          {
+            "id": "C7-02",
+            "source": "upload",
+            "date": "2026-10-16",
+            "rating": 3.0,
+            "text": "Markets fell 5% this month, pausing my SIP until recovery",
+            "stage": "Unclear",
+            "main_driver": "Low early returns",
+            "outcome": "Paused",
+            "unmet_need": "Guidance on market volatility and SIPs",
+            "income_stability": "Unclear",
+            "age_band": "Unclear",
+            "influence": "Unclear",
+            "label_origin": "ai_drafted"
+          },
+          {
+            "id": "C7-03",
+            "source": "survey",
+            "date": "2026-10-17",
+            "rating": 1.0,
+            "text": "Urgent medical expense in family, had to stop the monthly investment",
+            "stage": "Unclear",
+            "main_driver": "Cash crunch",
+            "outcome": "Stopped",
+            "unmet_need": "none",
+            "income_stability": "Unclear",
+            "age_band": "Unclear",
+            "influence": "Unclear",
+            "label_origin": "ai_drafted"
+          }
+        ],
+        "total": 3,
+        "page": 1,
+        "page_size": 50,
+        "total_pages": 1
+      }
+    },
+    "extracted_row_fields": [
+      {
+        "id": "C7-01",
+        "source": "playstore",
+        "date": "2026-10-15",
+        "rating": 2.0,
+        "text": "Bank mandate rejected due to signature mismatch on auto debit setup",
+        "main_driver": "Payment or mandate failure",
+        "outcome": "Unknown"
+      },
+      {
+        "id": "C7-02",
+        "source": "upload",
+        "date": "2026-10-16",
+        "rating": 3.0,
+        "text": "Markets fell 5% this month, pausing my SIP until recovery",
+        "main_driver": "Low early returns",
+        "outcome": "Paused"
+      },
+      {
+        "id": "C7-03",
+        "source": "survey",
+        "date": "2026-10-17",
+        "rating": 1.0,
+        "text": "Urgent medical expense in family, had to stop the monthly investment",
+        "main_driver": "Cash crunch",
+        "outcome": "Stopped"
+      }
+    ],
+    "insights_response": {
+      "status_code": 200,
+      "body": {
+        "dataset": "1e7b2f2e-484f-4d43-8e5f-82486b2e15f4",
+        "total_records": 3,
+        "computed_stats": {
+          "total_records": 3,
+          "main_driver_counts": {
+            "Expectation gap": 0,
+            "Low early returns": 1,
+            "Confusion about the app": 0,
+            "Cash crunch": 1,
+            "Payment or mandate failure": 1,
+            "Outside influence": 0,
+            "Forgot about it": 0,
+            "Working well / no issue": 0,
+            "Advice or question (no SIP experience)": 0,
+            "Praise or general feedback": 0,
+            "Other": 0
+          },
+          "outcome_counts": {
+            "Continuing": 0,
+            "Paused": 1,
+            "Reduced": 0,
+            "Stopped": 1,
+            "Unknown": 1
+          },
+          "segment_view": [
+            {
+              "income_stability": "Fixed salary",
+              "n": 0,
+              "negative_count": 0,
+              "negative_share": 0.0,
+              "percentage": 0.0
+            },
+            {
+              "income_stability": "Variable income (freelance/business)",
+              "n": 0,
+              "negative_count": 0,
+              "negative_share": 0.0,
+              "percentage": 0.0
+            },
+            {
+              "income_stability": "Student or dependent",
+              "n": 0,
+              "negative_count": 0,
+              "negative_share": 0.0,
+              "percentage": 0.0
+            },
+            {
+              "income_stability": "Unclear",
+              "n": 3,
+              "negative_count": 2,
+              "negative_share": 0.6666666666666666,
+              "percentage": 66.7
+            }
+          ],
+          "top_unmet_needs": [
+            {
+              "theme": "Easier process for bank mandate setup",
+              "count": 1
+            },
+            {
+              "theme": "Guidance on market volatility and SIPs",
+              "count": 1
+            }
+          ],
+          "supporting_ids_by_driver": {
+            "Low early returns": [
+              "C7-02"
+            ],
+            "Cash crunch": [
+              "C7-03"
+            ],
+            "Payment or mandate failure": [
+              "C7-01"
+            ]
+          }
+        },
+        "segment_view": [
+          {
+            "income_stability": "Fixed salary",
+            "n": 0,
+            "negative_count": 0,
+            "negative_share": 0.0,
+            "percentage": 0.0
+          },
+          {
+            "income_stability": "Variable income (freelance/business)",
+            "n": 0,
+            "negative_count": 0,
+            "negative_share": 0.0,
+            "percentage": 0.0
+          },
+          {
+            "income_stability": "Student or dependent",
+            "n": 0,
+            "negative_count": 0,
+            "negative_share": 0.0,
+            "percentage": 0.0
+          },
+          {
+            "income_stability": "Unclear",
+            "n": 3,
+            "negative_count": 2,
+            "negative_share": 0.6666666666666666,
+            "percentage": 66.7
+          }
+        ],
+        "ai_summary_available": true,
+        "message": null,
+        "cards": [
+          {
+            "headline": "Mandate friction causes involuntary SIP churn",
+            "explanation": "Investors are experiencing involuntary SIP termination due to technical banking failures such as signature mismatches during the auto-debit setup process. As evidenced by C7-01, these administrative hurdles prevent users from maintaining their investment discipline despite their initial intent.",
+            "proposed_pm_action": "Implement digital e-mandate verification via net banking or UPI to bypass manual signature-based rejection risks.",
+            "supporting_evidence_ids": [
+              "C7-01"
+            ],
+            "supporting_count": 1,
+            "strength": "Weak signal",
+            "strength_label": "Weak signal (1 item)",
+            "filter": "main_driver = 'Payment or mandate failure'"
+          },
+          {
+            "headline": "Market volatility triggers reactive SIP pausing",
+            "explanation": "Investors lack the necessary behavioral guidance to navigate short-term market corrections, leading them to pause SIPs during downturns. Quote C7-02 highlights that a 5% market decline is sufficient to disrupt long-term investment strategies.",
+            "proposed_pm_action": "Introduce in-app educational nudges and 'stay-the-course' notifications during market volatility to reinforce the benefits of rupee-cost averaging.",
+            "supporting_evidence_ids": [
+              "C7-02"
+            ],
+            "supporting_count": 1,
+            "strength": "Weak signal",
+            "strength_label": "Weak signal (1 item)",
+            "filter": "main_driver = 'Low early returns'"
+          },
+          {
+            "headline": "Liquidity shocks drive permanent SIP cessation",
+            "explanation": "Unforeseen personal financial emergencies, such as medical expenses, force investors to stop their SIPs entirely. Evidence C7-03 confirms that cash crunches are a primary driver for total investment abandonment.",
+            "proposed_pm_action": "Develop a 'flexible SIP' feature that allows users to temporarily skip or reduce monthly installments without needing to fully cancel the mandate.",
+            "supporting_evidence_ids": [
+              "C7-03"
+            ],
+            "supporting_count": 1,
+            "strength": "Weak signal",
+            "strength_label": "Weak signal (1 item)",
+            "filter": "main_driver = 'Cash crunch'"
+          }
+        ],
+        "suggested_questions": [
+          "What is the demographic profile of the 'Unclear' income segment that accounts for 66.7% of negative outcomes?",
+          "How does the churn rate of users who utilize e-mandates compare to those using physical signature-based mandates?",
+          "What percentage of users who pause their SIPs due to market volatility eventually resume their investments without manual intervention?"
+        ],
+        "generated_at": "2026-11-06T08:29:34.722084+00:00",
+        "cached": false,
+        "data_warnings": []
+      }
+    },
+    "data_warnings": [],
+    "main_driver_counts": {
+      "Expectation gap": 0,
+      "Low early returns": 1,
+      "Confusion about the app": 0,
+      "Cash crunch": 1,
+      "Payment or mandate failure": 1,
+      "Outside influence": 0,
+      "Forgot about it": 0,
+      "Working well / no issue": 0,
+      "Advice or question (no SIP experience)": 0,
+      "Praise or general feedback": 0,
+      "Other": 0
+    },
+    "missing_columns": []
+  }
+}

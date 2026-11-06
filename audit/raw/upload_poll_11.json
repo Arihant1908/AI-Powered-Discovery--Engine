@@ -1,0 +1,13 @@
+{
+  "status_code": 200,
+  "body": {
+    "job_id": "d2358c1f-b61f-47c3-8fb1-0ee1e4a41a3d",
+    "state": "done",
+    "rows_tagged": 36,
+    "total": 36,
+    "fallback_count": 0,
+    "error_message": null,
+    "data_warnings": [],
+    "missing_columns": []
+  }
+}

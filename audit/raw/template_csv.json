@@ -1,0 +1,4 @@
+{
+  "status_code": 200,
+  "body": "id,source,date,rating,text\nSAMPLE-0001,playstore,2026-01-01,5,\"Invented sample text for upload template\"\n"
+}

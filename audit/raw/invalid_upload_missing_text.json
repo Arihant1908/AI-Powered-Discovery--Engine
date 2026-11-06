@@ -1,0 +1,9 @@
+{
+  "status_code": 400,
+  "body": {
+    "error": {
+      "code": "HTTP_400",
+      "message": "Missing required columns: text. No feedback or text column found in the file."
+    }
+  }
+}

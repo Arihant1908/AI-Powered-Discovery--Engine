@@ -1,0 +1,25 @@
+{
+  "status_code": 200,
+  "body": {
+    "themes": [
+      {
+        "theme": "SIP Flexibility and Control",
+        "count": 13
+      },
+      {
+        "theme": "SIP Education and Guidance",
+        "count": 11
+      },
+      {
+        "theme": "Payment and Autopay Reliability",
+        "count": 9
+      },
+      {
+        "theme": "Investment Performance and Risk Reassurance",
+        "count": 9
+      }
+    ],
+    "ai_available": true,
+    "ai_grouped": true
+  }
+}

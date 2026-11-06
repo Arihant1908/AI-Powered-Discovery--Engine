@@ -1,0 +1,9 @@
+{
+  "status_code": 400,
+  "body": {
+    "error": {
+      "code": "HTTP_400",
+      "message": "Invalid value 'Invalid Nonexistent Driver Name' for main_driver. Allowed values: ['Expectation gap', 'Low early returns', 'Confusion about the app', 'Cash crunch', 'Payment or mandate failure', 'Outside influence', 'Forgot about it', 'Working well / no issue', 'Advice or question (no SIP experience)', 'Praise or general feedback', 'Other']"
+    }
+  }
+}

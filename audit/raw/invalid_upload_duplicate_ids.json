@@ -1,0 +1,9 @@
+{
+  "status_code": 400,
+  "body": {
+    "error": {
+      "code": "HTTP_400",
+      "message": "Duplicate ID 'DUP-01' found in row 3."
+    }
+  }
+}

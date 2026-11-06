@@ -1,0 +1,86 @@
+{
+  "status_code": 200,
+  "body": {
+    "items": [
+      {
+        "id": "SV-00001",
+        "source": "survey",
+        "date": "2026-10-26",
+        "rating": null,
+        "text": "Started SIP 2+ years ago on Groww; age 28-35; status: Active, same amount; influenced by: Own research; money from: Fixed salary (Mostly fixed income); expected after 1 year: Steady growth; checks: Rarely; looks at: Return %; confidence 5.0/5; paused/reduced/thought of stopping: Paused; reason: Cash crunch; when unsure: Google; would keep going if:",
+        "stage": "Month 24+",
+        "main_driver": "Cash crunch",
+        "outcome": "Continuing",
+        "unmet_need": "none",
+        "income_stability": "Fixed salary",
+        "age_band": "28-35",
+        "influence": "Own research",
+        "label_origin": "ai_drafted"
+      },
+      {
+        "id": "SV-00002",
+        "source": "survey",
+        "date": "2026-10-26",
+        "rating": null,
+        "text": "Started SIP 2+ years ago on Other; age 23-27; status: Active, same amount; influenced by: Friend; money from: Other (Mostly fixed income); expected after 1 year: Steady growth; checks: Monthly; looks at: Return %; confidence 3.0/5; paused/reduced/thought of stopping: Paused; reason: Returns looked low;Didn\u2019t understand what I saw;Needed the money; when unsure: YouTube;Friends or family;Reddit or forums; confuses/worries: The rate; would keep going if: Good returns",
+        "stage": "Month 24+",
+        "main_driver": "Low early returns",
+        "outcome": "Continuing",
+        "unmet_need": "Good returns",
+        "income_stability": "Fixed salary",
+        "age_band": "23-27",
+        "influence": "Friends",
+        "label_origin": "ai_drafted"
+      },
+      {
+        "id": "SV-00003",
+        "source": "survey",
+        "date": "2026-10-26",
+        "rating": null,
+        "text": "Started SIP 1-2 years ago on Other; age 28-35; status: Active, same amount; influenced by: Own research; money from: Fixed salary (Fixed income); expected after 1 year: Better than FD or savings; checks: Monthly; looks at: Return %; confidence 5.0/5; paused/reduced/thought of stopping: Never; when unsure: Google; confuses/worries: Returns; would keep going if: Future Investment",
+        "stage": "Unclear",
+        "main_driver": "Working well / no issue",
+        "outcome": "Continuing",
+        "unmet_need": "none",
+        "income_stability": "Fixed salary",
+        "age_band": "28-35",
+        "influence": "Own research",
+        "label_origin": "ai_drafted"
+      },
+      {
+        "id": "SV-00004",
+        "source": "survey",
+        "date": "2026-10-27",
+        "rating": null,
+        "text": "Started SIP 2+ years ago on Other; age 18-22; status: Active, same amount; influenced by: Family; money from: Family allowance (Mostly fixed income); expected after 1 year: Steady growth; checks: Weekly; looks at: Current value;Return %; confidence 3.0/5; paused/reduced/thought of stopping: Thought about it but didn\u2019t; reason: Returns looked low; when unsure: YouTube;Google;Friends or family;Reddit or forums; confuses/worries: Nothing really",
+        "stage": "Month 24+",
+        "main_driver": "Low early returns",
+        "outcome": "Continuing",
+        "unmet_need": "none",
+        "income_stability": "Student or dependent",
+        "age_band": "Under 23",
+        "influence": "Family",
+        "label_origin": "ai_drafted"
+      },
+      {
+        "id": "SV-00005",
+        "source": "survey",
+        "date": "2026-10-27",
+        "rating": null,
+        "text": "Started SIP 1-2 years ago on Groww; age 23-27; status: Active, same amount; influenced by: Own research; money from: Fixed salary (Fixed income); expected after 1 year: Better than FD or savings; checks: Rarely; looks at: Return %; confidence 1.0/5; paused/reduced/thought of stopping: Thought about it but didn\u2019t; when unsure: Nothing; would keep going if:",
+        "stage": "Unclear",
+        "main_driver": "Other",
+        "outcome": "Continuing",
+        "unmet_need": "none",
+        "income_stability": "Fixed salary",
+        "age_band": "23-27",
+        "influence": "Own research",
+        "label_origin": "ai_drafted"
+      }
+    ],
+    "total": 54,
+    "page": 1,
+    "page_size": 5,
+    "total_pages": 11
+  }
+}

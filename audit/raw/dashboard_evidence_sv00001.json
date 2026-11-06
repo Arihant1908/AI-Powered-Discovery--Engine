@@ -1,0 +1,18 @@
+{
+  "status_code": 200,
+  "body": {
+    "id": "SV-00001",
+    "source": "survey",
+    "date": "2026-10-26",
+    "rating": null,
+    "text": "Started SIP 2+ years ago on Groww; age 28-35; status: Active, same amount; influenced by: Own research; money from: Fixed salary (Mostly fixed income); expected after 1 year: Steady growth; checks: Rarely; looks at: Return %; confidence 5.0/5; paused/reduced/thought of stopping: Paused; reason: Cash crunch; when unsure: Google; would keep going if:",
+    "stage": "Month 24+",
+    "main_driver": "Cash crunch",
+    "outcome": "Continuing",
+    "unmet_need": "none",
+    "income_stability": "Fixed salary",
+    "age_band": "28-35",
+    "influence": "Own research",
+    "label_origin": "ai_drafted"
+  }
+}
