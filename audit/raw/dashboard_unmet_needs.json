@@ -3,23 +3,23 @@
   "body": {
     "themes": [
       {
-        "theme": "SIP Flexibility and Transaction Control",
+        "theme": "SIP Flexibility and Control",
         "count": 13
       },
       {
-        "theme": "Investment Education and Guidance",
+        "theme": "Educational Guidance and Transparency",
         "count": 11
       },
       {
-        "theme": "Technical Reliability of Autopay and SIP Management",
-        "count": 9
+        "theme": "Automation and Transaction Reliability",
+        "count": 8
       },
       {
-        "theme": "Risk Management and Market Volatility Concerns",
-        "count": 5
+        "theme": "Risk Management and Financial Security",
+        "count": 6
       },
       {
-        "theme": "Performance Transparency and Expectations",
+        "theme": "Investment Strategy and Fund Selection",
         "count": 4
       }
     ],

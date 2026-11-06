@@ -1,13 +1,15 @@
 {
   "status_code": 200,
   "body": {
-    "job_id": "d2358c1f-b61f-47c3-8fb1-0ee1e4a41a3d",
+    "job_id": "ee207ff0-f1f7-4113-bcec-730b5b831bda",
     "state": "running",
     "rows_tagged": 20,
     "total": 36,
     "fallback_count": 0,
     "error_message": null,
-    "data_warnings": [],
+    "data_warnings": [
+      "Using column 'text' as text"
+    ],
     "missing_columns": []
   }
 }

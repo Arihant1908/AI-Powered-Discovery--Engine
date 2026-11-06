@@ -44,15 +44,15 @@ Generated programmatically by `scripts/audit_check.py` reading directly from `da
 | Insights | Insight Cards Count | 4 | 4 | **PASS** | Expecting 4 cards |
 | Insight Card 1 | Card 1 Cited IDs Exist in Dataset | All in dataset (4 IDs) | All exist | **PASS** | IDs: ['SV-00007', 'SV-00011', 'INT-03', 'INT-07'] |
 | Insight Card 1 | Card 1 Cited IDs Satisfy Claim Filter | All satisfy filter: income_stability = 'Variable income (freelance/business)' AND outcome in ('Paused', 'Stopped', 'Reduced') | All satisfy | **PASS** | Filter: income_stability = 'Variable income (freelance/business)' AND outcome in ('Paused', 'Stopped', 'Reduced') |
-| Insight Card 1 | Card 1 Strength Count Matches Qualifying Records | 4 items (in filter) | 4 items (label: 'Medium signal, 4 records') | **PASS** | Headline: 'Variable-income investors report cash flow crunches during billing windows' |
+| Insight Card 1 | Card 1 Strength Count Matches Qualifying Records | 4 items (in filter) | 4 items (label: 'Medium signal, 4 records') | **PASS** | Headline: '4 of 6 variable-income records with a known outcome paused, stopped or reduced' |
 | Insight Card 2 | Card 2 Cited IDs Exist in Dataset | All in dataset (10 IDs) | All exist | **PASS** | IDs: ['SV-00007', 'SV-00009', 'SV-00011', 'SV-00012', 'PS-00139', 'PS-00087', 'INT-01', 'INT-03', 'INT-06', 'INT-07'] |
 | Insight Card 2 | Card 2 Cited IDs Satisfy Claim Filter | All satisfy filter: outcome in ('Paused', 'Stopped', 'Reduced') | All satisfy | **PASS** | Filter: outcome in ('Paused', 'Stopped', 'Reduced') |
-| Insight Card 2 | Card 2 Strength Count Matches Qualifying Records | 10 items (in filter) | 10 items (label: 'Strong signal, 10 records') | **PASS** | Headline: 'Drop-off drivers: cash crunch and performance concerns dominate churn' |
+| Insight Card 2 | Card 2 Strength Count Matches Qualifying Records | 10 items (in filter) | 10 items (label: 'Strong signal, 10 records') | **PASS** | Headline: '10 records report paused, stopped or reduced outcomes' |
 | Insight Card 3 | Card 3 Cited IDs Exist in Dataset | All in dataset (4 IDs) | All exist | **PASS** | IDs: ['PS-00066', 'PS-00139', 'AS-00014', 'AS-00060'] |
 | Insight Card 3 | Card 3 Cited IDs Satisfy Claim Filter | All satisfy filter: main_driver = 'Payment or mandate failure' | All satisfy | **PASS** | Filter: main_driver = 'Payment or mandate failure' |
-| Insight Card 3 | Card 3 Strength Count Matches Qualifying Records | 4 items (in filter) | 4 items (label: 'Medium signal, 4 records') | **PASS** | Headline: 'Investors cite Payment or mandate failure across bank debits' |
+| Insight Card 3 | Card 3 Strength Count Matches Qualifying Records | 4 items (in filter) | 4 items (label: 'Medium signal, 4 records') | **PASS** | Headline: '4 records cite Payment or mandate failure' |
 | Insight Card 4 | Card 4 Cited IDs Exist in Dataset | All in dataset (7 IDs) | All exist | **PASS** | IDs: ['SV-00002', 'SV-00004', 'SV-00006', 'SV-00009', 'SV-00011', 'YT-00135', 'INT-02'] |
 | Insight Card 4 | Card 4 Cited IDs Satisfy Claim Filter | All satisfy filter: main_driver = 'Low early returns' | All satisfy | **PASS** | Filter: main_driver = 'Low early returns' |
-| Insight Card 4 | Card 4 Strength Count Matches Qualifying Records | 7 items (in filter) | 7 items (label: 'Strong signal, 7 records') | **PASS** | Headline: 'Investors cite Low early returns during initial investment period' |
+| Insight Card 4 | Card 4 Strength Count Matches Qualifying Records | 7 items (in filter) | 7 items (label: 'Strong signal, 7 records') | **PASS** | Headline: '7 records cite Low early returns' |
 
 **Total Checks**: 50 | **Passed**: 50 | **Failed**: 0

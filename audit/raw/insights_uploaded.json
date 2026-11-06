@@ -1,7 +1,7 @@
 {
   "status_code": 200,
   "body": {
-    "dataset": "33f190c3-027b-4629-8b8e-f0b56d073f9b",
+    "dataset": "ee207ff0-f1f7-4113-bcec-730b5b831bda",
     "total_records": 36,
     "computed_stats": {
       "total_records": 36,
@@ -174,9 +174,9 @@
     "message": null,
     "cards": [
       {
-        "headline": "Operational friction regarding payment mandates",
-        "explanation": "Users encounter difficulties when automated payment mandates fail due to insufficient account balances. The current interface lacks clear pathways for users to reinitiate failed transactions or manage payment schedules effectively. Outcome breakdown: 3 Unknown.",
-        "proposed_pm_action": "Implement an automated retry mechanism for failed mandates and provide clear in-app notifications with actionable steps to resolve payment issues.",
+        "headline": "3 records cite Payment or mandate failure",
+        "explanation": "Users report difficulties with payment mandates and express a desire for weekly investment options alongside improved retry mechanisms for failed transactions. Outcome breakdown: 3 Unknown. Unmet needs cited: Enable weekly SIP investment options, Retry mechanism for failed payments, Payment reminder and retry option.",
+        "proposed_pm_action": "Implement weekly SIP frequency and an automated payment retry interface.",
         "supporting_evidence_ids": [
           "AS-00022",
           "PS-00034",
@@ -189,9 +189,9 @@
         "source_mix": "2 playstore, 1 appstore"
       },
       {
-        "headline": "High demand for foundational investment education",
-        "explanation": "A significant portion of the user base expresses a need for basic knowledge regarding systematic investment planning and fund selection. Many individuals seek guidance on how to align their personal financial goals with appropriate investment strategies. Outcome breakdown: 1 Continuing, 18 Unknown.",
-        "proposed_pm_action": "Develop an integrated educational hub within the application featuring beginner-friendly tutorials and interactive planning tools.",
+        "headline": "19 records cite Advice or question (no SIP experience)",
+        "explanation": "Beginner investors frequently seek educational resources and guidance regarding the differences between lump sum investments and systematic investment plans. Outcome breakdown: 1 Continuing, 18 Unknown. Unmet needs cited: Guidance on SIP versus lump sum, Educational resources for mutual funds, Guidance on starting SIP investments, Alternative platforms for SIP investing.",
+        "proposed_pm_action": "Develop an in-app educational hub featuring comparative investment guides and tutorials.",
         "supporting_evidence_ids": [
           "YT-00027",
           "RD-00011",
@@ -220,9 +220,9 @@
         "source_mix": "13 youtube, 5 reddit, 1 playstore"
       },
       {
-        "headline": "Positive reception of interface simplicity",
-        "explanation": "Users frequently commend the platform for its intuitive design and accessible calculation tools. While the interface is praised for its ease of use, there is a recurring request for more human-centric support channels. Outcome breakdown: 1 Continuing, 9 Unknown.",
-        "proposed_pm_action": "Enhance customer support accessibility by integrating a live chat feature or a more responsive help desk system.",
+        "headline": "10 records cite Praise or general feedback",
+        "explanation": "Satisfied users appreciate the platform interface but request additional tools like excel worksheets for planning and access to human customer support. Outcome breakdown: 1 Continuing, 9 Unknown. Unmet needs cited: Excel worksheet for SIP planning, Access to human customer support, Trade directly from charts on mobile.",
+        "proposed_pm_action": "Integrate a downloadable SIP planning worksheet and expand human support channels.",
         "supporting_evidence_ids": [
           "YT-00513",
           "PS-00051",
@@ -242,9 +242,9 @@
         "source_mix": "5 playstore, 3 appstore, 1 youtube, 1 reddit"
       },
       {
-        "headline": "Concerns regarding transaction transparency and service reliability",
-        "explanation": "Some users report frustration regarding delayed redemption processing and perceived lack of clarity in investment plan types. These experiences highlight a need for improved communication regarding transaction status and account management. Outcome breakdown: 4 Unknown.",
-        "proposed_pm_action": "Provide real-time status tracking for all redemption requests and clarify the distinction between regular and direct investment plans within the user dashboard.",
+        "headline": "4 records cite Other",
+        "explanation": "Users report concerns regarding redemption processes and request greater transparency regarding direct plan access and customer service interactions. Outcome breakdown: 4 Unknown. Unmet needs cited: Faster resolution for redemption issues, Respectful customer service for loans, Direct access to direct plans.",
+        "proposed_pm_action": "Streamline the redemption status tracking UI and clarify direct plan investment pathways.",
         "supporting_evidence_ids": [
           "AS-00013",
           "PS-00049",
@@ -259,11 +259,11 @@
       }
     ],
     "suggested_questions": [
-      "What specific barriers prevent users from successfully re-applying after a mandate failure?",
-      "Which educational topics show the highest correlation with long-term platform engagement?",
-      "How can we improve the visibility of redemption status updates to reduce user anxiety?"
+      "What specific barriers prevent users from transitioning from educational inquiries to active SIP investments?",
+      "How can we improve the visibility of direct plan options to address user concerns regarding plan types?",
+      "What are the primary friction points in the redemption process that lead to user reports of unresolved issues?"
     ],
-    "generated_at": "2026-11-06T11:09:39.774535+00:00",
+    "generated_at": "2026-11-06T13:13:02.167010+00:00",
     "cached": false,
     "data_warnings": [
       "Using column 'text' as text"

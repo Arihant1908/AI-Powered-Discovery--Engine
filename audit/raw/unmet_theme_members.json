@@ -1,0 +1,304 @@
+[
+  {
+    "theme": "SIP Flexibility and Transaction Control",
+    "count": 13,
+    "record_ids": [
+      "INT-01",
+      "INT-02",
+      "INT-03",
+      "INT-04",
+      "INT-07",
+      "INT-08",
+      "PS-00328",
+      "YT-00209",
+      "AS-00002",
+      "YT-00149",
+      "PS-00316",
+      "YT-00386",
+      "YT-00284"
+    ],
+    "member_phrases": [
+      "Penalty-free pause or skip when balance is low",
+      "Easy way to change SIP date",
+      "Skip SIP button on the home page",
+      "Flexible SIP date within the month",
+      "Pause that is easy to find, with no long notice period",
+      "One-tap change of SIP amount",
+      "Pause SIP for a few months",
+      "Skip or pause SIP when short of cash",
+      "Working skip-SIP on iPhone",
+      "SIP with flexible amount and date",
+      "Auto-hide cancelled or rejected SIPs",
+      "Steps to start, stop and withdraw in Groww",
+      "Exit SIP in an emergency without loss"
+    ],
+    "members": [
+      {
+        "id": "INT-01",
+        "unmet_need": "Penalty-free pause or skip when balance is low"
+      },
+      {
+        "id": "INT-02",
+        "unmet_need": "Easy way to change SIP date"
+      },
+      {
+        "id": "INT-03",
+        "unmet_need": "Skip SIP button on the home page"
+      },
+      {
+        "id": "INT-04",
+        "unmet_need": "Flexible SIP date within the month"
+      },
+      {
+        "id": "INT-07",
+        "unmet_need": "Pause that is easy to find, with no long notice period"
+      },
+      {
+        "id": "INT-08",
+        "unmet_need": "One-tap change of SIP amount"
+      },
+      {
+        "id": "PS-00328",
+        "unmet_need": "Pause SIP for a few months"
+      },
+      {
+        "id": "YT-00209",
+        "unmet_need": "Skip or pause SIP when short of cash"
+      },
+      {
+        "id": "AS-00002",
+        "unmet_need": "Working skip-SIP on iPhone"
+      },
+      {
+        "id": "YT-00149",
+        "unmet_need": "SIP with flexible amount and date"
+      },
+      {
+        "id": "PS-00316",
+        "unmet_need": "Auto-hide cancelled or rejected SIPs"
+      },
+      {
+        "id": "YT-00386",
+        "unmet_need": "Steps to start, stop and withdraw in Groww"
+      },
+      {
+        "id": "YT-00284",
+        "unmet_need": "Exit SIP in an emergency without loss"
+      }
+    ]
+  },
+  {
+    "theme": "Investment Education and Guidance",
+    "count": 11,
+    "record_ids": [
+      "SV-00008",
+      "YT-00403",
+      "YT-00411",
+      "YT-00371",
+      "YT-00301",
+      "YT-00002",
+      "YT-00477",
+      "YT-00360",
+      "YT-00400",
+      "YT-00253",
+      "YT-00416"
+    ],
+    "member_phrases": [
+      "Understand how returns work",
+      "Understand how SIP works",
+      "Guidance on next steps after a year",
+      "Help choosing a first fund",
+      "Fund pick for a 5k SIP",
+      "Which fund to pick as a student",
+      "One vs multiple index funds",
+      "Top-up vs new fund guidance",
+      "How much to start SIP with",
+      "Start SIP below 5000 on low income",
+      "Partial redemption guidance"
+    ],
+    "members": [
+      {
+        "id": "SV-00008",
+        "unmet_need": "Understand how returns work"
+      },
+      {
+        "id": "YT-00403",
+        "unmet_need": "Understand how SIP works"
+      },
+      {
+        "id": "YT-00411",
+        "unmet_need": "Guidance on next steps after a year"
+      },
+      {
+        "id": "YT-00371",
+        "unmet_need": "Help choosing a first fund"
+      },
+      {
+        "id": "YT-00301",
+        "unmet_need": "Fund pick for a 5k SIP"
+      },
+      {
+        "id": "YT-00002",
+        "unmet_need": "Which fund to pick as a student"
+      },
+      {
+        "id": "YT-00477",
+        "unmet_need": "One vs multiple index funds"
+      },
+      {
+        "id": "YT-00360",
+        "unmet_need": "Top-up vs new fund guidance"
+      },
+      {
+        "id": "YT-00400",
+        "unmet_need": "How much to start SIP with"
+      },
+      {
+        "id": "YT-00253",
+        "unmet_need": "Start SIP below 5000 on low income"
+      },
+      {
+        "id": "YT-00416",
+        "unmet_need": "Partial redemption guidance"
+      }
+    ]
+  },
+  {
+    "theme": "Technical Reliability of Autopay and SIP Management",
+    "count": 9,
+    "record_ids": [
+      "PS-00066",
+      "PS-00139",
+      "AS-00060",
+      "AS-00014",
+      "AS-00056",
+      "INT-06",
+      "YT-00394",
+      "YT-00393",
+      "PS-00087"
+    ],
+    "member_phrases": [
+      "Auto-retry for failed SIP payments",
+      "Reliable autopay for SIPs",
+      "Working UPI autopay setup for new SIP",
+      "One combined debit for multiple SIP mandates",
+      "See whether new autopay is active and its date",
+      "Plain-language explanation of how and when money is debited",
+      "When an extra SIP instalment is priced",
+      "Assurance SIP continues if the app shuts down",
+      "No changes to SIP or redemption without permission"
+    ],
+    "members": [
+      {
+        "id": "PS-00066",
+        "unmet_need": "Auto-retry for failed SIP payments"
+      },
+      {
+        "id": "PS-00139",
+        "unmet_need": "Reliable autopay for SIPs"
+      },
+      {
+        "id": "AS-00060",
+        "unmet_need": "Working UPI autopay setup for new SIP"
+      },
+      {
+        "id": "AS-00014",
+        "unmet_need": "One combined debit for multiple SIP mandates"
+      },
+      {
+        "id": "AS-00056",
+        "unmet_need": "See whether new autopay is active and its date"
+      },
+      {
+        "id": "INT-06",
+        "unmet_need": "Plain-language explanation of how and when money is debited"
+      },
+      {
+        "id": "YT-00394",
+        "unmet_need": "When an extra SIP instalment is priced"
+      },
+      {
+        "id": "YT-00393",
+        "unmet_need": "Assurance SIP continues if the app shuts down"
+      },
+      {
+        "id": "PS-00087",
+        "unmet_need": "No changes to SIP or redemption without permission"
+      }
+    ]
+  },
+  {
+    "theme": "Risk Management and Market Volatility Concerns",
+    "count": 5,
+    "record_ids": [
+      "SV-00009",
+      "YT-00135",
+      "YT-00125",
+      "YT-00277",
+      "YT-00225"
+    ],
+    "member_phrases": [
+      "Principal stays safe or grows",
+      "Reassurance when market falls",
+      "What happens to SIP when market falls",
+      "What happens if market crashes late in SIP",
+      "Can SIP lose more than invested"
+    ],
+    "members": [
+      {
+        "id": "SV-00009",
+        "unmet_need": "Principal stays safe or grows"
+      },
+      {
+        "id": "YT-00135",
+        "unmet_need": "Reassurance when market falls"
+      },
+      {
+        "id": "YT-00125",
+        "unmet_need": "What happens to SIP when market falls"
+      },
+      {
+        "id": "YT-00277",
+        "unmet_need": "What happens if market crashes late in SIP"
+      },
+      {
+        "id": "YT-00225",
+        "unmet_need": "Can SIP lose more than invested"
+      }
+    ]
+  },
+  {
+    "theme": "Performance Transparency and Expectations",
+    "count": 4,
+    "record_ids": [
+      "SV-00002",
+      "INT-05",
+      "YT-00232",
+      "YT-00441"
+    ],
+    "member_phrases": [
+      "Good returns",
+      "Realistic return expectations shown in the app",
+      "What happens if SIP payments stop",
+      "What happens to SIP if payments stop"
+    ],
+    "members": [
+      {
+        "id": "SV-00002",
+        "unmet_need": "Good returns"
+      },
+      {
+        "id": "INT-05",
+        "unmet_need": "Realistic return expectations shown in the app"
+      },
+      {
+        "id": "YT-00232",
+        "unmet_need": "What happens if SIP payments stop"
+      },
+      {
+        "id": "YT-00441",
+        "unmet_need": "What happens to SIP if payments stop"
+      }
+    ]
+  }
+]

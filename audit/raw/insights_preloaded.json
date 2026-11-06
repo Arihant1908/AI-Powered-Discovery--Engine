@@ -202,9 +202,9 @@
     "message": null,
     "cards": [
       {
-        "headline": "Variable-income investors report cash flow crunches during billing windows",
-        "explanation": "Variable-income investors face irregular income cycles and liquidity constraints during scheduled debit windows. Portfolio reviews highlight recurring cash flow timing mismatches rather than structural platform dissatisfaction. Outcome breakdown: 2 Paused, 1 Stopped, 1 Reduced.",
-        "proposed_pm_action": "Introduce a streamlined pause option directly inside the cancellation workflow with automated resumption reminders.",
+        "headline": "4 of 6 variable-income records with a known outcome paused, stopped or reduced",
+        "explanation": "Investors with variable income patterns require flexible options to manage their contributions when facing cash flow constraints. Outcome breakdown: 2 Paused, 1 Stopped, 1 Reduced. Driver breakdown: Cash crunch 3, Low early returns 1. Unmet needs cited: Skip SIP button on the home page, Pause that is easy to find, with no long notice period.",
+        "proposed_pm_action": "Implement a prominent, easily accessible skip or pause button on the home screen for SIP management.",
         "supporting_evidence_ids": [
           "SV-00007",
           "SV-00011",
@@ -218,9 +218,9 @@
         "source_mix": "2 survey, 2 interviews"
       },
       {
-        "headline": "Drop-off drivers: cash crunch and performance concerns dominate churn",
-        "explanation": "Investors pausing, stopping, or reducing commitments cite Cash crunch and Low early returns as primary considerations. Outcome breakdown: 3 Paused, 4 Stopped, 3 Reduced.",
-        "proposed_pm_action": "Implement proactive pause options and educational check-ins prior to scheduled SIP debits.",
+        "headline": "10 records report paused, stopped or reduced outcomes",
+        "explanation": "Users experiencing cash flow constraints seek penalty-free flexibility to pause or skip contributions without terminating their investment plans. Outcome breakdown: 3 Paused, 4 Stopped, 3 Reduced. Driver breakdown: Cash crunch 5, Low early returns 2, Payment or mandate failure 1, Other 1, Confusion about the app 1. Unmet needs cited: Principal stays safe or grows, Reliable autopay for SIPs, No changes to SIP or redemption without permission, Penalty-free pause or skip when balance is low.",
+        "proposed_pm_action": "Introduce a penalty-free pause feature that allows users to temporarily halt SIPs without manual cancellation.",
         "supporting_evidence_ids": [
           "SV-00007",
           "SV-00009",
@@ -240,9 +240,9 @@
         "source_mix": "4 survey, 4 interviews, 2 playstore"
       },
       {
-        "headline": "Investors cite Payment or mandate failure across bank debits",
-        "explanation": "Mandate authorizations encounter bank server timeouts and response delays during account setup. Outcome breakdown: 1 Stopped, 3 Unknown.",
-        "proposed_pm_action": "Implement a flexible debit retry grace window before marking mandates as failed.",
+        "headline": "4 records cite Payment or mandate failure",
+        "explanation": "Investors report difficulties with automated payment mandates and require more reliable systems for processing their recurring contributions. Outcome breakdown: 1 Stopped, 3 Unknown. Unmet needs cited: Auto-retry for failed SIP payments, Reliable autopay for SIPs, One combined debit for multiple SIP mandates, Working UPI autopay setup for new SIP.",
+        "proposed_pm_action": "Develop an auto-retry mechanism for failed payments and consolidate multiple SIP mandates into a single debit transaction.",
         "supporting_evidence_ids": [
           "PS-00066",
           "PS-00139",
@@ -256,9 +256,9 @@
         "source_mix": "2 playstore, 2 appstore"
       },
       {
-        "headline": "Investors cite Low early returns during initial investment period",
-        "explanation": "Feedback mentions portfolio value fluctuations and expectations during initial investment months. Outcome breakdown: 4 Continuing, 1 Paused, 1 Reduced, 1 Unknown.",
-        "proposed_pm_action": "Embed an interactive averaging and volatility context explainer highlighting long-horizon accumulation milestones.",
+        "headline": "7 records cite Low early returns",
+        "explanation": "Investors observing market fluctuations express a need for reassurance and clarity regarding the safety and growth of their principal amounts. Outcome breakdown: 4 Continuing, 1 Paused, 1 Reduced, 1 Unknown. Unmet needs cited: Good returns, Principal stays safe or grows, Reassurance when market falls, Easy way to change SIP date.",
+        "proposed_pm_action": "Provide educational content and clear performance visualizations to help users understand market volatility and long-term growth.",
         "supporting_evidence_ids": [
           "SV-00002",
           "SV-00004",
@@ -276,11 +276,11 @@
       }
     ],
     "suggested_questions": [
-      "What percentage of paused SIPs resume within 60 days of cancellation flow interventions?",
-      "How do payment mandate retries perform across different banking partner cohorts?",
-      "Does an onboarding volatility explainer decrease early drop-offs among first-time investors?"
+      "What specific communication strategies effectively reassure investors during periods of market volatility?",
+      "How can we better identify the underlying reasons for unknown outcomes in our user base?",
+      "What are the primary barriers preventing users from successfully activating autopay mandates?"
     ],
-    "generated_at": "2026-11-06T11:08:13.411161+00:00",
+    "generated_at": "2026-11-06T13:12:23.460575+00:00",
     "cached": true,
     "data_warnings": [],
     "segment_footnote": "Share is among records that state an outcome. Most public reviews do not."

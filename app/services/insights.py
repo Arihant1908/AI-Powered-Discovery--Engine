@@ -40,6 +40,24 @@ FORBIDDEN_PATTERNS = [
     re.compile(r"\bdiscontinu(e|es|ed|ing|ation|ations)?\b", re.IGNORECASE),
 ]
 
+MECHANISM_PATTERNS = {
+    "timeout": re.compile(r"\btimeouts?\b", re.IGNORECASE),
+    "server": re.compile(r"\bservers?\b", re.IGNORECASE),
+    "delay": re.compile(r"\bdelay(s|ed|ing)?\b", re.IGNORECASE),
+    "latency": re.compile(r"\blatenc(y|ies)\b", re.IGNORECASE),
+    "bank": re.compile(r"\bbank(s|ing)?\b", re.IGNORECASE),
+    "initial": re.compile(r"\binitial\b", re.IGNORECASE),
+    "early": re.compile(r"\bearly\b", re.IGNORECASE),
+    "structural": re.compile(r"\bstructural\b", re.IGNORECASE),
+    "dissatisfaction": re.compile(r"\bdissatisfaction\b", re.IGNORECASE),
+    "billing window": re.compile(r"\bbilling\s+windows?\b", re.IGNORECASE),
+}
+
+TIMING_PATTERN = re.compile(
+    r"\b(timing|months?|stage|initial|early|years?|tenure|duration|periods?|timeline|horizon)\b",
+    re.IGNORECASE,
+)
+
 FEATURE_CLAIM_PATTERN = re.compile(
     r"\b(struggle[s]? to (find|locate)|cannot find|can't find|unable to (find|locate)|difficult to find|hard to find|trouble finding|could not find|couldn't find)\b",
     re.IGNORECASE,
@@ -55,6 +73,23 @@ def has_feature_find_claim(text: str) -> bool:
 
 def record_mentions_feature_find(text: str) -> bool:
     return bool(RECORD_FEATURE_FIND_PATTERN.search(text))
+
+def count_words(text: str) -> int:
+    return len(text.strip().split())
+
+def find_forbidden_mechanism_words(text: str, allowed_context: str) -> List[str]:
+    """
+    Checks if text contains any mechanism word (timeout, server, delay, latency, bank,
+    initial, early, structural, dissatisfaction, billing window)
+    unless that word appears in allowed_context (cited unmet_need phrases or driver label).
+    """
+    allowed_context_lower = allowed_context.lower()
+    forbidden_found = []
+    for word_key, pat in MECHANISM_PATTERNS.items():
+        if pat.search(text):
+            if not pat.search(allowed_context_lower):
+                forbidden_found.append(word_key)
+    return forbidden_found
 
 def compute_source_mix(records: List[TaggedRecord]) -> str:
     first_seen = {}
@@ -88,10 +123,27 @@ def get_outcome_breakdown_str(records: List[TaggedRecord]) -> str:
     return ", ".join(parts) if parts else "0 Unknown"
 
 def get_driver_breakdown_str(records: List[TaggedRecord]) -> str:
-    counts = Counter(r.main_driver for r in records)
+    counts = Counter(r.main_driver for r in records if r.main_driver)
     sorted_items = sorted(counts.items(), key=lambda x: x[1], reverse=True)
-    parts = [f"{cnt} {drv}" for drv, cnt in sorted_items if cnt > 0]
-    return ", ".join(parts) if parts else "0 Other"
+    parts = [f"{drv} {cnt}" for drv, cnt in sorted_items if cnt > 0]
+    return ", ".join(parts) if parts else "Other 0"
+
+def get_stage_breakdown_str(records: List[TaggedRecord]) -> str:
+    counts = Counter(r.stage for r in records if r.stage)
+    sorted_items = sorted(counts.items(), key=lambda x: x[1], reverse=True)
+    parts = [f"{stg} {cnt}" for stg, cnt in sorted_items if cnt > 0]
+    return ", ".join(parts) if parts else "Unclear 0"
+
+def get_unmet_needs_str(records: List[TaggedRecord], max_items: int = 4) -> str:
+    valid_needs = []
+    seen = set()
+    for r in records:
+        if r.unmet_need:
+            n = r.unmet_need.strip()
+            if n and n.lower() != "none" and n not in seen:
+                seen.add(n)
+                valid_needs.append(n)
+    return ", ".join(valid_needs[:max_items]) if valid_needs else ""
 
 def sanitize_dataset_key(dataset: str) -> str:
     cleaned = "".join(c for c in dataset.strip() if c.isalnum() or c in ("-", "_"))
@@ -224,6 +276,7 @@ class InsightFilterDefinition:
         segment_name: Optional[str] = None,
         segment_base: Optional[int] = None,
         segment_count: Optional[int] = None,
+        segment_known_count: Optional[int] = None,
         segment_text: Optional[str] = None,
         qualifying_ids: Optional[List[str]] = None,
         has_outcome_condition: bool = False,
@@ -236,29 +289,60 @@ class InsightFilterDefinition:
         self.segment_name = segment_name
         self.segment_base = segment_base
         self.segment_count = segment_count
+        self.segment_known_count = segment_known_count
         self.segment_text = segment_text
         self.qualifying_ids = qualifying_ids or []
         self.qualifying_ids_set = set(self.qualifying_ids)
         self.has_outcome_condition = has_outcome_condition
         self.target_driver = target_driver
 
+def build_headline(
+    filter_def: InsightFilterDefinition,
+    qualifying_recs: List[TaggedRecord],
+) -> str:
+    n = len(qualifying_recs)
+    if filter_def.is_drop_off:
+        return f"{n} records report paused, stopped or reduced outcomes"
+    elif filter_def.is_segment:
+        label = "variable-income"
+        if filter_def.segment_name:
+            if "variable" in filter_def.segment_name.lower():
+                label = "variable-income"
+            elif "fixed" in filter_def.segment_name.lower():
+                label = "fixed-salary"
+            elif "student" in filter_def.segment_name.lower():
+                label = "student or dependent"
+            else:
+                label = filter_def.segment_name.lower()
+        k = filter_def.segment_count if filter_def.segment_count is not None else n
+        m = filter_def.segment_known_count if filter_def.segment_known_count is not None else n
+        return f"{k} of {m} {label} records with a known outcome paused, stopped or reduced"
+    else:
+        drv = filter_def.target_driver or "customer feedback"
+        return f"{n} records cite {drv}"
+
 def build_template_card(
     filter_def: InsightFilterDefinition,
     qualifying_recs: List[TaggedRecord]
 ) -> Tuple[str, str, str]:
+    hl = build_headline(filter_def, qualifying_recs)
     if filter_def.is_drop_off:
-        hl = "Drop-off drivers: cash crunch and performance concerns dominate churn"
-        expl = "Investors pausing, stopping, or reducing commitments cite Cash crunch and Low early returns as primary considerations."
+        expl = "Investors pausing or stopping mutual fund commitments most frequently report cash constraints alongside portfolio performance considerations."
         act = "Implement proactive pause options and educational check-ins prior to scheduled SIP debits."
     elif filter_def.is_segment:
-        hl = f"{filter_def.segment_name}: Cash-flow volatility during billing windows"
-        expl = f"{filter_def.segment_name} investors face irregular income cycles and liquidity constraints during scheduled debit windows. Portfolio reviews highlight recurring cash flow timing mismatches rather than structural platform dissatisfaction."
+        expl = "Variable-income investors report cash flow difficulties and liquidity constraints when maintaining recurring mutual fund investments."
         act = "Introduce targeted flexibility options and automated pause controls."
     else:
         drv = filter_def.target_driver or "customer feedback"
-        hl = f"Investors cite {drv} across portfolio reviews"
-        expl = f"Feedback mentions {drv.lower()} as a recurring operational factor and user experience consideration."
-        act = f"Review user workflows and investor guidance regarding {drv}."
+        if drv == "Payment or mandate failure":
+            expl = "Investors report recurring issues with autopay authorizations and payment execution when managing their recurring mutual fund investments."
+            act = "Implement automated mandate retries and clearer status feedback for pending autopay authorizations."
+        elif drv == "Low early returns":
+            expl = "Investors report concerns with portfolio gains and market fluctuations across their active mutual fund tenures."
+            act = "Provide benchmark comparisons and contextual guidance illustrating historical long-term market volatility."
+        else:
+            expl = f"Investors cite {drv.lower()} as a notable consideration across their mutual fund experiences."
+            act = f"Review user workflows and investor guidance regarding {drv}."
     return hl, expl, act
 
 def get_card_filters(
@@ -309,6 +393,7 @@ def get_card_filters(
                 segment_name=seg_inc,
                 segment_base=top_seg.n,
                 segment_count=top_seg.negative_count,
+                segment_known_count=top_seg.known_outcome_count,
                 segment_text=seg_text,
                 qualifying_ids=matching_ids,
                 has_outcome_condition=True,
@@ -422,13 +507,24 @@ def _build_generation_prompt(
         q_recs = [records_by_id[cid] for cid in f.qualifying_ids if cid in records_by_id]
         outcome_str = get_outcome_breakdown_str(q_recs)
         driver_str = get_driver_breakdown_str(q_recs)
+        stage_str = get_stage_breakdown_str(q_recs)
+        source_mix_str = compute_source_mix(q_recs)
+        unmet_list = [
+            r.unmet_need.strip()
+            for r in q_recs
+            if r.unmet_need and r.unmet_need.strip().lower() != "none" and r.unmet_need.strip() != ""
+        ]
+        distinct_unmet = list(dict.fromkeys(unmet_list))[:4]
 
         prompt += f"\n--- Card {idx} Filter: {f.description} ---\n"
         prompt += f"Total qualifying records: {len(q_recs)}\n"
-        prompt += f"Outcome breakdown for Card {idx}: {outcome_str}\n"
-        prompt += f"Driver breakdown for Card {idx}: {driver_str}\n"
+        prompt += f"Outcome breakdown: {outcome_str}\n"
+        prompt += f"Driver breakdown: {driver_str}\n"
+        prompt += f"Stage breakdown: {stage_str}\n"
+        prompt += f"Source mix: {source_mix_str}\n"
+        prompt += f"Exact unmet needs cited in records: {json.dumps(distinct_unmet)}\n"
         if f.is_segment and f.segment_text:
-            prompt += f"Mandatory segment baseline fact to include in explanation: \"{f.segment_text}\"\n"
+            prompt += f"Mandatory segment baseline fact: \"{f.segment_text}\"\n"
         if f.is_drop_off:
             prompt += f"Mandatory drop-off driver fact: Among records with outcome in Paused, Stopped, or Reduced, count by main_driver: {driver_str}\n"
 
@@ -442,21 +538,23 @@ def _build_generation_prompt(
     prompt += (
         f"\nINSTRUCTIONS:\n"
         f"1. Produce exactly {len(card_filters)} insight cards corresponding to the cards above.\n"
-        "2. Ground every card strictly in the evidence. Describe patterns qualitatively.\n"
-        "3. ZERO DIGITS CONSTRAINT: You MUST NOT output any digits (0-9), numbers, or counts anywhere in 'headline' or 'explanation'. Write purely qualitative descriptions without digits.\n"
-        "4. FORBIDDEN WORDS: Unless the card's filter includes an outcome condition, you MUST NOT use any of these causal words: 'leads to', 'triggers', 'causes', 'drives', 'cancel', 'churn', 'drop out', 'discontinue' (or any of their variations).\n"
-        "5. CLAIMS MUST MATCH EVIDENCE: If you claim users 'struggle to find', 'cannot find', or similar about a feature, it must only appear if at least half of the card's cited records explicitly mention it; otherwise you MUST describe only the cash-flow pattern.\n"
-        "6. DO NOT output any 'Outcome breakdown:' line or outcome counts in headline or explanation. The backend strictly appends the exact verified breakdown line in code.\n"
-        "7. For each card:\n"
-        "   - 'headline': One concise qualitative takeaway without digits.\n"
-        "   - 'explanation': Two qualitative sentences explaining observed patterns without digits. No numbers, no outcome breakdown line.\n"
+        "2. Ground every card strictly in the evidence.\n"
+        "3. ONE SENTENCE & 25 WORDS LIMIT: For each card, write exactly ONE concise explanation sentence of at most 25 words using only the structured facts provided above.\n"
+        "4. NO MECHANISMS OR CAUSES: Do not speculate on mechanisms, causes, timing, or technical reasons unless an exact listed unmet_need phrase states them.\n"
+        "5. ZERO DIGITS CONSTRAINT: You MUST NOT output any digits (0-9), numbers, or counts anywhere in 'explanation'. Write purely qualitative descriptions without digits.\n"
+        "6. FORBIDDEN CAUSAL WORDS: Unless the card's filter includes an outcome condition, you MUST NOT use any of these causal words: 'leads to', 'triggers', 'causes', 'drives', 'cancel', 'churn', 'drop out', 'discontinue' (or any of their variations).\n"
+        "7. FORBIDDEN MECHANISM WORDS: You MUST NOT use any of the following mechanism or technical words unless that exact word appears in that card's cited unmet needs list or driver name: timeout, server, delay, latency, bank, initial, early, structural, dissatisfaction, billing window (or their plural/verb forms).\n"
+        "8. CLAIMS MUST MATCH EVIDENCE: If you claim users 'struggle to find', 'cannot find', or similar about a feature, it must only appear if at least half of the card's cited records explicitly mention it; otherwise you MUST describe only the cash-flow pattern.\n"
+        "9. DO NOT output any breakdown line ('Outcome breakdown:', 'Driver breakdown:', 'Stage breakdown:', 'Unmet needs cited:') in explanation. The backend strictly appends them in code.\n"
+        "10. For each card:\n"
+        "   - 'explanation': Exactly ONE qualitative sentence of at most 25 words without digits, mechanism words, or breakdown lines.\n"
         "   - 'proposed_pm_action': Concrete, actionable product or UX solution.\n"
         "   - 'supporting_evidence_ids': Array of cited IDs. Cite ONLY from that card's valid evidence IDs list above!\n"
-        "8. Produce exactly 3 'suggested_questions' highlighting critical data gaps.\n"
-        "9. Return ONLY a valid JSON object matching this schema:\n"
+        "11. Produce exactly 3 'suggested_questions' highlighting critical data gaps.\n"
+        "12. Return ONLY a valid JSON object matching this schema:\n"
         "{\n"
         '  "insight_cards": [\n'
-        '    {"headline": "...", "explanation": "Qualitative observation sentence one. Qualitative observation sentence two.", "proposed_pm_action": "...", "supporting_evidence_ids": ["..."]}\n'
+        '    {"explanation": "One qualitative sentence of at most 25 words.", "proposed_pm_action": "...", "supporting_evidence_ids": ["..."]}\n'
         "  ],\n"
         '  "suggested_questions": ["Question 1?", "Question 2?", "Question 3?"]\n'
         "}\n"
@@ -467,7 +565,8 @@ def _build_generation_prompt(
 
     system_instruction = (
         "You are an executive insights analyst. Ground every claim strictly in the provided dataset and specified card filters. "
-        "Never make causal claims without outcome filters. Never use forbidden words. Return JSON only."
+        "Write exactly one sentence of at most 25 words per card. Never make causal claims without outcome filters. "
+        "Never use unevidenced mechanism words. Return JSON only."
     )
     return prompt, system_instruction
 
@@ -479,9 +578,10 @@ def generate_ai_insights(
     Calls Gemini (or deterministic mock if enabled) with strict grounding:
     - Defines exact filter for each insight card.
     - Supporting IDs and strength count come ONLY from records satisfying each filter.
-    - Model must NOT output any digits or outcome counts in headline or explanation.
-    - Backend appends exactly one 'Outcome breakdown: ...' line built in code from qualifying records.
-    - Validates against digits, forbidden words, and unverified feature find claims (retries once, then template).
+    - Headlines are generated in code from filter and counts.
+    - Model must NOT output any digits or breakdown lines in explanation (at most 25 words).
+    - Backend appends Outcome, Driver, Stage, and Unmet needs breakdown lines built in code.
+    - Validates against digits, forbidden words, unevidenced mechanism words, length <= 25 words, and unverified feature find claims (retries once, then template).
     - Source mix is computed and attached to each card.
     """
     if not settings.is_ai_available:
@@ -508,35 +608,63 @@ def generate_ai_insights(
                     failed_reasons.append(f"Missing card {i+1}")
                     continue
                 card = raw_cards[i]
-                hl = str(card.get("headline", "")).strip()
                 expl = str(card.get("explanation", "")).strip()
 
+                # Clean any self-generated breakdown lines before validation
+                clean_expl = re.sub(
+                    r"\s*(Outcome|Driver|Stage|Unmet\s+needs\s+cited)\s*breakdown:.*$",
+                    "",
+                    expl,
+                    flags=re.IGNORECASE,
+                ).strip()
+                clean_expl = re.sub(r"\s*Unmet\s+needs\s+cited:.*$", "", clean_expl, flags=re.IGNORECASE).strip()
+
+                q_recs = [records_by_id[cid] for cid in f.qualifying_ids if cid in records_by_id]
+                allowed_ctx = " ".join(
+                    [
+                        f.target_driver or "",
+                        f.description or "",
+                        get_unmet_needs_str(q_recs, max_items=10),
+                    ]
+                )
+
                 # 1. Reject digits
-                if re.search(r'\d', hl) or re.search(r'\d', expl):
+                if re.search(r"\d", clean_expl):
                     failed_reasons.append(
-                        f"Card {i+1} headline or explanation contains digits. Digits are strictly forbidden in AI narrative."
+                        f"Card {i+1} explanation contains digits. Digits are strictly forbidden in AI narrative."
                     )
 
-                # 2. Reject self-generated Outcome breakdown
-                if "outcome breakdown" in hl.lower() or "outcome breakdown" in expl.lower():
+                # 2. Reject self-generated Outcome/Driver/Stage breakdown lines
+                if any(b in expl.lower() for b in ["outcome breakdown", "driver breakdown", "stage breakdown", "unmet needs cited"]):
                     failed_reasons.append(
-                        f"Card {i+1} contains 'Outcome breakdown'. The backend automatically produces this line."
+                        f"Card {i+1} contains breakdown lines. The backend automatically produces these lines."
                     )
 
                 # 3. Forbidden causal words
                 if not f.has_outcome_condition:
-                    bad_words_hl = find_forbidden_words(hl)
-                    bad_words_expl = find_forbidden_words(expl)
-                    bad_all = bad_words_hl + bad_words_expl
-                    if bad_all:
+                    bad_words_expl = find_forbidden_words(clean_expl)
+                    if bad_words_expl:
                         failed_reasons.append(
-                            f"Card {i+1} ('{f.description}') contains forbidden words: {bad_all}. "
+                            f"Card {i+1} ('{f.description}') contains forbidden words: {bad_words_expl}. "
                             f"Do NOT use 'leads to', 'triggers', 'causes', 'drives', 'cancel', 'churn', 'drop out', 'discontinue'."
                         )
 
-                # 4. Feature discoverability claim check
-                if has_feature_find_claim(hl) or has_feature_find_claim(expl):
-                    q_recs = [records_by_id[cid] for cid in f.qualifying_ids if cid in records_by_id]
+                # 4. Forbidden mechanism words
+                bad_mech = find_forbidden_mechanism_words(clean_expl, allowed_ctx)
+                if bad_mech:
+                    failed_reasons.append(
+                        f"Card {i+1} contains unevidenced mechanism words: {bad_mech}. "
+                        f"Do NOT use timeout, server, delay, latency, bank, initial, early, structural, dissatisfaction, billing window unless present in cited unmet needs."
+                    )
+
+                # 5. Length constraint (at most 25 words)
+                if count_words(clean_expl) > 25:
+                    failed_reasons.append(
+                        f"Card {i+1} explanation has {count_words(clean_expl)} words (max 25 allowed)."
+                    )
+
+                # 6. Feature discoverability claim check
+                if has_feature_find_claim(clean_expl):
                     find_count = sum(1 for r in q_recs if record_mentions_feature_find(r.text))
                     if find_count < (len(q_recs) / 2.0):
                         failed_reasons.append(
@@ -573,41 +701,91 @@ def generate_ai_insights(
         for i, filter_def in enumerate(card_filters):
             q_recs = [records_by_id[cid] for cid in filter_def.qualifying_ids if cid in records_by_id]
             outcome_str = get_outcome_breakdown_str(q_recs)
+            driver_str = get_driver_breakdown_str(q_recs)
             source_mix = compute_source_mix(q_recs)
             template_hl, template_expl, template_act = build_template_card(filter_def, q_recs)
 
+            # Headline is strictly built in code from filter and counts
+            hl = build_headline(filter_def, q_recs)
+
             card = raw_cards[i] if i < len(raw_cards) else {}
-            hl = str(card.get("headline", "")).strip()
             expl = str(card.get("explanation", "")).strip()
             act = str(card.get("proposed_pm_action", "")).strip()
 
-            # Clean any model-generated outcome breakdown line if somehow present
-            clean_expl = re.sub(r'\s*Outcome breakdown:.*$', '', expl, flags=re.IGNORECASE).strip()
+            # Clean any model-generated breakdown lines if present
+            clean_expl = re.sub(
+                r"\s*(Outcome|Driver|Stage|Unmet\s+needs\s+cited)\s*breakdown:.*$",
+                "",
+                expl,
+                flags=re.IGNORECASE,
+            ).strip()
+            clean_expl = re.sub(r"\s*Unmet\s+needs\s+cited:.*$", "", clean_expl, flags=re.IGNORECASE).strip()
+
+            allowed_ctx = " ".join(
+                [
+                    filter_def.target_driver or "",
+                    filter_def.description or "",
+                    get_unmet_needs_str(q_recs, max_items=10),
+                ]
+            )
 
             # Check digit violations
-            has_digits = bool(re.search(r'\d', hl) or re.search(r'\d', clean_expl))
+            has_digits = bool(re.search(r"\d", clean_expl))
 
             # Check forbidden causal words
             card_has_forbidden = False
             if not filter_def.has_outcome_condition:
-                if find_forbidden_words(hl) or find_forbidden_words(clean_expl):
+                if find_forbidden_words(clean_expl):
                     card_has_forbidden = True
+
+            # Check forbidden mechanism words
+            forbidden_mech = bool(find_forbidden_mechanism_words(clean_expl, allowed_ctx))
+
+            # Check word count limit
+            word_count_exceeded = count_words(clean_expl) > 25
 
             # Check feature claim threshold
             feature_claim_invalid = False
-            if has_feature_find_claim(hl) or has_feature_find_claim(clean_expl):
+            if has_feature_find_claim(clean_expl):
                 find_count = sum(1 for r in q_recs if record_mentions_feature_find(r.text))
                 if find_count < (len(q_recs) / 2.0):
                     feature_claim_invalid = True
 
-            # If card is invalid, empty, contains digits, forbidden words, or unverified feature claims, fall back to template sentence
-            if not hl or not clean_expl or has_digits or card_has_forbidden or feature_claim_invalid:
-                hl = template_hl
+            # If card is invalid, empty, contains digits, forbidden causal/mechanism words,
+            # exceeds 25 words, or has unverified feature claims, fall back to template sentence
+            if (
+                not clean_expl
+                or has_digits
+                or card_has_forbidden
+                or forbidden_mech
+                or word_count_exceeded
+                or feature_claim_invalid
+            ):
                 clean_expl = template_expl
                 act = act or template_act
 
-            # Append EXACTLY ONE breakdown line built in code from qualifying records
-            final_expl = f"{clean_expl} Outcome breakdown: {outcome_str}."
+            # Build backend-appended breakdown lines
+            lines = [clean_expl]
+
+            # 1. Outcome breakdown (always)
+            lines.append(f"Outcome breakdown: {outcome_str}.")
+
+            # 2. Driver breakdown (when filter spans several drivers)
+            distinct_drivers = {r.main_driver for r in q_recs if r.main_driver}
+            if len(distinct_drivers) > 1:
+                lines.append(f"Driver breakdown: {driver_str}.")
+
+            # 3. Stage breakdown (when the text mentions timing)
+            if TIMING_PATTERN.search(clean_expl):
+                stage_str = get_stage_breakdown_str(q_recs)
+                lines.append(f"Stage breakdown: {stage_str}.")
+
+            # 4. Unmet needs cited (distinct phrases, up to 4)
+            unmet_str = get_unmet_needs_str(q_recs, max_items=4)
+            if unmet_str:
+                lines.append(f"Unmet needs cited: {unmet_str}.")
+
+            final_expl = " ".join(lines)
 
             # Evidence IDs filtering
             raw_ids = card.get("supporting_evidence_ids", []) if isinstance(card, dict) else []

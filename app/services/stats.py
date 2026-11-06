@@ -190,12 +190,68 @@ def get_dashboard_charts(
         },
     )
 
+UNMET_THEME_MAPPINGS = {
+    "SIP Flexibility and Transaction Control": [
+        "INT-01", "INT-02", "INT-03", "INT-04", "INT-07", "INT-08",
+        "PS-00328", "YT-00209", "AS-00002", "YT-00149", "PS-00316",
+        "YT-00386", "YT-00284"
+    ],
+    "Investment Education and Guidance": [
+        "SV-00008", "YT-00403", "YT-00411", "YT-00371", "YT-00301",
+        "YT-00002", "YT-00477", "YT-00360", "YT-00400", "YT-00253", "YT-00416"
+    ],
+    "Technical Reliability of Autopay and SIP Management": [
+        "PS-00066", "PS-00139", "AS-00060", "AS-00014", "AS-00056",
+        "INT-06", "YT-00394", "YT-00393", "PS-00087"
+    ],
+    "Risk Management and Market Volatility Concerns": [
+        "SV-00009", "YT-00135", "YT-00125", "YT-00277", "YT-00225"
+    ],
+    "Performance Transparency and Expectations": [
+        "SV-00002", "INT-05", "YT-00232", "YT-00441"
+    ]
+}
+
+def save_unmet_theme_members_json(output_path: Optional[Path] = None):
+    """
+    Saves audit/raw/unmet_theme_members.json listing each theme with its member phrases and record IDs.
+    """
+    engine_df = get_engine_df()
+    id_to_need = {}
+    for _, row in engine_df.iterrows():
+        id_to_need[str(row["id"])] = str(row["unmet_need"]).strip() if pd.notna(row["unmet_need"]) else ""
+
+    result = []
+    for theme, ids in UNMET_THEME_MAPPINGS.items():
+        phrases = [id_to_need[cid] for cid in ids if cid in id_to_need and id_to_need[cid]]
+        distinct_phrases = list(dict.fromkeys(phrases))
+        members = [{"id": cid, "unmet_need": id_to_need.get(cid, "")} for cid in ids]
+        result.append({
+            "theme": theme,
+            "count": len(ids),
+            "record_ids": ids,
+            "member_phrases": distinct_phrases,
+            "members": members,
+        })
+
+    dest = output_path or (settings.BASE_DIR / "audit" / "raw" / "unmet_theme_members.json")
+    try:
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        dest.write_text(json.dumps(result, indent=2), encoding="utf-8")
+    except Exception as e:
+        logger.warning(f"Could not save unmet_theme_members.json: {e}")
+    return result
+
 def get_dashboard_unmet_needs(
     source: Optional[List[str]] = None,
     income_stability: Optional[List[str]] = None,
     age_band: Optional[List[str]] = None,
     influence: Optional[List[str]] = None,
 ) -> UnmetNeedsResponse:
+    # Save unmet theme members mapping on unfiltered (preloaded) requests
+    if not (source or income_stability or age_band or influence):
+        save_unmet_theme_members_json()
+
     engine_df = get_engine_df()
     filtered = filter_engine_data(
         engine_df,

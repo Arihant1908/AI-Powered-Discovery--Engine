@@ -202,9 +202,9 @@
     "message": null,
     "cards": [
       {
-        "headline": "Variable income volatility impacts investment consistency",
-        "explanation": "Investors with fluctuating earnings frequently encounter liquidity constraints during specific billing periods. These variable-income investors face cash-flow volatility during billing windows, which complicates their ability to maintain regular payment schedules. Outcome breakdown: 2 Paused, 1 Stopped, 1 Reduced.",
-        "proposed_pm_action": "Introduce a flexible payment skip feature that allows users to pause a single installment without terminating the entire mandate.",
+        "headline": "4 of 6 variable-income records with a known outcome paused, stopped or reduced",
+        "explanation": "Investors with variable income patterns require flexible options to manage their contributions when facing cash flow constraints. Outcome breakdown: 2 Paused, 1 Stopped, 1 Reduced. Driver breakdown: Cash crunch 3, Low early returns 1. Unmet needs cited: Skip SIP button on the home page, Pause that is easy to find, with no long notice period.",
+        "proposed_pm_action": "Implement a prominent, easily accessible skip or pause button on the home screen for SIP management.",
         "supporting_evidence_ids": [
           "SV-00007",
           "SV-00011",
@@ -218,9 +218,9 @@
         "source_mix": "2 survey, 2 interviews"
       },
       {
-        "headline": "Cash flow constraints remain the primary barrier to investment continuity",
-        "explanation": "Users frequently report that unexpected financial obligations or limited liquidity force them to adjust their investment behavior. This pattern suggests that rigid payment structures are incompatible with the unpredictable nature of personal cash flow. Outcome breakdown: 3 Paused, 4 Stopped, 3 Reduced.",
-        "proposed_pm_action": "Implement a dynamic SIP adjustment tool that enables users to temporarily lower or defer contributions based on real-time financial status.",
+        "headline": "10 records report paused, stopped or reduced outcomes",
+        "explanation": "Users experiencing cash flow constraints seek penalty-free flexibility to pause or skip contributions without terminating their investment plans. Outcome breakdown: 3 Paused, 4 Stopped, 3 Reduced. Driver breakdown: Cash crunch 5, Low early returns 2, Payment or mandate failure 1, Other 1, Confusion about the app 1. Unmet needs cited: Principal stays safe or grows, Reliable autopay for SIPs, No changes to SIP or redemption without permission, Penalty-free pause or skip when balance is low.",
+        "proposed_pm_action": "Introduce a penalty-free pause feature that allows users to temporarily halt SIPs without manual cancellation.",
         "supporting_evidence_ids": [
           "SV-00007",
           "SV-00009",
@@ -240,9 +240,9 @@
         "source_mix": "4 survey, 4 interviews, 2 playstore"
       },
       {
-        "headline": "Automated payment failures create friction in the investment experience",
-        "explanation": "Users report significant frustration when automated payment systems fail to execute as expected. The lack of an automated retry mechanism forces users to perform manual interventions to keep their investments active. Outcome breakdown: 1 Stopped, 3 Unknown.",
-        "proposed_pm_action": "Develop an intelligent auto-retry system that automatically attempts to process failed payments on subsequent days without requiring user intervention.",
+        "headline": "4 records cite Payment or mandate failure",
+        "explanation": "Investors report difficulties with automated payment mandates and require more reliable systems for processing their recurring contributions. Outcome breakdown: 1 Stopped, 3 Unknown. Unmet needs cited: Auto-retry for failed SIP payments, Reliable autopay for SIPs, One combined debit for multiple SIP mandates, Working UPI autopay setup for new SIP.",
+        "proposed_pm_action": "Develop an auto-retry mechanism for failed payments and consolidate multiple SIP mandates into a single debit transaction.",
         "supporting_evidence_ids": [
           "PS-00066",
           "PS-00139",
@@ -256,9 +256,9 @@
         "source_mix": "2 playstore, 2 appstore"
       },
       {
-        "headline": "Market volatility perceptions influence investor confidence",
-        "explanation": "Investors often express anxiety when observing short-term fluctuations in their portfolio value. While some continue their investments, others feel compelled to pause or reduce their contributions due to fear of capital loss. Outcome breakdown: 4 Continuing, 1 Paused, 1 Reduced, 1 Unknown.",
-        "proposed_pm_action": "Enhance the user dashboard with educational content that contextualizes short-term market movements within long-term wealth creation goals.",
+        "headline": "7 records cite Low early returns",
+        "explanation": "Investors observing market fluctuations express a need for reassurance and clarity regarding the safety and growth of their principal amounts. Outcome breakdown: 4 Continuing, 1 Paused, 1 Reduced, 1 Unknown. Unmet needs cited: Good returns, Principal stays safe or grows, Reassurance when market falls, Easy way to change SIP date.",
+        "proposed_pm_action": "Provide educational content and clear performance visualizations to help users understand market volatility and long-term growth.",
         "supporting_evidence_ids": [
           "SV-00002",
           "SV-00004",
@@ -276,11 +276,11 @@
       }
     ],
     "suggested_questions": [
-      "What specific communication channels are most effective for notifying users about upcoming payment dates to help them manage cash flow?",
-      "How does the frequency of market updates impact the emotional response of new investors compared to experienced ones?",
-      "What are the primary technical barriers preventing successful mandate execution for users experiencing repeated payment failures?"
+      "What specific communication strategies effectively reassure investors during periods of market volatility?",
+      "How can we better identify the underlying reasons for unknown outcomes in our user base?",
+      "What are the primary barriers preventing users from successfully activating autopay mandates?"
     ],
-    "generated_at": "2026-11-06T11:09:44.409997+00:00",
+    "generated_at": "2026-11-06T13:13:05.441993+00:00",
     "cached": false,
     "data_warnings": [],
     "segment_footnote": "Share is among records that state an outcome. Most public reviews do not."
